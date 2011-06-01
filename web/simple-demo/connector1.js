@@ -77,10 +77,10 @@
 		    }
 
 		    if (command.event == 'link') {
-    			$("#dialog").html(command.event + ' - ' + command.uid + ' - ' + command.ext + ' - ' + command.agent);
-    			//$("#dialog").load('gw.php?inc=' + command.agent + '&caller=' + command.remote);
-			//$('#dialog').dialog('open');
-			showStickySuccessToast(command.uid, command.event + ' - ' + command.uid + ' - ' + command.caller  + ' -> ' + command.ext + ' -> ' + command.agent)
+    			//$("#dialog").html(command.event + ' - ' + command.uid + ' - ' + command.ext + ' - ' + command.agent);
+    			$("#dialog").load('gw.php?inc=' + command.agent + '&caller=' + command.remote);
+			$('#dialog').dialog('open');
+			//showStickySuccessToast(command.uid, command.event + ' - ' + command.uid + ' - ' + command.caller  + ' -> ' + command.ext + ' -> ' + command.agent)
 		    }
 
 		    if (command.event == 'hangup_cleanup') {
