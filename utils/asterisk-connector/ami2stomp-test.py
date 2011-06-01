@@ -70,7 +70,7 @@ manager = asterisk.manager.Manager()
 try:
     # connect to the manager
     try:
-	manager.connect('80.243.146.77') 
+	manager.connect('127.0.0.1') 
         manager.login('me', 'mysecret')
 
 #        manager.register_event('Shutdown', handle_shutdown) # shutdown

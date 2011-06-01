@@ -6,7 +6,7 @@ import sys,time
 import simplejson as json
 from stompy.simple import Client
 
-stomp = Client('80.243.146.77') 
+stomp = Client('127.0.0.1') 
 stomp.connect('guest', 'password')
 stomp.subscribe("/queue/test/13")
 message = stomp.get()
