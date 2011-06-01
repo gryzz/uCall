@@ -99,6 +99,9 @@
             
             http://activemq.apache.org/persistence.html 
         -->
+	
+	<!-- TODO: do we need this persistence??? -->
+
         <persistenceAdapter>
             <kahaDB directory="${activemq.base}/data/kahadb"/>
         </persistenceAdapter>
@@ -125,10 +128,15 @@
     <import resource="camel.xml"/>
     -->
 
+
+
     <!-- 
         Enable web consoles, REST and Ajax APIs and demos
         Take a look at activemq-jetty.xml for more details 
     -->
+
+	<!-- TODO: do we need this console??? -->
+
     <!-- import resource="jetty.xml"/ -->
     
 </beans>
