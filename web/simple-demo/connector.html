@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src='extras/jquery/js/jquery-1.4.2.min.js'></script>
+    <script type="text/javascript" src="extras/jquery/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="extras/jquery/js/jquery.cookie.js"></script>
+    <link type="text/css" href="extras/jquery/css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />	
+    <script type="text/javascript" src='extras/jquery/js/jquery.toastmessage.js'></script>
+    <link type="text/css" href='extras/jquery/js/jquery.toastmessage.css' rel="stylesheet" />	
+    <script src='stomp.js'></script>
+    <script>
+	var queue = 'ws://queue.ucall.org:61614/stomp';
+    </script>
+    <script src='connector1.js'></script>
+  </head>
+  <body>
+  <table width="100%">
+  <tr valign="top">
+    <td id="state">offline</td>
+    <td><span id="counter_answered">0</span> / <span id="counter_unanswered">0</span></td>
+    </tr>
+  <tr valign="top">
+    <td id="messages"><hr></td>
+    <td width="200"><pre id="debug"></pre></td>
+    </tr>
+    </table>    
+    <div id="dialog" style="display: none;" title="Incomming Call..."></div>
+  </body>
+</html>
