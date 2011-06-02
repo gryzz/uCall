@@ -12,7 +12,11 @@ myfileobj = open("events.txt","read")
 csv_read = csv.reader(myfileobj,dialect=csv.excel_tab)
 
 config = ConfigParser.ConfigParser()
-config.read('/opt/etc/asterisk/config.ini')
+devel_config = ConfigParser.ConfigParser()
+
+config.read('/opt/ucall/etc/config.ini')
+devel_config.read('/opt/ucall/etc/devel_config.ini')
+
 stomp = Client(config.get('STOMP', 'host'))
 stomp.connect(config.get('STOMP', 'username'), config.get('STOMP', 'password'))
 
@@ -39,7 +43,14 @@ for line in csv_read:
             sleep(delta.seconds)
 
     timestamp_prev = timestamp_curr
-    
-    message = callbacks[line[2]](eval(line[4]))
 
-    print type(message)
+    event = line[2]
+    event_data = eval(line[4])
+
+    print event
+    
+    message = callbacks[event](event_data)
+    json_message = json.dumps(message, separators=(',',':'))
+    destination = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
+    
+    stomp.put(json_message, destination=destination)
