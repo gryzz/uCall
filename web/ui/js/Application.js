@@ -32,7 +32,7 @@ Ext.onReady(function(){
 							title: "Button 1 clicked!",
 							width: 400,
 							height: 150,
-							html: "Some window content"
+							html: "<b>Some</b> window <p>content</p>"
 						}).show();
 					}
 				},
@@ -49,14 +49,14 @@ Ext.onReady(function(){
 							border: false,
 							resizable: false,
 							draggable: false,
-							closable: false,
-							buttonAlign: "center",
-							buttons: [{
-								text: "Close me!",
-								handler: function(){
-									w2.close();
-								}
-							}]
+							closable: false //,
+							// buttonAlign: "center",
+							// buttons: [{
+							// 	text: "Close me!",
+							// 	handler: function(){
+							// 		w2.close();
+							// 	}
+							// }]
 						}).show();
 					}
 				}
