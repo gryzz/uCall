@@ -1,6 +1,4 @@
-# Create your views here.
-
-from django.http import HttpResponse
+from django.shortcuts import render_to_response
 
 def main(request):
-    return HttpResponse("Hello, world. You're at the index.")
+    return render_to_response('ucall_ui/main.html', {'agent': 'SIP/1113', 'username': 'Andrew Kornilov'})

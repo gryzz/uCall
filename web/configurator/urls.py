@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'configurator.views.home', name='home'),
+    url(r'^$', 'ucall_ui.views.main'),
     # url(r'^configurator/', include('configurator.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
