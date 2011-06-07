@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'configurator.config',
     'ucall_ui',
+    #'website.users.models',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -146,4 +147,4 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'config.UserProfile'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
