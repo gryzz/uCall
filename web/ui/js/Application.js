@@ -12,9 +12,9 @@ Ext.extend(uCall.ui.Application, Ext.Viewport, {
 	}
 });
 
+var app;
 Ext.onReady(function(){
-	
-	var app = new uCall.ui.Application({
+	app = new uCall.ui.Application({
 		// Default configuration for our App's viewport here, e.g. layout: "border"
 		layout: "border",
 		items: [{
