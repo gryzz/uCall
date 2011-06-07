@@ -7,7 +7,7 @@ import simplejson as json
 from stompy.simple import Client
 from time import *
 
-stomp = Client('192.168.122.13') 
+stomp = Client('queue.ucall.org') 
 stomp.connect('guest', 'password')
       
 def handle_link():

@@ -1,4 +1,8 @@
 .settings
 .rockstarapps
 .project
+<<<<<<< .merge_file_M0DHkL
+*.pyc
+=======
 .DS_Store
+>>>>>>> .merge_file_E8lHtI
