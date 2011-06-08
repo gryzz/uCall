@@ -1,2 +1,44 @@
-<hr>
-{% block content %}{{ agent }} {% if user.is_staff %}<a href="/admin/">Admin</a>{% endif %} {{ user.first_name }} {{ user.last_name }} <a href="/accounts/logout/">logout</a>{% endblock %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    
+    <title>uCall</title>
+    <meta name="description" content="uCall UI Application" />
+    <meta name="author" content="ucall.org" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!--link rel="shortcut icon" href="/ui/resources/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/ui/resources/images/apple-touch-icon.png" /-->
+    
+    <link rel="stylesheet" href="/ui/vendors/ext-4.0.1/resources/css/ext-all.css">
+    <link rel="stylesheet" href="/ui/resources/css/style.css" />
+</head>
+<body>
+	{% block content %}
+	<script type="text/javascript">
+		var currentUser = {
+            username: "{{user.username}}",
+            firstName: "{{user.first_name}}",
+            lastName: "{{user.last_name}}",
+			agentId: "{{agent}}",
+			is_admin: '{{user.is_staff|yesno:"true,false"}}'
+		};
+		
+		var urls = {
+            {% if user.is_staff %}
+            adminUrl: "/admin/",
+            {% endif %}
+            
+            logoutUrl: "/accounts/logout/"
+		};
+	</script>
+    <script type="text/javascript" src="/ui/vendors/ext-4.0.1/ext-debug.js"></script>
+    <!--script type="text/javascript" src="/ui/vendors/ext-4.0.1/ext-all-debug.js"></script-->
+    <script type="text/javascript" src="/ui/app.js"></script>
+    {% endblock %}
+</body>
+</html>
+
