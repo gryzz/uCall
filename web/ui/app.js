@@ -1,13 +1,19 @@
+// Configuration
 Ext.Loader.setConfig({enabled: true});
 Ext.Loader.setPath('uCall', 'app/uCall');
-Ext.require(
-	'Ext.container.Viewport', 
-	'uCall.App',
-	'uCall.view.MainPanel',
-	'uCall.model.User'
-);
 
+// Includes
+Ext.require('uCall.App');
 
+// Application
+Ext.application({
+    name: 'uCall',
+    launch: function() {
+        Ext.create('uCall.App');
+    }
+});
+
+// Ready
 Ext.onReady(function(){
-    var app = new uCall.App();    
+	// TODO: Do something
 });

@@ -6,4 +6,5 @@
 .Trashes
 .fseventsd
 .tmp_*
-
+lighttpd*
+web/ui/vendors/kembuco/
