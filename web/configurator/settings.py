@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'configurator.config',
     'ucall_ui',
+    'ucall',
     'django.contrib.admin',
 )
 
@@ -145,4 +146,4 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+AUTH_PROFILE_MODULE = 'ucall.UserProfile'
