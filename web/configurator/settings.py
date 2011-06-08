@@ -145,4 +145,4 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+AUTH_PROFILE_MODULE = 'config.UserProfile'
