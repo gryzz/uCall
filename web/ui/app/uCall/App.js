@@ -14,17 +14,12 @@ Ext.define('uCall.App', {
     
     initComponent: function(){
         
-        Ext.define('User', {
-            extend: 'Ext.data.Model',
-            fields: ['username', 'firstName', 'lastName', 'agentId', 'is_admin']
-        });
-
         Ext.apply(this, {
             layout: 'fit',
             items: [this.createMainPanel()]
         });
         
-        this.callParent(arguments);
+        this.callParent([arguments]);
     },
     
     /**
@@ -36,6 +31,7 @@ Ext.define('uCall.App', {
         this.mainPanel = Ext.create('widget.mainpanel', {
             user: window.user
         });
+        
         return this.mainPanel;
     }
 });
