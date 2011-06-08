@@ -24,7 +24,7 @@
             username: "{{user.username}}",
             firstName: "{{user.first_name}}",
             lastName: "{{user.last_name}}",
-			agentId: "{{agent}}",
+			agentId: "{{user.get_profile.agentKey}}",
 			isAdmin: '{{user.is_staff|yesno:"true,false"}}'
 		};
 		
