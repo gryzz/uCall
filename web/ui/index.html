@@ -16,12 +16,8 @@
     <link rel="stylesheet" href="/ui/vendors/probonogeek/extjs/resources/css/ext-all.css">
     <link rel="stylesheet" href="/ui/resources/css/style.css" />
 
-    <!--script type="text/javascript" src="/ui/vendors/ext-4.0.1/ext-debug.js"></script-->
-    <script type="text/javascript" src="/ui/vendors/ext-4.0.1/ext-all-debug.js"></script>
-
 </head>
 <body>
-	{% block content %}
         <script type="text/javascript">
 		var currentUser = {
             username: "{{user.username}}",
@@ -32,19 +28,12 @@
 		};
 		
 		var urls = {
-            {% if user.is_staff %}
             adminUrl: "/admin/",
-            {% endif %}
-            
             logoutUrl: "{% url logout %}"
 		};
         </script>
-<<<<<<< HEAD
-=======
     <!--script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-debug.js"></script-->
     <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
->>>>>>> f947d97f21ecfdf6092c8817272aaa54820755f5
     <script type="text/javascript" src="/ui/bootstrap.js"></script>
-    {% endblock %}
 </body>
 </html>
