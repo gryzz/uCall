@@ -144,3 +144,5 @@ LOGGING = {
         },
     }
 }
+
+AUTH_PROFILE_MODULE = 'config.UserProfile'
