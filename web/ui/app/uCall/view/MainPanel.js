@@ -11,59 +11,17 @@
 
 Ext.define('uCall.view.MainPanel', {
     extend: 'Ext.panel.Panel',
-
     alias: 'widget.mainpanel',
+    
+    user: {},
 
-    animCollapse: true,
-    layout: 'fit',
-    title: 'uCall',
+    config: {
+	    layout: 'fit',
+	    title: 'uCall',
+    }
+    
+    constructor: function(){
+    	this.callParent([this]);
+    }
 
-    initComponent: function(){
-        Ext.apply(this, {
-           // items: this.createView(),
-            // dockedItems: this.createToolbar()
-        });
-        
-       // this.addEvents();
-
-        this.callParent([arguments]);
-    } // ,
-
-    /**
-     * Creates the main toolbar.
-     * @private
-     * @return {Ext.toolbar.Toolbar}
-     */
-    // createToolbar: function(){
-        // this.createActions();
-        // this.toolbar = Ext.create('widget.toolbar', {
-            // items: [this.userInfo, this.statusMenu, this.serviceMenu]
-        // });
-        
-        // return this.toolbar;
-    // },
-
-    /**
-     * Create actions to share between toolbar and menu
-     * @private
-     */
-    // createActions: function(){
-        // this.userInfo = Ext.create('widget.label', {
-            // text: 'User info will go here'
-        // });
-// 
-        // this.statusMenu = Ext.create('widget.menu', {
-            // items: [{
-                // scope: this,
-                // handler: function(){
-                    // alert("TODO: Status menu handler click");
-                // },
-                // text: 'Status menu'
-            // }]
-        // });
-// 
-        // this.serviceMenu = Ext.create('widget.label', {
-            // text: 'Service menu'
-        // });
-    // }
 });

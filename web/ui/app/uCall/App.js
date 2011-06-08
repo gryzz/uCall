@@ -12,25 +12,25 @@
 Ext.define('uCall.App', {
     extend: 'Ext.container.Viewport',
     
-    initComponent: function(){
-        
-        Ext.apply(this, {
-            layout: 'fit',
-            items: [this.createMainPanel()]
-        });
-        
-        this.callParent([arguments]);
+    config: {
+        layout: 'fit',
+        items: [this.createMainPanel()]
+    }
+    
+    constructor: function(){
+        this.callParent([this]);
     },
     
     /**
      * Create main panel
      * @private
-     * @return {uCall.MainPanel} mainPanel
+     * @return {uCall.view.MainPanel} mainPanel
      */
     createMainPanel: function(){
-        this.mainPanel = Ext.create('widget.mainpanel', {
-            user: window.user
-        });
+        this.mainPanel = {
+        	xtype: 'widget.mainpanel',
+        	user: window.user
+        }
         
         return this.mainPanel;
     }
