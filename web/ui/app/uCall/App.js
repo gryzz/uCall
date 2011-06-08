@@ -15,7 +15,7 @@ Ext.define('uCall.App', {
     config: {
         layout: 'fit',
         items: [this.createMainPanel()]
-    }
+    },
     
     constructor: function(){
         this.callParent([this]);
