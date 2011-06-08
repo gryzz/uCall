@@ -13,9 +13,15 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
     extend: 'Ext.Button',
     alias: 'widget.UserStatusMenuButton',
     
-    onMenuItemClick: function(){
-		console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
-	},
+    onMenuItemClick: function(menu, item, event){
+	console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
+
+	switch(item.id) {
+	    case 'StatusItemLogout':
+		window.location = window.urls.logoutUrl;
+		break;
+	}
+    },
 	
     config: {
     	id: 'UserStatusMenuButton',
@@ -27,7 +33,7 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
 				{text: "Away"},
 				{text: "N/A"},
 				'-',
-				{text: "Logout"}
+				{text: "Logout", id: "StatusItemLogout"}
 			]
 
 		}
