@@ -3,17 +3,12 @@ Ext.Loader.setConfig({enabled: true});
 Ext.Loader.setPath('uCall', '/ui/app/uCall');
 
 // Includes
-Ext.require('uCall.App');
+Ext.require('uCall.LoginApp');
 
 // Application
 Ext.application({
     name: 'uCall',
     launch: function() {
-        Ext.create('uCall.App');
+        Ext.create('uCall.LoginApp');
     }
-});
-
-// Ready
-Ext.onReady(function(){
-	// TODO: Do something
 });
