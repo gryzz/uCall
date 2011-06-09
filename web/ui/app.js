@@ -1,6 +1,6 @@
 // Configuration
 Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('uCall', 'app/uCall');
+Ext.Loader.setPath('uCall', 'ui/app/uCall');
 
 // Includes
 Ext.require('uCall.App');
