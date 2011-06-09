@@ -1,3 +1,6 @@
 [submodule "web/ui/vendors/jmesnil/stomp-websocket"]
 	path = web/ui/vendors/jmesnil/stomp-websocket
 	url = https://github.com/jmesnil/stomp-websocket.git
+[submodule "probonogeek/extjs"]
+	path = probonogeek/extjs
+	url = https://github.com/probonogeek/extjs.git
