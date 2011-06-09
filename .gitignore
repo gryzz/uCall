@@ -8,3 +8,5 @@
 .tmp_*
 lighttpd*
 web/ui/vendors/kembuco/
+.pydevproject
+
