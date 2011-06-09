@@ -1,3 +1,0 @@
-[submodule "web/ui/vendors/benjaminws/stomp-js"]
-	path = web/ui/vendors/benjaminws/stomp-js
-	url = https://github.com/benjaminws/stomp-js.git
