@@ -3,4 +3,5 @@ from django.shortcuts import render_to_response
 
 @login_required()
 def main(request):
-    return render_to_response('ucall/profile.html', {'user': request.user})
+    agentKey = request.user.get_profile().agentKey
+    return render_to_response('ucall/profile.html', {'agentKey': agentKey,'user': request.user})
