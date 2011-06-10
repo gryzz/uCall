@@ -6,6 +6,8 @@ Ext.define('uCall.controllers.MessagesDeck', {
 
     extend: 'uCall.controllers.AbstractController',
 
+    id: 'ucall-controllers-messagesdeck',
+
     add: function(id, message) {
 	alert(message);
     },

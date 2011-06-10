@@ -33,6 +33,6 @@ Ext.define('uCall.App', {
 		this.callParent(arguments);
 		console.log("TODO: App(). Create 'User' model and keep user's data inside it.");
 
-		window.MessagesDeck = Ext.create('uCall.controllers.MessagesDeck');
+		Ext.create('uCall.controllers.MessagesDeck');
 	}    
 });
