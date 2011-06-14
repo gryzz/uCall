@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^profile/', 'ucall.views.main'),
+    url(r'^profile-save/', 'ucall.views.profile_save'),
 )

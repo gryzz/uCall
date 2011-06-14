@@ -1,2 +1,10 @@
-<hr>
-{% block content %} {{ user.first_name }} {{ user.last_name }} {{ agentKey  }} <a href="/accounts/logout/">logout</a>{% endblock %}
+{% block content %}
+<form action="/profile-save/" method="get">
+        <table>
+            <tr><td>Firstname:</td><td><input type="text" name="firstname" value="{{user.first_name}}"></td></tr>
+            <tr><td>Lastname:</td><td><input type="text" name="lastname" value="{{user.last_name}}"></td></tr>
+            <tr><td colspan="2"><input type="submit" value="Save"></td></tr>
+        </table>
+</form>
+{{message}}
+{% endblock %}
