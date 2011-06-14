@@ -3,10 +3,6 @@
  * @extends Ext.Button
  *
  * Shows channel status indicator.
- *
- * @constructor
- * Create a new Channel Status Indicator
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.ChannelStatusIndicator', {

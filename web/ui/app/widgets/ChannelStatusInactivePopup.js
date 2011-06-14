@@ -3,10 +3,6 @@
  * @extends Ext.window.Window
  *
  * Shows channel status inactive popup.
- *
- * @constructor
- * Create a new Channel Status Inactive Popup
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.ChannelStatusInactivePopup', {

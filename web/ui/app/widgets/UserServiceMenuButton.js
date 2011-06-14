@@ -3,10 +3,6 @@
  * @extends Ext.Button
  *
  * Shows user service menu.
- *
- * @constructor
- * Create a new User Service Menu Button
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.UserServiceMenuButton', {

@@ -3,10 +3,6 @@
  * @extends Ext.toolbar.Toolbar
  *
  * Shows main bottom toolbar.
- *
- * @constructor
- * Create a new Main Bottom Toolbar
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.MainBottomToolbar', {
