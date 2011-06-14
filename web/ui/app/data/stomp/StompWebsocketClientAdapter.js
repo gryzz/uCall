@@ -1,13 +1,13 @@
 /**
- * @class uCall.data.StompWebsocketClientAdapter
+ * @class uCall.data.stomp.StompWebsocketClientAdapter
  * @extends uCall.data.StompClientAdapter
  *
  * Stomp websocket connector adapter.
  */
 
-Ext.define('uCall.data.StompWebsocketClientAdapter', {
+Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 	requires: [
-		'uCall.data.StompClientAdapter',
+		'uCall.data.stomp.StompClientAdapter',
 		'jmesnil.StompWebsocket'
 	],
 	extend: 'uCall.data.StompClientAdapter',
@@ -19,24 +19,24 @@ Ext.define('uCall.data.StompWebsocketClientAdapter', {
 	},
 	
 	onConnectionSuccess: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onConnectionSuccess: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onConnectionSuccess: implement")
 		
 		this.performSubscribe();
 	},
 	onConnectionError: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onConnectionError: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onConnectionError: implement")
 	},
 	onDataReceived: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onDataReceived: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDataReceived: implement")
 	},
 	onDataSent: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onDataSent: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDataSent: implement")
 	},
 	onDisconnect: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onDisconnect: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDisconnect: implement")
 	},
 	onSubscribe: function() {
-		console.log("TODO: uCall.data.StompWebsocketClientAdapter.onSubscribe: implement")
+		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onSubscribe: implement")
 	},
 	
 	performConnect: function() {

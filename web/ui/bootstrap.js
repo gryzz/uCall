@@ -20,10 +20,12 @@ Ext.onReady(function(){
 	// TODO: Do something
 	console.log("woof! woof! DOM is ready.");
 	
-	Ext.create('uCall.data.StompClientAdapter', {
+	var stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
 		url: 'ws://rstets.ucserv.dev:61614/stomp',
 		login: 'guest',
 		password: 'password',
 		destination: '/queue/messages/'
 	});
+	
+	console.log(stompClientAdapterFactory.adapterInstance);
 });

@@ -1,12 +1,11 @@
 /**
- * @class uCall.data.StompClientAdapter
+ * @class uCall.data.stomp.StompClientAdapter
  * @extends Ext.util.Observable
  *
  * Stomp connector adapter.
  */
 
-Ext.define('uCall.data.StompClientAdapter', {
-	requires: ['uCall.data.StompWebsocketClientAdapter'],
+Ext.define('uCall.data.stomp.StompClientAdapter', {
 	extend: 'Ext.util.Observable',
 	
 	config: {
@@ -15,7 +14,6 @@ Ext.define('uCall.data.StompClientAdapter', {
 		password: null,
 		destination: null,
 		client: null,
-		adapter: 'uCall.data.StompWebsocketClientAdapter',
 
 		listeners: {
 			connectionSuccess: this.onConnectionSuccess,
@@ -39,8 +37,6 @@ Ext.define('uCall.data.StompClientAdapter', {
 	constructor: function() {
 		Ext.applyIf(this, this.config);
 		this.addEvents(this.events);
-		
-		return Ext.create(this.adapter, this.config);
 	},
 	
 	onConnectionSuccess: Ext.emptyFn,
