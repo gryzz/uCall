@@ -1,7 +1,10 @@
 from django.conf.urls.defaults import patterns, include, url
+from ucall.rpc import Router
+
 
 from django.contrib import admin
 admin.autodiscover()
+router = Router()
 
 urlpatterns = patterns('',
     url(r'^$', 'ucall_ui.views.main'),
@@ -10,4 +13,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^profile/', 'ucall.views.main'),
     url(r'^profile-save/', 'ucall.views.profile_save'),
+    url(r'^router/$', router, name='router'),
+    url(r'^router/api/$', router.api, name='api'),
 )
