@@ -21,6 +21,8 @@ Ext.define('uCall.widgets.LoginWindow', {
 	    layout: 'vbox',
 	    height: '100%',
 	    width: '100%',
+	    border: false,
+            bodyPadding: 10,            
             
             baseParams: {next: '/'},
                                 

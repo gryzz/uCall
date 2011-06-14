@@ -16,6 +16,9 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
 	    case 'StatusItemLogout':
 		window.location = window.urls.logoutUrl;
 		break;
+	    case 'StatusItemNA':
+		Ext.getCmp('ucall-controllers-messagesdeck').add('id', 'message');
+		break;
 	}
     },
 	
@@ -27,7 +30,7 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
 			items: [
 				{text: "Available"},
 				{text: "Away"},
-				{text: "N/A"},
+				{text: "N/A", id: "StatusItemNA"},
 				'-',
 				{text: "Logout", id: "StatusItemLogout"}
 			]

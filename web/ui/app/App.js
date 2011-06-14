@@ -6,9 +6,11 @@
  */
 
 Ext.define('uCall.App', {
-	requires: [
-		'uCall.widgets.MainPanel'
-	],
+    requires: [
+	'uCall.widgets.MainPanel',
+	'uCall.controllers.MessagesDeck'
+    ],
+    
     extend: 'Ext.container.Viewport',
     
     config: {
@@ -26,5 +28,7 @@ Ext.define('uCall.App', {
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
 		console.log("TODO: App(). Create 'User' model and keep user's data inside it.");
+
+		Ext.create('uCall.controllers.MessagesDeck');
 	}    
 });
