@@ -9,7 +9,6 @@ Ext.Loader.setPath('Stomp.client', '/ui/vendors/jmesnil/stomp-websocket/src/stom
 Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 	requires: [
 		'uCall.data.stomp.StompClientAdapter',
-		'uCall.constants.ChannelEvent',
 		'Stomp.client'
 	],
 	extend: 'uCall.data.stomp.StompClientAdapter',
@@ -18,16 +17,14 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 		// Parent
 		this.callParent(arguments);
 		// Merge configs
-		Ext.applyIf(this.config, config);
+		Ext.apply(this.config, config);
 		Ext.applyIf(this, this.config);
 		// Create stomp client		
 		this.client = new Stomp.client(this.url);
 		
 		if (this.debug) {
 			// Debug client
-			this.client.debug = function(str) {                                                                                                                                                              
-				console.log(str);                                                                                                                                                                           
-		    };
+			this.client.debug = console.log;                                                                                                                                                                           
 		}
 	},
 	

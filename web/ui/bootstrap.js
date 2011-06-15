@@ -27,12 +27,12 @@ Ext.application({
 		channelEventController = Ext.create("uCall.controllers.ChannelEventController", {
 			onConnect: function(){
 				console.log("onConnect");
-				
-				// Send message
+
+				// // Send message
 				// stompClientAdapter.performDataSend("Hello World!");
-				// Send message with 30 seconds TTL
-				// NOTE: ttl will not work correctly if clocks on client and mq server are not in sync
-				stompClientAdapter.performDataSend("Good Bye!", ttl = 30);
+				// // Send message with 30 seconds TTL
+				// // NOTE: ttl will not work correctly if clocks on client and mq server are not in sync
+				// stompClientAdapter.performDataSend("Good Bye!", ttl = 30);
 			},
 			onMessage: function(){
 				console.log("onMessage");
