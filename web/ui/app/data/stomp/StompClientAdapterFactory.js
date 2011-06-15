@@ -8,14 +8,21 @@ Ext.define('uCall.data.stomp.StompClientAdapterFactory', {
 	requires: ['uCall.data.stomp.StompWebsocketClientAdapter'],
 	
 	config: {
-		defaultAdapter: 'uCall.data.stomp.StompWebsocketClientAdapter'
+		adapterClass: 'uCall.data.stomp.StompWebsocketClientAdapter'
 	},
 	
-	adapterInstance: null,
+	adapterSingletonInstance: null,
 
 	constructor: function(config) {
+		// Apply passed config to object's config
+		Ext.applyIf(this.config, config);
+		// Apply config to current object
 		Ext.applyIf(this, this.config);
-		Ext.applyIf(this, config);
-		this.adapterInstance = Ext.create(this.defaultAdapter, this.config); 
+		// Instantiate adapter by class name with current config
+		this.adapterSingletonInstance = Ext.create(this.adapterClass, this.config); 
+	},
+	
+	getAdapter: function() {
+		return this.adapterSingletonInstance;
 	}
 });

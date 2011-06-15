@@ -6,37 +6,51 @@
  */
 
 Ext.define('uCall.data.stomp.StompClientAdapter', {
+	requires: ['uCall.constants.StompClientEvent'],
 	extend: 'Ext.util.Observable',
 	
 	config: {
 		url: null,
 		login: null,
-		password: null,
+		passcode: null,
 		destination: null,
-		client: null,
-
-		listeners: {
-			connectionSuccess: this.onConnectionSuccess,
-			connectionError: this.onConnectionError,
-			subscribe: this.onSubscribe,
-			dataReceived: this.onDataReceived,
-			dataSent: this.onDataSent,
-			disconnect: this.onDisconnect
-		},
 		
-		events: {
-			connectionSuccess: true,
-			connectionError: true,
-			subscribe: true,
-            dataReceived: true,
-            dataSent: true,
-            disconnect: true
-        }
+		// Ping settings
+		pingMessage: null,
+		pingDestination: "/queue/ping",
+		pingOptions: {
+			priority:1, 
+			persistent:false,
+			expires:1 // Expires at 1st of Jan 1970 00:00:01
+		},
+	    keepAliveInterval : 10000,
+		
+		// 3rd party adapter
+		client: null,
 	},
 	
-	constructor: function() {
+	isConnected: false,
+	
+	constructor: function(config) {
+		// Parent
+		this.callParent(arguments);
+		// Merge configs
+		Ext.applyIf(this.config, config);
 		Ext.applyIf(this, this.config);
-		this.addEvents(this.events);
+		// Register events
+		this.addEvents(
+			uCall.constants.StompClientEvent.CONNECTION_SUCCESS,
+			uCall.constants.StompClientEvent.CONNECTION_ERROR,
+		    uCall.constants.StompClientEvent.DATA_RECEIVED,
+		    uCall.constants.StompClientEvent.DATA_SENT,
+		    uCall.constants.StompClientEvent.DISCONNECTED
+		);
+		// Add listeners
+		this.on(uCall.constants.StompClientEvent.CONNECTION_SUCCESS, this.onConnectionSuccess, this);
+		this.on(uCall.constants.StompClientEvent.CONNECTION_ERROR, this.onConnectionError, this);
+	    this.on(uCall.constants.StompClientEvent.DATA_RECEIVED, this.onDataReceived, this);
+	    this.on(uCall.constants.StompClientEvent.DATA_SENT, this.onDataSent, this);
+	    this.on(uCall.constants.StompClientEvent.DISCONNECTED, this.onDisconnect, this);
 	},
 	
 	onConnectionSuccess: Ext.emptyFn,
@@ -44,7 +58,6 @@ Ext.define('uCall.data.stomp.StompClientAdapter', {
 	onDataReceived: Ext.emptyFn,
 	onDataSent: Ext.emptyFn,
 	onDisconnect: Ext.emptyFn,
-	onSubscribe: Ext.emptyFn,
 	
 	performConnect: Ext.emptyFn,
 	performSubscribe: Ext.emptyFn,

@@ -4,51 +4,117 @@
  *
  * Stomp websocket connector adapter.
  */
+Ext.Loader.setPath('Stomp.client', '/ui/vendors/jmesnil/stomp-websocket/src/stomp.js');
 
 Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 	requires: [
 		'uCall.data.stomp.StompClientAdapter',
-		'jmesnil.StompWebsocket'
+		'uCall.constants.ChannelEvent',
+		'Stomp.client'
 	],
-	extend: 'uCall.data.StompClientAdapter',
+	extend: 'uCall.data.stomp.StompClientAdapter',
 	
-	constructor: function() {
+	constructor: function(config) {
+		// Parent
+		this.callParent(arguments);
+		// Merge configs
+		Ext.applyIf(this.config, config);
 		Ext.applyIf(this, this.config);
-		
+		// Create stomp client		
 		this.client = new Stomp.client(this.url);
+		
+		if (this.debug) {
+			// Debug client
+			this.client.debug = function(str) {                                                                                                                                                              
+				console.log(str);                                                                                                                                                                           
+		    };
+		}
 	},
 	
-	onConnectionSuccess: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onConnectionSuccess: implement")
-		
+	onConnectionSuccess: function(event) {
+		// Set connection status flag
+		this.isConnected = true;
+		// Subscribe to messages
 		this.performSubscribe();
+		// Schedule keep alive
+		this.keepAlive();
+		// Propagate message channel event
+		this.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 	},
-	onConnectionError: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onConnectionError: implement")
+	
+	onConnectionError: function(event) {
+		// Set connection status flag
+		this.isConnected = false;
+		// Propagate message channel event
+		this.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
+
+		console.log("onConnectionError");
+		console.log(event);
 	},
-	onDataReceived: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDataReceived: implement")
+	
+	onDataReceived: function(data) {
+		// Propagate message channel event
+		this.fireEvent(uCall.constants.ChannelEvent.MESSAGE, {message: data});
+		
+		console.log("onDataReceived");
 	},
-	onDataSent: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDataSent: implement")
+	
+	onDataSent: function(event) {
+		console.log("TODO: onDataSent: implement");
+		console.log(event);
 	},
-	onDisconnect: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onDisconnect: implement")
-	},
-	onSubscribe: function() {
-		console.log("TODO: uCall.data.stomp.StompWebsocketClientAdapter.onSubscribe: implement")
+	
+	onDisconnect: function(event) {
+		// Set connection status flag
+		this.isConnected = false;
+		// Propagate message channel event
+		this.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
+		
+		console.log("onDisconnect");
+		console.log(event);
 	},
 	
 	performConnect: function() {
-		this.client.connect(this.login, this.passcode, this.onConnectionSuccess, this.onConnectionError);
+		var that = this;
+		this.client.connect(this.login, this.passcode, 
+			function(){that.fireEvent(uCall.constants.StompClientEvent.CONNECTION_SUCCESS)}, 
+			function(){that.fireEvent(uCall.constants.StompClientEvent.CONNECTION_ERROR)} 
+		);
 	},
+	
 	performSubscribe: function() {
-		this.client.subscribe(this.destination, this.onSubscribe, headers = []);
+		var that = this;
+		this.client.subscribe(this.destination, 
+			function(event){that.fireEvent(uCall.constants.StompClientEvent.DATA_RECEIVED, {data: event})}, 
+			headers = []
+		);
 	},
+	
 	performDataSend: function(messageBody) {
 		this.client.send(this.destination, headers = [], messageBody);
+		
+		console.log("performDataSend");
 	},
+	
 	performDisconnect: function() {
-		this.client.disconnect(this.onDisconnect);
+		var that = this;
+		this.client.disconnect(
+			function(){that.fireEvent(uCall.constants.StompClientEvent.DISCONNECTED)}
+		);
+		
+		console.log("performDisconnect");
+	},
+	
+	keepAlive: function() {
+		// Don't repeat for dead connection
+		if (!this.isConnected) {
+			return;
+		}
+		
+		// Send ping to queue
+		this.client.send(this.pingDestination, this.pingOptions, this.pingMessage);
+		
+		// Schedule next iteration
+		Ext.defer(this.keepAlive, this.keepAliveInterval, this);
 	}
 });
