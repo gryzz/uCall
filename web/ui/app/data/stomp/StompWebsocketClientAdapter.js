@@ -38,40 +38,35 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 		this.performSubscribe();
 		// Schedule keep alive
 		this.keepAlive();
-		// Propagate message channel event
-		this.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
+		// Application connect callback
+		if (this.onConnectCallback) {
+			this.onConnectCallback();
+		}
 	},
 	
 	onConnectionError: function(event) {
 		// Set connection status flag
 		this.isConnected = false;
-		// Propagate message channel event
-		this.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
-
-		console.log("onConnectionError");
-		console.log(event);
+		// Application disconnect callback
+		if (this.onDisconnectCallback) {
+			this.onDisconnectCallback();
+		}
 	},
 	
 	onDataReceived: function(data) {
-		// Propagate message channel event
-		this.fireEvent(uCall.constants.ChannelEvent.MESSAGE, {message: data});
-		
-		console.log("onDataReceived");
-	},
-	
-	onDataSent: function(event) {
-		console.log("TODO: onDataSent: implement");
-		console.log(event);
+		// Application disconnect callback
+		if (this.onMessageCallback) {
+			this.onMessageCallback(data);
+		}
 	},
 	
 	onDisconnect: function(event) {
 		// Set connection status flag
 		this.isConnected = false;
-		// Propagate message channel event
-		this.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
-		
-		console.log("onDisconnect");
-		console.log(event);
+		// Application disconnect callback
+		if (this.onDisconnectCallback) {
+			this.onDisconnectCallback();
+		}
 	},
 	
 	performConnect: function() {
@@ -86,14 +81,19 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 		var that = this;
 		this.client.subscribe(this.destination, 
 			function(event){that.fireEvent(uCall.constants.StompClientEvent.DATA_RECEIVED, {data: event})}, 
-			headers = []
+			headers = {}
 		);
 	},
 	
-	performDataSend: function(messageBody) {
-		this.client.send(this.destination, headers = [], messageBody);
+	performDataSend: function(messageBody, ttl) {
+		var headers = {};
 		
-		console.log("performDataSend");
+		if (!isNaN(ttl)) {
+			var now = new Date().getTime();
+			headers.expires = now + ttl * 1000;	
+		}
+		
+		this.client.send(this.sendDestination, headers, messageBody);
 	},
 	
 	performDisconnect: function() {
@@ -101,8 +101,6 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 		this.client.disconnect(
 			function(){that.fireEvent(uCall.constants.StompClientEvent.DISCONNECTED)}
 		);
-		
-		console.log("performDisconnect");
 	},
 	
 	keepAlive: function() {

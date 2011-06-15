@@ -11,6 +11,5 @@ Ext.define('uCall.constants.StompClientEvent', {
 	CONNECTION_SUCCESS: "StompClientConnectionSuccess",
 	CONNECTION_ERROR: "StompClientConnectionError",
     DATA_RECEIVED: "StompClientDataReceived",
-    DATA_SENT: "StompClientDataSent",
     DISCONNECTED: "StompClientDisconnected"
 });

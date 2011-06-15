@@ -27,6 +27,10 @@ Ext.define('uCall.data.stomp.StompClientAdapter', {
 		
 		// 3rd party adapter
 		client: null,
+
+		onConnectCallback: Ext.emptyFn,
+		onDisconnectCallback: Ext.emptyFn,
+		onMessageCallback: Ext.emptyFn
 	},
 	
 	isConnected: false,
@@ -41,26 +45,24 @@ Ext.define('uCall.data.stomp.StompClientAdapter', {
 		this.addEvents(
 			uCall.constants.StompClientEvent.CONNECTION_SUCCESS,
 			uCall.constants.StompClientEvent.CONNECTION_ERROR,
-		    uCall.constants.StompClientEvent.DATA_RECEIVED,
-		    uCall.constants.StompClientEvent.DATA_SENT,
-		    uCall.constants.StompClientEvent.DISCONNECTED
+			uCall.constants.StompClientEvent.DATA_RECEIVED,
+			uCall.constants.StompClientEvent.DISCONNECTED
 		);
 		// Add listeners
 		this.on(uCall.constants.StompClientEvent.CONNECTION_SUCCESS, this.onConnectionSuccess, this);
 		this.on(uCall.constants.StompClientEvent.CONNECTION_ERROR, this.onConnectionError, this);
 	    this.on(uCall.constants.StompClientEvent.DATA_RECEIVED, this.onDataReceived, this);
-	    this.on(uCall.constants.StompClientEvent.DATA_SENT, this.onDataSent, this);
 	    this.on(uCall.constants.StompClientEvent.DISCONNECTED, this.onDisconnect, this);
 	},
 	
 	onConnectionSuccess: Ext.emptyFn,
 	onConnectionError: Ext.emptyFn,
 	onDataReceived: Ext.emptyFn,
-	onDataSent: Ext.emptyFn,
 	onDisconnect: Ext.emptyFn,
 	
 	performConnect: Ext.emptyFn,
 	performSubscribe: Ext.emptyFn,
 	performDataSend: Ext.emptyFn,
-	performDisconnect: Ext.emptyFn
+	performDisconnect: Ext.emptyFn,
+	keepAlive: Ext.emptyFn
 });
