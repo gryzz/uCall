@@ -1,21 +1,26 @@
 #rpc.py
 from utils.extjs import RpcRouter
+from django.contrib.auth.models import User
 
 class MainApiClass(object):
 
-    def getBasicInfo(self, id, email, user):
+    def getBasicInfo(self, request):
         return {
-            "foo":"bar","name":"Aaron Conran","company":"Sencha Inc.","email":"aaron@sencha.com"
+            "success":"true",
+            "data": {"firstname": request.user.first_name, "lastname":request.user.last_name, "email":request.user.email}
         }
 
-    getBasicInfo._args_len = 2
+    getBasicInfo._args_len = 0
 
-    def updateBasicInfo(self, user):
-        return {
-            'msg': 'Cool!!'
-        }
-
-    updateBasicInfo._args_len = 0
+    def updateBasicInfo(self, query_dict, request):
+        #TODO: WTF? Why do we need take it from DB?
+         user = User.objects.get(username=request.user.username)
+         user.first_name = request.POST['firstname']
+         user.last_name = request.POST['lastname']
+         user.email = request.POST['email']
+         user.save()
+    updateBasicInfo._args_len = 1
+    updateBasicInfo._form_handler = True
 
 
 class Router(RpcRouter):
