@@ -23,7 +23,7 @@ Ext.define('uCall.data.stomp.StompClientAdapter', {
 			persistent:false,
 			expires:1 // Expires at 1st of Jan 1970 00:00:01
 		},
-	    keepAliveInterval : 10000,
+	    keepAliveInterval : 100000,
 		
 		// 3rd party adapter
 		client: null,
