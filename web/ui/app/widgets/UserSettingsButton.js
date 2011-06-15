@@ -10,9 +10,7 @@ Ext.define('uCall.widgets.UserSettingsButton', {
     extend: 'Ext.Button',
     alias: 'widget.UserSettingsButton',
     
-    activeStatusImageSrc: "/ui/resources/images/channel_status/active.png",
-    inactiveStatusImageSrc: "/ui/resources/images/channel_status/inactive.png",
-    channelStatusActive: false,
+    iconSrc: "/ui/resources/images/user_settings/gear.png",
     
     onClick: function(){
 		Ext.create("uCall.widgets.UserSettingsWindow");
@@ -34,7 +32,7 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 	constructor: function(){
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
-		this.setIcon(this.inactiveStatusImageSrc);
+		this.setIcon(this.iconSrc);
 		
 		console.log("TODO: ChannelStatusIndicator(). Pass a provider!");
 		console.log("TODO: ChannelStatusIndicator(). Create 'real' events and add listeners!");
@@ -59,7 +57,7 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 	channelReconnect: function() {
 		console.log("TODO: ChannelStatusIndicator.channelReconnect. Bind to provider!");
 		this.channelStatusActive = true;
-		this.setIcon(this.activeStatusImageSrc);
+		this.setIcon(this.iconSrc);
 		this.delayedFakeDisconnect();
 	},
 	
