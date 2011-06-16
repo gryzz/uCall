@@ -24,17 +24,29 @@ Ext.define('uCall.App', {
         		height: "100%"
         	}
         ]
+        ,autoReconnectLimit: 3
+        ,autoReconnectTimeout: 1000
+        ,reconnectTimeout: 1000
     },
     // Declare members
     messageDeck: null,
 	stompClientAdapterFactory: null,
 	stompClientAdapter: null,
 	channelEventController: null,
+	channelStatusIndicator: null,
+    autoReconnectCount: 0,
     
     // Constructor
 	constructor: function(){
 		var that = this;
 		
+		var manualChannelReconnect = function() {
+			if (!that.stompClientAdapter.isConnected) {
+				// Wait before reconnecting
+				Ext.defer(that.stompClientAdapter.performConnect, that.reconnectTimeout, that.stompClientAdapter);	
+			}
+		}
+ 		
 		// Copy config values to current object
 		Ext.applyIf(this, this.config);
 		// Call parent constructor
@@ -43,7 +55,6 @@ Ext.define('uCall.App', {
         /*
          * Init app components
          */
-         
         // Message deck
 		this.messageDeck = Ext.create('uCall.controllers.MessagesDeck');
 		
@@ -54,15 +65,32 @@ Ext.define('uCall.App', {
 		this.channelEventController = Ext.create("uCall.controllers.ChannelEventController", {
 			onConnect: function(){
 				that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
+
+				// Undset on click handler for channel status indicator
+				that.channelStatusIndicator.un("click", manualChannelReconnect);
+				// Hide popup
+				uCall.widgets.ChannelStatusInactivePopup.hide();
 			},
 			onMessage: function(){
 				console.log("onMessage");
 			},
 			onDisconnect: function(){
+				// Propagate event to channel status indicator
 				that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
+				
+				// Try reconnecting automatically
+				if (that.autoReconnectCount < that.autoReconnectLimit) {
+					that.autoReconnectCount++;
+					Ext.defer(that.stompClientAdapter.performConnect, that.autoReconnectTimeout, that.stompClientAdapter);
+					return;
+				}
+		
+				// Define on click handler for channel status indicator
+				that.channelStatusIndicator.on("click", manualChannelReconnect);
+				// Show manual reconnect message
+				uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
 			},
 		});
-
 		
         // Stomp client adapter factory
 		this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
@@ -75,6 +103,8 @@ Ext.define('uCall.App', {
 			debug: true, 
 			
 			onConnectCallback: function(){
+				// Reset reconnect counter
+				that.autoReconnectCount = 0;
 				// Propagate channel connect event
 				that.channelEventController.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 			},
@@ -93,6 +123,5 @@ Ext.define('uCall.App', {
 		
 		// Do connect
 		this.stompClientAdapter.performConnect();
-		
 	}    
 });
