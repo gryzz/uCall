@@ -22,7 +22,7 @@ Ext.define('uCall.widgets.MainPanel', {
     	},
 	    bbar: {
     		xtype: 'MainBottomToolbar'
-    	},
+    	}
     },
     
 	constructor: function(){

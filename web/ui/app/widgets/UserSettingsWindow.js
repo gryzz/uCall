@@ -9,13 +9,13 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
     alias: 'widget.UserSettingsWindow',
     
     config: {
-    	id: 'UserSettingsWindow',
-    	title: 'User Profile',
-	layout: 'fit',
-	height: 200,
-	width: 400,
-	closable: true,
-	modal: false,
+        id: 'UserSettingsWindow',
+        title: 'User Profile',
+        layout: 'fit',
+        height: 200,
+        width: 400,
+        closable: true,
+        modal: false
     },
     
     items: 

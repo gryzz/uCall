@@ -39,11 +39,12 @@ Ext.application({
 			},
 			onDisconnect: function(){
 				console.log("onDisconnect");
-			},
+			}
 		});
 
         // Stomp client adapter factory
 		stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
+			/** @todo Domain name must be detected dynamically!!! by IY, 16.06.11 */
 			url: 'ws://rstets.ucserv.dev:61614/stomp',
 			login: 'guest',
 			passcode: 'password',
