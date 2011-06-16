@@ -25,7 +25,7 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 		if (this.debug) {
 			// Debug client
 			this.client.debug = function(str) {
-				console.log(srt);
+				console.log(str);
 			};
 		}
 	},
