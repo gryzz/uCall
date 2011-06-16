@@ -152,13 +152,19 @@ class RpcRouter(object):
                 func_args.remove(name)
 
         required_args_count = len(func_args) - len(func_defaults or [])
+        #TODO: Remove after Code review
         if (required_args_count - len(args)) > 0 or (not varargs and len(args) > len(func_args)):
+ #       if required_args_count - len(args) > 0:
             return {
                 'tid': rd['tid'],
                 'type': 'exception',
                 'action': rd['action'],
                 'method': method,
-                'message': 'Incorrect arguments number' + str(required_args_count)+ '_' + str(args) + '_' + test_name
+                'message': 'Incorrect arguments number' +
+                    ' required_args_count:' + str(required_args_count)+
+                    ' len(args):' + str(len(args)) +
+                    ' len(func_args):' + str(len(func_args)) +
+                    ' <<==args:' + str(args)
             }
 
         try:

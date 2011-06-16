@@ -9,63 +9,24 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 	requires: "uCall.widgets.UserSettingsWindow",
     extend: 'Ext.Button',
     alias: 'widget.UserSettingsButton',
-    
-    activeStatusImageSrc: "/ui/resources/images/channel_status/active.png",
-    inactiveStatusImageSrc: "/ui/resources/images/channel_status/inactive.png",
-    channelStatusActive: false,
-    
+
+    iconSrc: "/ui/resources/images/user_settings/gear.png",
+
     onClick: function(){
-		Ext.create("uCall.widgets.UserSettingsWindow");
+        var userSettingsWindow = Ext.getCmp("UserSettingsWindow");
+        if (userSettingsWindow == undefined) {
+            userSettingsWindow = Ext.create("uCall.widgets.UserSettingsWindow");
+        }
+		userSettingsWindow.show();
 	},
-	
-	onChannelStatusActive: function() {
-		// TODO: Implement
-	},
-	
-	onChannelStatusInactive: function() {
-		// TODO: Implement
-	},
-	
     config: {
-    	id: 'ChannelStatusIndicator',
+    	id: 'UserSettingsButton',
 		handler: this.onClick
     },
-    
+
 	constructor: function(){
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
-		this.setIcon(this.inactiveStatusImageSrc);
-		
-		console.log("TODO: ChannelStatusIndicator(). Pass a provider!");
-		console.log("TODO: ChannelStatusIndicator(). Create 'real' events and add listeners!");
-	},
-	
-	showPopup: function() {
-		Ext.create("uCall.widgets.ChannelStatusInactivePopup").show();
-	},
-	
-	delayedFakeDisconnect: function() {
-		console.log("TODO: ChannelStatusIndicator.delayedFakeDisconnect. Remove!");
-		
-		setTimeout(function(that) {
-			that.channelStatusActive = false;
-			that.setIcon(that.inactiveStatusImageSrc);
-			
-			that.showPopup();
-		}, 5000, this);		
-
-	},
-	
-	channelReconnect: function() {
-		console.log("TODO: ChannelStatusIndicator.channelReconnect. Bind to provider!");
-		this.channelStatusActive = true;
-		this.setIcon(this.activeStatusImageSrc);
-		this.delayedFakeDisconnect();
-	},
-	
-	isChannelStatusActive: function() {
-		console.log("TODO: ChannelStatusIndicator.isChannelStatusActive. Bind to provider!");
-		return this.channelStatusActive;
+		this.setIcon(this.iconSrc);
 	}
-    
 });

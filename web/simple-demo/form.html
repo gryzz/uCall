@@ -1,9 +1,10 @@
 <html>
 <head>
-    <link rel="stylesheet" href="/ui/vendors/ext-4.0.1/resources/css/ext-all.css">
+    <link rel="stylesheet" href="/ui/vendors/probonogeek/extjs/resources/css/ext-all.css">
     <link rel="stylesheet" href="/ui/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.2/examples/shared/example.css" />
 
-    <script type="text/javascript" src="/ui/vendors/ext-4.0.1/ext-all-debug.js"></script>
+    <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
     <script src="http://172.22.90.132/router/api/"></script>
 
     <script>
@@ -23,11 +24,14 @@
                 "type":"remoting",
                 "actions":{
                     "Profile":[
-                        {"name":"getBasicInfo","len":2},
+                        {"name":"getBasicInfo","len":0},
                         {"name":"updateBasicInfo","len":0,"formHandler":true}
                     ]
                 }
             };*/
+
+         // provide feedback for any errors
+         Ext.tip.QuickTipManager.init();
 
 
         Ext.onReady(function(){
@@ -49,8 +53,6 @@
                     // The server-side must mark the submit handler as a 'formHandler'
                     submit: Profile.updateBasicInfo
                 },
-                // specify the order for the passed params
-                paramOrder: ['id', 'email'],
                 dockedItems: [{
                     dock: 'bottom',
                     xtype: 'toolbar',
@@ -59,12 +61,7 @@
                     items: ['->', {
                         text: 'Submit',
                         handler: function(){
-                            basicInfo.getForm().submit({
-                                params: {
-                                    foo: 'bar',
-                                    uid: 34
-                                }
-                            });
+                            basicInfo.getForm().submit();
                         }
                     }]
                 }],
@@ -73,16 +70,16 @@
                     anchor: '100%'
                 },
                 items: [{
-                    fieldLabel: 'Name',
-                    name: 'name'
+                    fieldLabel: 'First Name',
+                    name: 'firstname'
+                },{
+                    fieldLabel: 'Last Name',
+                    name: 'lastname'
                 },{
                     fieldLabel: 'Email',
-                    msgTarget: 'side',
                     name: 'email'
-                },{
-                    fieldLabel: 'Company',
-                    name: 'company'
-                }]
+                }
+                ]
             });
 
              var accordion = Ext.create('Ext.panel.Panel', {
@@ -94,13 +91,7 @@
                 items: [basicInfo]
              });
 
-            basicInfo.getForm().load({
-                // pass 2 arguments to server side getBasicInfo method (len=2)
-                params: {
-                    email: 'mail@mail.ua',
-                    id: 34
-                }
-            });
+            basicInfo.getForm().load();
 
 
 

@@ -6,7 +6,10 @@
  */
 
 Ext.define('uCall.widgets.ChannelStatusIndicator', {
-	requires: "uCall.widgets.ChannelStatusInactivePopup",
+	requires: [
+		"uCall.widgets.ChannelStatusInactivePopup",
+		'uCall.constants.ChannelEvent'
+	],
     extend: 'Ext.Button',
     alias: 'widget.ChannelStatusIndicator',
     
@@ -15,59 +18,51 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
     channelStatusActive: false,
     
     onClick: function(){
-		if(!this.isChannelStatusActive()) {
-			this.channelReconnect();
+		if(!this.channelStatusActive) {
+			this.performChannelReconnect();
 		}
 	},
 	
 	onChannelStatusActive: function() {
-		// TODO: Implement
+		// Set channel starus flag
+		this.channelStatusActive = true;
+		// Set icon
+		this.setIcon(this.activeStatusImageSrc);
 	},
 	
 	onChannelStatusInactive: function() {
-		// TODO: Implement
+		// Set channel starus flag
+		this.channelStatusActive = false;
+		// Set icon
+		this.setIcon(this.inactiveStatusImageSrc);
+		
+		// Auto reconnect
+		this.performChannelReconnect();
 	},
 	
     config: {
-    	id: 'ChannelStatusIndicator',
-		handler: this.onClick
+    	id: 'ChannelStatusIndicator'
     },
     
 	constructor: function(){
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
+		
+		// Set channel starus flag
+		this.channelStatusActive = false;
+		// Set icon
 		this.setIcon(this.inactiveStatusImageSrc);
 		
-		console.log("TODO: ChannelStatusIndicator(). Pass a provider!");
-		console.log("TODO: ChannelStatusIndicator(). Create 'real' events and add listeners!");
+		this.addEvents(uCall.constants.ChannelEvent.CONNECTED, uCall.constants.ChannelEvent.DISCONNECTED);
+		
+		this.on(uCall.constants.ChannelEvent.CONNECTED, this.onChannelStatusActive, this);
+		this.on(uCall.constants.ChannelEvent.DISCONNECTED, this.onChannelStatusInactive, this);
+		this.on("click", this.onClick, this);
 	},
 	
 	showPopup: function() {
 		Ext.create("uCall.widgets.ChannelStatusInactivePopup").show();
 	},
 	
-	delayedFakeDisconnect: function() {
-		console.log("TODO: ChannelStatusIndicator.delayedFakeDisconnect. Remove!");
-		
-		setTimeout(function(that) {
-			that.channelStatusActive = false;
-			that.setIcon(that.inactiveStatusImageSrc);
-			
-			that.showPopup();
-		}, 5000, this);		
-
-	},
-	
-	channelReconnect: function() {
-		console.log("TODO: ChannelStatusIndicator.channelReconnect. Bind to provider!");
-		this.channelStatusActive = true;
-		this.setIcon(this.activeStatusImageSrc);
-		this.delayedFakeDisconnect();
-	},
-	
-	isChannelStatusActive: function() {
-		console.log("TODO: ChannelStatusIndicator.isChannelStatusActive. Bind to provider!");
-		return this.channelStatusActive;
-	}
-    
+	performChannelReconnect: Ext.emptyFn
 });
