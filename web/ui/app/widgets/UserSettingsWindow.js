@@ -1,10 +1,9 @@
 Ext.Direct.addProvider({"url": "/router/", "enableBuffer": 50, "type": "remoting", "actions": {"Profile": [{"name": "getBasicInfo", "len": 0}, {"formHandler": true, "name": "updateBasicInfo", "len": 1}]}});
 Ext.define('uCall.widgets.UserSettingsWindow', {
     requires: [
-	'Ext.direct.*',
-	'Ext.form.*',
-	'Ext.tip.QuickTipManager',
-	'Ext.layout.container.Accordion'
+	    'Ext.direct.*',
+	    'Ext.form.*',
+	    'Ext.tip.QuickTipManager'
     ],
 
     extend: 'Ext.window.Window',
@@ -20,9 +19,9 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
     },
 
     closable: true,
-    maximizable: true,    
+    maximizable: true,
 
-    items: 
+    items:
 	{
 	    xtype: 'form',
 		id: 'UserSettingsForm',
@@ -54,7 +53,8 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
         },{
             xtype: 'textfield',
             fieldLabel: 'Email',
-            name: 'email'
+            name: 'email',
+            vtype:'email'
         }
         ],
 
@@ -64,7 +64,15 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
         	handler: function() {
         	    var form = this.up('form').getForm();
                 if (form.isValid()) {
-                    form.submit();
+                    form.submit({
+                        waitMsg: 'Submitting your data...',
+                        success: function(form, action){
+                            //TODO: Add messageBox
+                        },
+                        failure: function(form, action){
+                            Ext.Msg.alert('Failure');
+                        }
+                    });
         	    }
             }
         }]
