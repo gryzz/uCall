@@ -17,12 +17,6 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
     inactiveStatusImageSrc: "/ui/resources/images/channel_status/inactive.png",
     channelStatusActive: false,
     
-    onClick: function(){
-		if(!this.channelStatusActive) {
-			this.performChannelReconnect();
-		}
-	},
-	
 	onChannelStatusActive: function() {
 		// Set channel starus flag
 		this.channelStatusActive = true;
@@ -35,9 +29,6 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
 		this.channelStatusActive = false;
 		// Set icon
 		this.setIcon(this.inactiveStatusImageSrc);
-		
-		// Auto reconnect
-		this.performChannelReconnect();
 	},
 	
     config: {
@@ -57,12 +48,5 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
 		
 		this.on(uCall.constants.ChannelEvent.CONNECTED, this.onChannelStatusActive, this);
 		this.on(uCall.constants.ChannelEvent.DISCONNECTED, this.onChannelStatusInactive, this);
-		this.on("click", this.onClick, this);
-	},
-	
-	showPopup: function() {
-		Ext.create("uCall.widgets.ChannelStatusInactivePopup").show();
-	},
-	
-	performChannelReconnect: Ext.emptyFn
+	}
 });
