@@ -7,8 +7,8 @@
 
 Ext.define('uCall.widgets.MainPanel', {
 	requires: [
-		'uCall.widgets.MainTopToolbar',
-		'uCall.widgets.MainBottomToolbar'
+		'uCall.widgets.MainTopToolbar'
+		//,'uCall.widgets.MainBottomToolbar'
 	],
     extend: 'Ext.panel.Panel',
     alias: 'widget.MainPanel',
@@ -19,10 +19,10 @@ Ext.define('uCall.widgets.MainPanel', {
 	    // title: 'uCall UI',
 	    tbar: {
     		xtype: 'MainTopToolbar'
-    	},
-	    bbar: {
-    		xtype: 'MainBottomToolbar'
-    	},
+    	}
+    	// ,bbar: {
+    		// xtype: 'MainBottomToolbar'
+    	// }
     },
     
 	constructor: function(){

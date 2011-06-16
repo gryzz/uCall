@@ -16,8 +16,8 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 		Ext.create("uCall.widgets.UserSettingsWindow");
 	},
     config: {
-    	id: 'ChannelStatusIndicator',
-	handler: this.onClick
+    	id: 'UserSettingsButton',
+		handler: this.onClick
     },
     
 	constructor: function(){
@@ -26,4 +26,3 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 		this.setIcon(this.iconSrc);
 	}
 });
-

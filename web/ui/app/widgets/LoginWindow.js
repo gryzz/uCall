@@ -5,7 +5,7 @@ Ext.define('uCall.widgets.LoginWindow', {
     
     config: {
     	id: 'LoginForm',
-    	title: 'Log in',
+    	title: 'Please log in',
 	layout: 'fit',
 	height: 200,
 	width: 400
@@ -20,7 +20,8 @@ Ext.define('uCall.widgets.LoginWindow', {
 	    xtype: 'form',
             url: '/accounts/login/',
 	    standardSubmit : true,
-	    layout: 'vbox',
+	    //layout: 'vbox',
+	    layout: 'anchor',
 	    height: '100%',
 	    width: '100%',
 	    border: false,
@@ -32,15 +33,19 @@ Ext.define('uCall.widgets.LoginWindow', {
                                 
             items: [
         	{
+		    labelAlign: 'right',
         	    xtype: 'textfield',
 		    fieldLabel: 'Username',
 		    allowBlank: false,
+		    anchor: '100%',
             	    name: 'username'
         	},
         	{
+		    labelAlign: 'right',
         	    xtype: 'textfield',
 		    fieldLabel: 'Password',
 		    inputType: 'password',
+		    anchor: '100%',
 		    allowBlank: false,
             	    name: 'password'
         	},
@@ -48,7 +53,7 @@ Ext.define('uCall.widgets.LoginWindow', {
             
             buttons: [{
         	xtype: 'button',
-        	text: 'Submit',
+        	text: 'Login',
             	handler: function() {
             	    // The getForm() method returns the Ext.form.Basic instance:
                     var form = this.up('form').getForm();

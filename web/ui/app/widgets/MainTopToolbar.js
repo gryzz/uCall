@@ -9,7 +9,8 @@ Ext.define('uCall.widgets.MainTopToolbar', {
 	requires: [
 		'uCall.widgets.UserStatusMenuButton',
 		'uCall.widgets.UserServiceMenuButton',
-		'uCall.widgets.UserSettingsButton'
+		'uCall.widgets.UserSettingsButton',
+		'uCall.widgets.ChannelStatusIndicator'
 	],
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.MainTopToolbar',
@@ -17,23 +18,19 @@ Ext.define('uCall.widgets.MainTopToolbar', {
     config: {
     	id: 'MainTopToolbar',
     	items: [
-    		'uCall UI',
+    		{xtype: 'ChannelStatusIndicator'},
     		'->',
+    		'uCall UI',
+    		'-',
     		'Agent: ' + window.currentUser.agentId,
     		'-',
     		'User Name: ' + window.currentUser.username,
     		'-',
-    		{
-    			xtype: 'UserStatusMenuButton'
-    		},
+    		{xtype: 'UserStatusMenuButton'},
     		'-',
-    		{
-    			xtype: 'UserServiceMenuButton'
-    		},
+    		{xtype: 'UserServiceMenuButton'},
     		'-',
-    		{
-    			xtype: 'UserSettingsButton'
-		}
+    		{xtype: 'UserSettingsButton'}
     		            
     	]
     },
@@ -41,7 +38,6 @@ Ext.define('uCall.widgets.MainTopToolbar', {
 	constructor: function(){
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
-		console.log("TODO: MainTopToolbar(). Pass the 'User' model instead of using global vars.");
 	}    
     
 });
