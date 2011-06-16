@@ -6,28 +6,23 @@
  */
 
 Ext.define('uCall.widgets.MainPanel', {
-	requires: [
-		'uCall.widgets.MainTopToolbar'
-		//,'uCall.widgets.MainBottomToolbar'
-	],
+    requires: [
+        'uCall.widgets.MainTopToolbar'
+        //,'uCall.widgets.MainBottomToolbar'
+    ],
     extend: 'Ext.panel.Panel',
     alias: 'widget.MainPanel',
     
     config: {
-    	id: 'MainPanel',
-	    layout: 'fit',
-	    // title: 'uCall UI',
-	    tbar: {
-    		xtype: 'MainTopToolbar'
-    	}
-    	// ,bbar: {
-    		// xtype: 'MainBottomToolbar'
-    	// }
+        id: 'MainPanel',
+        layout: 'fit',
+        // title: 'uCall UI',
+        tbar: {xtype: 'MainTopToolbar'}
+        // ,bbar: {xtype: 'MainBottomToolbar'}
     },
     
-	constructor: function(){
-		Ext.applyIf(this, this.config);
-		this.callParent(arguments);
-	}    
-    
+    constructor: function(){
+        Ext.applyIf(this, this.config);
+        this.callParent(arguments);
+    }
 });

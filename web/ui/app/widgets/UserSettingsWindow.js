@@ -1,10 +1,10 @@
 Ext.Direct.addProvider({"url": "/router/", "enableBuffer": 50, "type": "remoting", "actions": {"Profile": [{"name": "getBasicInfo", "len": 0}, {"formHandler": true, "name": "updateBasicInfo", "len": 1}]}});
 Ext.define('uCall.widgets.UserSettingsWindow', {
     requires: [
-	'Ext.direct.*',
-	'Ext.form.*',
-	'Ext.tip.QuickTipManager',
-	'Ext.layout.container.Accordion'
+        'Ext.direct.*',
+        'Ext.form.*',
+        'Ext.tip.QuickTipManager',
+        'Ext.layout.container.Accordion'
     ],
 
     extend: 'Ext.window.Window',
@@ -23,18 +23,17 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
     closable: true,
     maximizable: true,    
 
-    items: 
-	{
-	    xtype: 'form',
+    items: [{
+        xtype: 'form',
         id: 'UserSettingsForm',
-	    standardSubmit : false,
-	    layout: 'vbox',
-	    height: '100%',
-	    width: '100%',
-	    border: false,
-	    bodyPadding: 10,
+        standardSubmit : false,
+        layout: 'vbox',
+        height: '100%',
+        width: '100%',
+        border: false,
+        bodyPadding: 10,
 
-	    baseParams: {next: '/'},
+        baseParams: {next: '/'},
 
         api: {
             // The server-side method to call for load() requests
@@ -43,8 +42,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
             submit: Profile.updateBasicInfo
         },
 
-	    items: [
-	    {
+        items: [{
             xtype: 'textfield',
             fieldLabel: 'First Name',
             name: 'firstname'
@@ -56,28 +54,26 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
             xtype: 'textfield',
             fieldLabel: 'Email',
             name: 'email'
-        }
-        ],
+        }],
 
         buttons: [{
-        xtype: 'button',
-        text: 'Save',
-        	handler: function() {
-        	    var form = this.up('form').getForm();
+            xtype: 'button',
+            text: 'Save',
+            handler: function() {
+                var form = this.up('form').getForm();
                 if (form.isValid()) {
                     form.submit();
-        	    }
+                }
             }
         }]
-    },
+    }],
 
     constructor: function(){
-	    Ext.applyIf(this, this.config);
-		Ext.tip.QuickTipManager.init();
-	    this.callParent(arguments);
-	    this.show();
-		//TODO: Do not use id to retrive the form: this is one of own items
-		Ext.getCmp('UserSettingsForm').getForm().load();
+        Ext.applyIf(this, this.config);
+        Ext.tip.QuickTipManager.init();
+        this.callParent(arguments);
+        this.show();
+        //TODO: Do not use id to retrive the form: this is one of own items
+        Ext.getCmp('UserSettingsForm').getForm().load();
     }
-
 });
