@@ -24,7 +24,8 @@ Ext.define('uCall.App', {
         		height: "100%"
         	}
         ]
-        // ,autoReconnectLimit: 3
+        ,autoReconnectLimit: 3
+        ,autoReconnectTimeout: 1000
         ,reconnectTimeout: 1000
     },
     // Declare members
@@ -33,7 +34,7 @@ Ext.define('uCall.App', {
 	stompClientAdapter: null,
 	channelEventController: null,
 	channelStatusIndicator: null,
-    // autoReconnectCount: 0,
+    autoReconnectCount: 0,
     
     // Constructor
 	constructor: function(){
@@ -78,12 +79,11 @@ Ext.define('uCall.App', {
 				that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
 				
 				// Try reconnecting automatically
-				// if (that.autoReconnectCount < that.autoReconnectLimit) {
-					// Ext.defer(that.stompClientAdapter.performConnect, that.autoReconnectInterval, that.stompClientAdapter);
-					// that.autoReconnectCount++;
-					// return;
-				// }
-				
+				if (that.autoReconnectCount < that.autoReconnectLimit) {
+					that.autoReconnectCount++;
+					Ext.defer(that.stompClientAdapter.performConnect, that.autoReconnectTimeout, that.stompClientAdapter);
+					return;
+				}
 		
 				// Define on click handler for channel status indicator
 				that.channelStatusIndicator.on("click", manualChannelReconnect);
