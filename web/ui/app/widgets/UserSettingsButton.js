@@ -10,9 +10,7 @@ Ext.define('uCall.widgets.UserSettingsButton', {
     extend: 'Ext.Button',
     alias: 'widget.UserSettingsButton',
     
-    activeStatusImageSrc: "/ui/resources/images/channel_status/active.png",
-    inactiveStatusImageSrc: "/ui/resources/images/channel_status/inactive.png",
-    channelStatusActive: false,
+    iconSrc: "/ui/resources/images/user_settings/gear.png",
     
     onClick: function(){
 		Ext.create("uCall.widgets.UserSettingsWindow");
@@ -25,5 +23,7 @@ Ext.define('uCall.widgets.UserSettingsButton', {
 	constructor: function(){
 		Ext.applyIf(this, this.config);
 		this.callParent(arguments);
-	}    
+		this.setIcon(this.iconSrc);
+	}
 });
+

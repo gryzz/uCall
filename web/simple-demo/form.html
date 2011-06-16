@@ -2,6 +2,7 @@
 <head>
     <link rel="stylesheet" href="/ui/vendors/probonogeek/extjs/resources/css/ext-all.css">
     <link rel="stylesheet" href="/ui/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.2/examples/shared/example.css" />
 
     <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
     <script src="http://172.22.90.132/router/api/"></script>
@@ -28,6 +29,9 @@
                     ]
                 }
             };*/
+
+         // provide feedback for any errors
+         Ext.tip.QuickTipManager.init();
 
 
         Ext.onReady(function(){

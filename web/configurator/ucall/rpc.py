@@ -21,8 +21,12 @@ class MainApiClass(object):
          user.email = request.POST['email']
          user.save()
          return {
-            "msg":traceback.print_stack()
+            "errors":{"email":"already taken"},
+            "success":"false"
          }
+
+    #{"errors":{"email":"already taken"},"success":false,"debug_formPacket":{"extTID":"6","extAction":"Profile","extMethod":"updateBasicInfo","extType":"rpc","extUpload":"false","foo":"bar","uid":"34","name":"Aaron Conran","email":"aaron@sencha.com","company":"Sencha Inc."}
+
     updateBasicInfo._args_len = 1
     updateBasicInfo._form_handler = True
 

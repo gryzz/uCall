@@ -8,10 +8,12 @@ Ext.define('uCall.widgets.LoginWindow', {
     	title: 'Log in',
 	layout: 'fit',
 	height: 200,
-	width: 400,
-	closable: false,
-	modal: true,
+	width: 400
     },
+
+    closable: false,
+    modal: true,
+
     
     items: 
 	{
@@ -24,21 +26,26 @@ Ext.define('uCall.widgets.LoginWindow', {
 	    border: false,
             bodyPadding: 10,            
             
-            baseParams: {next: '/'},
+            baseParams: {
+        	next: '/'
+    	    },
                                 
             items: [
         	{
         	    xtype: 'textfield',
 		    fieldLabel: 'Username',
+		    allowBlank: false,
             	    name: 'username'
         	},
         	{
         	    xtype: 'textfield',
 		    fieldLabel: 'Password',
+		    inputType: 'password',
+		    allowBlank: false,
             	    name: 'password'
         	},
             ],
-                                                        
+            
             buttons: [{
         	xtype: 'button',
         	text: 'Submit',
