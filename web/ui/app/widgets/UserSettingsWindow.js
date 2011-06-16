@@ -5,6 +5,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
 	'Ext.tip.QuickTipManager',
 	'Ext.layout.container.Accordion'
     ],
+
     extend: 'Ext.window.Window',
     alias: 'widget.UserSettingsWindow',
     
@@ -14,10 +15,12 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
 	layout: 'fit',
 	height: 200,
 	width: 400,
-	closable: true,
-	modal: false,
+	modal: false
     },
-    
+
+    closable: true,
+    maximizable: true,    
+
     items: 
 	{
 	    xtype: 'form',
