@@ -38,6 +38,12 @@
             
             logoutUrl: "{% url logout %}"
 		};
+		
+		var controlChannel = {
+			url: "ws://rstets.ucserv.dev:61614/stomp"
+		};
+		
+		console.log("FIXME: Load global settings from server instead!");
         </script>
     <script type="text/javascript" src="/ui/bootstrap.js"></script>
     {% endblock %}

@@ -66,7 +66,7 @@ Ext.define('uCall.App', {
 		
         // Stomp client adapter factory
 		this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
-			url: 'ws://rstets.ucserv.dev:61614/stomp',
+			url: window.controlChannel.url,
 			login: 'guest',
 			passcode: 'password',
 			destination: '/queue/messages/SIP/1001',
