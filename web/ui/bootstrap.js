@@ -9,7 +9,7 @@ Ext.require('uCall.App');
 Ext.application({
     name: 'uCall',
     launch: function() {
-    	// Show main viewport
+        // Show main viewport
         Ext.create('uCall.App');
     }
 });

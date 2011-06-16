@@ -1,8 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 from ucall.rpc import Router
-
-
 from django.contrib import admin
+
 admin.autodiscover()
 router = Router()
 

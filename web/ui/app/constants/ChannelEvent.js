@@ -5,10 +5,10 @@
  */
 
 Ext.define('uCall.constants.ChannelEvent', {
-	singleton: true,
+    singleton: true,
 
-	// Event types
-	CONNECTED: "ChannelStatusConnected",
+    // Event types
+    CONNECTED: "ChannelStatusConnected",
     MESSAGE: "ChannelMessage",
     DISCONNECTED: "ChannelStatusDisconnected"
 });

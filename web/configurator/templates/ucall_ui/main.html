@@ -19,33 +19,34 @@
     <!--script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-debug.js"></script-->
     <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
 
-</head>
-<body>
-	{% block content %}
-        <script type="text/javascript">
-		var currentUser = {
+    {% block content %}
+    <script type="text/javascript">
+        var currentUser = {
             username: "{{user.username}}",
             firstName: "{{user.first_name}}",
             lastName: "{{user.last_name}}",
-			agentId: "{{user.get_profile.agentKey}}",
-			isAdmin: '{{user.is_staff|yesno:"true,false"}}'
-		};
-		
-		var urls = {
+            agentId: "{{user.get_profile.agentKey}}",
+            isAdmin: '{{user.is_staff|yesno:"true,false"}}'
+        };
+
+        var urls = {
             {% if user.is_staff %}
             adminUrl: "/admin/",
             {% endif %}
             
             logoutUrl: "{% url logout %}"
-		};
-		
-		var controlChannel = {
-			url: "ws://rstets.ucserv.dev:61614/stomp"
-		};
-		
-		console.log("FIXME: Load global settings from server instead!");
-        </script>
+        };
+
+        var controlChannel = {
+            url: "ws://rstets.ucserv.dev:61614/stomp"
+        };
+
+        console.log("FIXME: Load global settings from server instead!");
+    </script>
     <script type="text/javascript" src="/ui/bootstrap.js"></script>
     {% endblock %}
+
+</head>
+<body>
 </body>
 </html>
