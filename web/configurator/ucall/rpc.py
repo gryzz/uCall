@@ -29,8 +29,7 @@ class MainApiClass(object):
                 else:
                     change_password = True
 
-            #TODO: WTF? Why do we need take it from DB?
-            user = User.objects.get(username=request.user.username)
+            user = request.user
             user.first_name = request.POST['firstname']
             user.last_name = request.POST['lastname']
             user.email = request.POST['email']
