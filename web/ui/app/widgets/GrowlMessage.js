@@ -4,32 +4,22 @@ Ext.define('uCall.widgets.GrowlMessage', {
     alias: 'widget.GrowlMessage',
     
     config: {
-//		layout: 'vbox',
-		height: 150,
+		height: 90,
 		width: 250,
 		floating: false,
 		draggable: false,
 		resizable: false,
-//		margin: ' 0 0 0 0',
 		cls: 'x-message-box',
-//		maximizable: true,
 		closable: false,
-		items: {
-			xtype: 'button',
-			text: 'test',
-			},
+//		items: {
+//			xtype: 'button',
+//			text: 'test',
+//        },
     },
 
-//	resize: function(){alert('here')},
-	
     constructor: function(config){
-//		this.config.id = 'GrowlMessage' + (new Date()).getTime() + Math.floor(Math.random()*1000);
-		
-        Ext.apply(this, this.config);
-//		Ext.Array.remove(this.stateEvents, 'resize');
+        Ext.apply(this, config, this.config);
 		this.callParent(arguments);
-//		this.resizer.clearListeners()
-//        this.header.doLayout();
 		
     }
 });

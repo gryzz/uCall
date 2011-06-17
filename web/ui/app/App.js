@@ -8,9 +8,10 @@
 Ext.define('uCall.App', {
     requires: [
         'uCall.widgets.MainPanel',
-        'uCall.controllers.MessagesDeck',
         'uCall.data.stomp.StompClientAdapterFactory',
-        'uCall.controllers.ChannelEventController'
+        'uCall.controllers.ChannelEventController',
+        'uCall.controllers.GrowlController',
+        'uCall.controllers.MessageController'
     ],
     
     extend: 'Ext.container.Viewport',
@@ -23,7 +24,8 @@ Ext.define('uCall.App', {
         ,reconnectTimeout: 1000
     },
     // Declare members
-    messageDeck: null,
+    messageController: null,
+    growlController: null,
     stompClientAdapterFactory: null,
     stompClientAdapter: null,
     channelEventController: null,
@@ -49,10 +51,21 @@ Ext.define('uCall.App', {
         /*
          * Init app components
          */
-        // Message deck
-        this.messageDeck = Ext.create('uCall.controllers.MessagesDeck');
-
-        // performChannelReconnect
+        // Channel messages controller
+        this.growlController = Ext.create('uCall.controllers.GrowlController');
+        this.messageController = Ext.create('uCall.controllers.MessageController', {
+            onShow: function(id, message) {
+                that.growlController.add(id, [ {
+            xtype: 'component',
+            html: message,
+        }]);
+            },
+            onHide: function(id) {
+                that.growlController.remove(id);
+            }
+        });
+        
+        // Channel status indicator
         this.channelStatusIndicator = Ext.getCmp("ChannelStatusIndicator");
 
         // Create channel event controller
@@ -60,13 +73,13 @@ Ext.define('uCall.App', {
             onConnect: function(){
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 
-                // Undset on click handler for channel status indicator
+                // Unset on click handler for channel status indicator
                 that.channelStatusIndicator.un("click", manualChannelReconnect);
                 // Hide popup
                 uCall.widgets.ChannelStatusInactivePopup.hide();
             },
-            onMessage: function(){
-                console.log("onMessage");
+            onMessage: function(message){
+                that.messageController.parseMessage(message);
             },
             onDisconnect: function(){
                 // Propagate event to channel status indicator
@@ -120,49 +133,4 @@ Ext.define('uCall.App', {
         this.stompClientAdapter.performConnect();
     }    
 });
-Ext.example = function(){
-    var msgCt;
 
-    function createBox(t, s){
-       // return ['<div class="msg">',
-       //         '<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',
-       //         '<div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc"><h3>', t, '</h3>', s, '</div></div></div>',
-       //         '<div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>',
-       //         '</div>'].join('');
-       return '<div class="msg"><h3>' + t + '</h3><p>' + s + '</p></div>';
-    }
-    return {
-        msg : function(title, format){
-            if(!msgCt){
-                msgCt = Ext.core.DomHelper.insertFirst(document.body, {id:'msg-div'}, true);
-            }
-            var s = Ext.String.format.apply(String, Array.prototype.slice.call(arguments, 1));
-            var m = Ext.core.DomHelper.append(msgCt, createBox(title, s), true);
-            m.hide();
-            m.slideIn('t').ghost("t", { delay: 1000, remove: true});
-        },
-
-        init : function(){
-//            var t = Ext.get('exttheme');
-//            if(!t){ // run locally?
-//                return;
-//            }
-//            var theme = Cookies.get('exttheme') || 'aero';
-//            if(theme){
-//                t.dom.value = theme;
-//                Ext.getBody().addClass('x-'+theme);
-//            }
-//            t.on('change', function(){
-//                Cookies.set('exttheme', t.getValue());
-//                setTimeout(function(){
-//                    window.location.reload();
-//                }, 250);
-//            });
-//
-//            var lb = Ext.get('lib-bar');
-//            if(lb){
-//                lb.show();
-//            }
-        }
-    };
-}();

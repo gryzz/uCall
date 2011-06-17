@@ -3,10 +3,12 @@ Ext.define('uCall.widgets.GrowlMessaging', {
     extend: 'Ext.container.Container',
 	alias: 'widget.GrowlMessaging',
     
+    id: 'grows-messaging',
+    
 	requires: [
 		'uCall.widgets.GrowlMessage'
 	],
-	
+
     config: {
 		id: 'GrowlMessaging',
 		width: 250,
@@ -17,7 +19,6 @@ Ext.define('uCall.widgets.GrowlMessaging', {
 		var that = this;
 		this.config.items = [{
 			region: 'south',
-			
 			xtype: 'toolbar',
 			items: {
 				xtype: 'button',
@@ -30,7 +31,6 @@ Ext.define('uCall.widgets.GrowlMessaging', {
 			region: 'north',
 			height: '100%',
 			xtype: 'container',
-//			layout: 'vbox',
 			id: 'GrowlMessagingContainer',
 			border: 0,
 		}, {
@@ -44,11 +44,7 @@ Ext.define('uCall.widgets.GrowlMessaging', {
 
 	createMessage: function(){
         var growl = Ext.create('uCall.widgets.GrowlMessage');
-//        console.log(growl);
         this.getComponent('GrowlMessagingContainer').add(growl);
         growl.show();
-//        growl.renderTo(this.getComponent('GrowlMessagingContainer'));
-//        growl.show();
-		//this.getComponent('GrowlMessagingContainer').add();
 	}
 });
