@@ -11,7 +11,8 @@ Ext.define('uCall.App', {
         'uCall.data.stomp.StompClientAdapterFactory',
         'uCall.controllers.ChannelEventController',
         'uCall.controllers.GrowlController',
-        'uCall.controllers.MessageController'
+        'uCall.controllers.MessageController',
+        'uCall.l10n.L10n'
     ],
     
     extend: 'Ext.container.Viewport',
@@ -96,7 +97,7 @@ Ext.define('uCall.App', {
                 that.channelStatusIndicator.on("click", manualChannelReconnect);
                 // Show manual reconnect message
                 uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
-            },
+            }
         });
 
         // Stomp client adapter factory

@@ -13,7 +13,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
     	id: 'UserSettingsWindow',
     	title: 'User Profile',
 	layout: 'fit',
-	height: 200,
+	height: 270,
 	width: 400,
 	modal: false
     },
@@ -26,7 +26,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
 	    xtype: 'form',
 		id: 'UserSettingsForm',
 	    standardSubmit : false,
-	    layout: 'vbox',
+		layout: 'vbox',
 	    height: '100%',
 	    width: '100%',
 	    border: false,
@@ -57,6 +57,19 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
             fieldLabel: 'Email',
             name: 'email',
             vtype:'email'
+        },{
+            xtype:'fieldset',
+            defaultType: 'textfield',
+            title: 'Change password',
+            items :[{
+                fieldLabel: 'New Password',
+                name: 'password',
+                inputType: 'password'
+            },{
+                fieldLabel: 'New Password Confirmation',
+                name: 'password_confirmation',
+                inputType: 'password'
+            }]
         }
         ],
 
@@ -66,13 +79,14 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
         	handler: function() {
         	    var form = this.up('form').getForm();
                 if (form.isValid()) {
+                    that = this;
                     form.submit({
                         waitMsg: 'Submitting your data...',
                         success: function(form, action){
-                            //TODO: Add messageBox
-                        },
-                        failure: function(form, action){
-                            Ext.Msg.alert('Failure');
+                            //TODO: Add messageBox that exdent common one
+                            that.up('form').getForm().reset();
+                            that.up('window').hide();
+                            Ext.MessageBox.alert('Thank you!', 'Your profile has been saved.');
                         }
                     });
         	    }
