@@ -70,9 +70,6 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
                         waitMsg: 'Submitting your data...',
                         success: function(form, action){
                             //TODO: Add messageBox
-                        },
-                        failure: function(form, action){
-                            Ext.Msg.alert('Failure');
                         }
                     });
         	    }
