@@ -13,13 +13,30 @@ class MainApiClass(object):
 
     getBasicInfo._args_len = 0
 
+    #TODO:refactor this
     def updateBasicInfo(self, fake, request):
         if not self._ifEmailIsBusy(request):
+            change_password = False
+            if 'password' in request.POST and request.POST['password'] :
+                if request.POST['password'] != request.POST['password_confirmation']:
+                    return {
+                        "errors":{
+                            "password": "Password and confirmation are not equal",
+                            "password_confirmation": "Password and confirmation are not equal"
+                        },
+                        "success":False
+                    }
+                else:
+                    change_password = True
+
             #TODO: WTF? Why do we need take it from DB?
             user = User.objects.get(username=request.user.username)
             user.first_name = request.POST['firstname']
             user.last_name = request.POST['lastname']
             user.email = request.POST['email']
+            if change_password is True:
+                user.set_password(request.POST['password'])
+
             user.save()
             return {
                 "success":True

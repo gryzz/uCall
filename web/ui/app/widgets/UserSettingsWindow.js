@@ -13,7 +13,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
     	id: 'UserSettingsWindow',
     	title: 'User Profile',
 	layout: 'fit',
-	height: 200,
+	height: 270,
 	width: 400,
 	modal: false
     },
@@ -57,6 +57,19 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
             fieldLabel: 'Email',
             name: 'email',
             vtype:'email'
+        },{
+            xtype:'fieldset',
+            defaultType: 'textfield',
+            title: 'Change password',
+            items :[{
+                fieldLabel: 'New Password',
+                name: 'password',
+                inputType: 'password'
+            },{
+                fieldLabel: 'New Password Confirmation',
+                name: 'password_confirmation',
+                inputType: 'password'
+            }]
         }
         ],
 
