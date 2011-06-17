@@ -4,11 +4,11 @@ Ext.define('uCall.widgets.LoginWindow', {
     alias: 'widget.LoginWindow',
     
     config: {
-    	id: 'LoginForm',
-    	title: 'Please log in',
-	layout: 'fit',
-	height: 200,
-	width: 400
+        id: 'LoginForm',
+        title: _('Please log in'),
+        layout: 'fit',
+        height: 200,
+        width: 400
     },
 
     closable: false,
@@ -35,7 +35,7 @@ Ext.define('uCall.widgets.LoginWindow', {
         	{
 		    labelAlign: 'right',
         	    xtype: 'textfield',
-		    fieldLabel: 'Username',
+		    fieldLabel: _('Username'),
 		    allowBlank: false,
 		    anchor: '100%',
             	    name: 'username'
@@ -43,17 +43,17 @@ Ext.define('uCall.widgets.LoginWindow', {
         	{
 		    labelAlign: 'right',
         	    xtype: 'textfield',
-		    fieldLabel: 'Password',
+		    fieldLabel: _('Password'),
 		    inputType: 'password',
 		    anchor: '100%',
 		    allowBlank: false,
             	    name: 'password'
-        	},
+        	}
             ],
             
             buttons: [{
         	xtype: 'button',
-        	text: 'Login',
+        	text: _('Login'),
             	handler: function() {
             	    // The getForm() method returns the Ext.form.Basic instance:
                     var form = this.up('form').getForm();
@@ -61,11 +61,11 @@ Ext.define('uCall.widgets.LoginWindow', {
                 	// Submit the Ajax request and handle the response
                         form.submit({
                     	    success: function(form, action) {
-                        	Ext.Msg.alert('Success', action.result.msg);
+                        	Ext.Msg.alert(_('Success'), action.result.msg);
                             },
                             
                             failure: function(form, action) {
-                        	Ext.Msg.alert('Failed', action.result.msg);
+                        	Ext.Msg.alert(_('Failed'), action.result.msg);
                             }
                         });
             	    }

@@ -7,6 +7,7 @@
 
 Ext.define('uCall.App', {
     requires: [
+        'uCall.l10n.L10n',
 		'uCall.widgets.MainPanel',
 		'uCall.controllers.MessagesDeck',
 		'uCall.data.stomp.StompClientAdapterFactory',
@@ -89,7 +90,7 @@ Ext.define('uCall.App', {
 				that.channelStatusIndicator.on("click", manualChannelReconnect);
 				// Show manual reconnect message
 				uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
-			},
+			}
 		});
 		
         // Stomp client adapter factory
