@@ -5,7 +5,7 @@ Ext.define('uCall.widgets.LoginWindow', {
     
     config: {
         id: 'LoginForm',
-        title: 'Please log in',
+        title: _('Please log in'),
         layout: 'fit',
         height: 200,
         width: 400
