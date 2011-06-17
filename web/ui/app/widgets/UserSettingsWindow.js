@@ -26,7 +26,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
 	    xtype: 'form',
 		id: 'UserSettingsForm',
 	    standardSubmit : false,
-	    layout: 'vbox',
+		layout: 'vbox',
 	    height: '100%',
 	    width: '100%',
 	    border: false,
@@ -79,10 +79,14 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
         	handler: function() {
         	    var form = this.up('form').getForm();
                 if (form.isValid()) {
+                    that = this;
                     form.submit({
                         waitMsg: 'Submitting your data...',
                         success: function(form, action){
-                            //TODO: Add messageBox
+                            //TODO: Add messageBox that exdent common one
+                            that.up('form').getForm().reset();
+                            that.up('window').hide();
+                            Ext.MessageBox.alert('Thank you!', 'Your profile has been saved.');
                         }
                     });
         	    }
