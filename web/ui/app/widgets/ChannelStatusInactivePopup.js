@@ -3,29 +3,57 @@
  * @extends Ext.window.Window
  *
  * Shows channel status inactive popup.
- *
- * @constructor
- * Create a new Channel Status Inactive Popup
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.ChannelStatusInactivePopup', {
     alias: 'widget.ChannelStatusInactivePopup',
     
+    singleton: true,
+    popupWindow: null,
+    
     config: {
-    	title: "Warning", 
-    	msg: "You have been disconnected.",
-    	modal: false
+        title: "Error", 
+        height: 150,
+        width: 300,
+        layout: {
+            type: 'fit',
+            align: 'center'
+        },
+
+        modal: false,
+        closable: false,
+        resizable: false,
+        draggable: false,
+        buttonAlign: "center",
+
+        buttons: [{id: "ChannelStatusPopupReconnectButton", text: 'Reconnect'}],
+        items: [{
+            xtype: 'label',
+            text:"You have been disconnected. Try reconnecting manually"
+        }]
     },
     
-	constructor: function(config){
-		// Initialize
-		Ext.applyIf(this, this.config);
-	},
-	
-	show: function() {
-		Ext.Msg.alert(this.config);
-		console.log("TODO: ChannelStatusInactivePopup.show(). Create a popup container to render to.");
-		console.log("TODO: ChannelStatusInactivePopup.show(). Create a popup extending window, not aggregating message box.");
-	}
+    onClick: function() {
+        if(this.onClickCallback) {
+            this.onClickCallback();
+        }
+    },
+    
+    show: function(config) {
+        Ext.apply(this.config, config);
+        Ext.applyIf(this, this.config);
+
+        if (!this.popupWindow) {
+            this.popupWindow = Ext.create('Ext.window.Window', this.config);
+            Ext.getCmp("ChannelStatusPopupReconnectButton").on("click", this.onClick, this);
+        }
+
+        this.popupWindow.show();
+    },
+
+    hide: function() {
+        if (this.popupWindow) {
+            this.popupWindow.hide();
+        }
+    }
 });

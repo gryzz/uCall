@@ -1,0 +1,108 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/ui/vendors/probonogeek/extjs/resources/css/ext-all.css">
+    <link rel="stylesheet" href="/ui/resources/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.2/examples/shared/example.css" />
+
+    <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
+    <script src="http://172.22.90.132/router/api/"></script>
+
+    <script>
+
+
+        Ext.require([
+            'Ext.direct.*',
+            'Ext.form.*',
+            'Ext.tip.QuickTipManager',
+            'Ext.layout.container.Accordion'
+        ]);
+
+ /*       Ext.ns("Ext.app");
+        Ext.app.REMOTING_API =
+            {
+                "url":"php\/router.php",
+                "type":"remoting",
+                "actions":{
+                    "Profile":[
+                        {"name":"getBasicInfo","len":0},
+                        {"name":"updateBasicInfo","len":0,"formHandler":true}
+                    ]
+                }
+            };*/
+
+         // provide feedback for any errors
+         Ext.tip.QuickTipManager.init();
+
+
+        Ext.onReady(function(){
+        /*    Ext.app.REMOTING_API.enableBuffer = 100;
+            Ext.direct.Manager.addProvider(Ext.app.REMOTING_API); */
+
+            // provide feedback for any errors
+            Ext.tip.QuickTipManager.init();
+
+            var basicInfo = Ext.create('Ext.form.Panel', {
+                // configs for FormPanel
+                title: 'Basic Information',
+                border: false,
+                bodyPadding: 10,
+                // configs for BasicForm
+                api: {
+                    // The server-side method to call for load() requests
+                    load: Profile.getBasicInfo,
+                    // The server-side must mark the submit handler as a 'formHandler'
+                    submit: Profile.updateBasicInfo
+                },
+                dockedItems: [{
+                    dock: 'bottom',
+                    xtype: 'toolbar',
+                    ui: 'footer',
+                    style: 'margin: 0 5px 5px 0;',
+                    items: ['->', {
+                        text: 'Submit',
+                        handler: function(){
+                            basicInfo.getForm().submit();
+                        }
+                    }]
+                }],
+                defaultType: 'textfield',
+                defaults: {
+                    anchor: '100%'
+                },
+                items: [{
+                    fieldLabel: 'First Name',
+                    name: 'firstname'
+                },{
+                    fieldLabel: 'Last Name',
+                    name: 'lastname'
+                },{
+                    fieldLabel: 'Email',
+                    name: 'email'
+                }
+                ]
+            });
+
+             var accordion = Ext.create('Ext.panel.Panel', {
+                layout: 'accordion',
+                renderTo: Ext.getBody(),
+                title: 'My Profile',
+                width: 300,
+                height: 240,
+                items: [basicInfo]
+             });
+
+            basicInfo.getForm().load();
+
+
+
+
+
+
+        });
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

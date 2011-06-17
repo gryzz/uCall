@@ -113,7 +113,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'configurator.config',
+    'config',
     'ucall_ui',
     'ucall',
     'django.contrib.admin',

@@ -3,10 +3,6 @@
  * @extends Ext.Button
  *
  * Shows user status menu.
- *
- * @constructor
- * Create a new User Status Menu Button
- * @param {Object} config The config object
  */
 
 Ext.define('uCall.widgets.UserStatusMenuButton', {
@@ -14,43 +10,42 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
     alias: 'widget.UserStatusMenuButton',
     
     onMenuItemClick: function(menu, item, event){
-	console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
+        console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
 
-	switch(item.id) {
-	    case 'StatusItemLogout':
-		window.location = window.urls.logoutUrl;
-		break;
-	    case 'StatusItemNA':
-		Ext.getCmp('ucall-controllers-messagesdeck').add('id', 'message');
-		break;
-	}
+        switch(item.id) {
+            case 'StatusItemLogout':
+                window.location = window.urls.logoutUrl;
+                break;
+            case 'StatusItemNA':
+                Ext.getCmp('ucall-controllers-messagesdeck').add('id', 'message');
+                break;
+        }
     },
-	
-    config: {
-    	id: 'UserStatusMenuButton',
-		text: "Status Menu",
-		menu: {
-			xtype: 'menu',
-			items: [
-				{text: "Available"},
-				{text: "Away"},
-				{text: "N/A", id: "StatusItemNA"},
-				'-',
-				{text: "Logout", id: "StatusItemLogout"}
-			]
 
-		}
+    config: {
+        id: 'UserStatusMenuButton',
+        text: "Status Menu",
+        menu: {
+            xtype: 'menu',
+            items: [
+                {text: "Available"},
+                {text: "Away"},
+                {text: "N/A", id: "StatusItemNA"},
+                '-',
+                {text: "Logout", id: "StatusItemLogout"}
+            ]
+        }
     },
     
-	constructor: function(){
-		// Initialize
-		Ext.applyIf(this, this.config);
-		this.callParent(arguments);
-		
-		// Event Handlers
-		this.menu.on("click", this.onMenuItemClick);
+    constructor: function(){
+        // Initialize
+        Ext.applyIf(this, this.config);
+        this.callParent(arguments);
 
-		console.log("TODO: UserStatusMenuButton(). Pass a 'User' model!");
-		console.log("TODO: UserStatusMenuButton(). Create 'real' events and add listeners!");
-	}
+        // Event Handlers
+        this.menu.on("click", this.onMenuItemClick);
+
+        console.log("TODO: UserStatusMenuButton(). Pass a 'User' model!");
+        console.log("TODO: UserStatusMenuButton(). Create 'real' events and add listeners!");
+    }
 });
