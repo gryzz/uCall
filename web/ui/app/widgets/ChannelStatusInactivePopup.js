@@ -12,50 +12,48 @@ Ext.define('uCall.widgets.ChannelStatusInactivePopup', {
     popupWindow: null,
     
     config: {
-    	title: "Error", 
-    	height: 150,
-	    width: 300,
-	    layout: {
-	    	type: 'fit',
-	    	align: 'center'
-		},
+        title: "Error", 
+        height: 150,
+        width: 300,
+        layout: {
+            type: 'fit',
+            align: 'center'
+        },
 
-    	modal: false,
-    	closable: false,
-    	resizable: false,
-    	draggable: false,
-    	buttonAlign: "center",
-    	
-    	buttons: [{id: "ChannelStatusPopupReconnectButton", text: 'Reconnect'}],
-    	items: [
-			{	
-				xtype: 'label',
-				text:"You have been disconnected. Try reconnecting manually"
-			}				
-    	]
+        modal: false,
+        closable: false,
+        resizable: false,
+        draggable: false,
+        buttonAlign: "center",
+
+        buttons: [{id: "ChannelStatusPopupReconnectButton", text: 'Reconnect'}],
+        items: [{
+            xtype: 'label',
+            text:"You have been disconnected. Try reconnecting manually"
+        }]
     },
     
     onClick: function() {
-		if(this.onClickCallback) {
-			this.onClickCallback();
-		}
-	},
+        if(this.onClickCallback) {
+            this.onClickCallback();
+        }
+    },
     
-	show: function(config) {
-		Ext.apply(this.config, config);
-		Ext.applyIf(this, this.config);
+    show: function(config) {
+        Ext.apply(this.config, config);
+        Ext.applyIf(this, this.config);
 
-		if (!this.popupWindow) {
-			this.popupWindow = Ext.create('Ext.window.Window', this.config);
-			Ext.getCmp("ChannelStatusPopupReconnectButton").on("click", this.onClick, this);
-		}
-		
-		this.popupWindow.show();
-	},
-	
-	hide: function() {
-		if (this.popupWindow) {
-			this.popupWindow.hide();	
-		}
-	}
+        if (!this.popupWindow) {
+            this.popupWindow = Ext.create('Ext.window.Window', this.config);
+            Ext.getCmp("ChannelStatusPopupReconnectButton").on("click", this.onClick, this);
+        }
+
+        this.popupWindow.show();
+    },
+
+    hide: function() {
+        if (this.popupWindow) {
+            this.popupWindow.hide();
+        }
+    }
 });

@@ -6,7 +6,7 @@
  */
 
 Ext.define('uCall.widgets.UserSettingsButton', {
-	requires: "uCall.widgets.UserSettingsWindow",
+    requires: "uCall.widgets.UserSettingsWindow",
     extend: 'Ext.Button',
     alias: 'widget.UserSettingsButton',
 
@@ -17,16 +17,17 @@ Ext.define('uCall.widgets.UserSettingsButton', {
         if (userSettingsWindow == undefined) {
             userSettingsWindow = Ext.create("uCall.widgets.UserSettingsWindow");
         }
-		userSettingsWindow.show();
-	},
+        userSettingsWindow.show();
+    },
+    
     config: {
-    	id: 'UserSettingsButton',
-		handler: this.onClick
+        id: 'UserSettingsButton',
+        handler: this.onClick
     },
 
-	constructor: function(){
-		Ext.applyIf(this, this.config);
-		this.callParent(arguments);
-		this.setIcon(this.iconSrc);
-	}
+    constructor: function(){
+        Ext.applyIf(this, this.config);
+        this.callParent(arguments);
+        this.setIcon(this.iconSrc);
+    }
 });

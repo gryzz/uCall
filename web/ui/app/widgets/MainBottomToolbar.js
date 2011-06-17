@@ -6,22 +6,17 @@
  */
 
 Ext.define('uCall.widgets.MainBottomToolbar', {
-	requires: 'uCall.widgets.ChannelStatusIndicator',
+    requires: 'uCall.widgets.ChannelStatusIndicator',
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.MainBottomToolbar',
     
     config: {
-    	id: 'MainBottomToolbar',
-    	items: [
-    		{
-    			xtype: 'ChannelStatusIndicator'
-    		}
-    	]
+        id: 'MainBottomToolbar',
+        items: [{xtype: 'ChannelStatusIndicator'}]
     },
     
-	constructor: function(){
-		Ext.applyIf(this, this.config);
-		this.callParent(arguments);
-	}    
-    
+    constructor: function(){
+        Ext.applyIf(this, this.config);
+        this.callParent(arguments);
+    }
 });

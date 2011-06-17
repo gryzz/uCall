@@ -22,7 +22,7 @@ class MainApiClass(object):
          user.save()
          return {
             "errors":{"email":"already taken"},
-            "success":"false"
+            "success":True
          }
 
     #{"errors":{"email":"already taken"},"success":false,"debug_formPacket":{"extTID":"6","extAction":"Profile","extMethod":"updateBasicInfo","extType":"rpc","extUpload":"false","foo":"bar","uid":"34","name":"Aaron Conran","email":"aaron@sencha.com","company":"Sencha Inc."}
