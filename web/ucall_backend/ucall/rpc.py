@@ -9,9 +9,9 @@ from formunculous.forms import ApplicationForm
 
 class MainApiClass(object):
     
-    def getForm(self, slug, request):
+    def getForm(self, application_definition_id, request):
         # retrieve required data
-        application_definition = ApplicationDefinition.objects.get(slug=slug)
+        application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
         
@@ -20,7 +20,6 @@ class MainApiClass(object):
         
         # return extjs-encoded form
         return ExtJSONEncoder().default(application_form)
-				
 
     getForm._args_len = 1
 
