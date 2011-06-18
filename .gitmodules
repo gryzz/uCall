@@ -1,9 +1,12 @@
 [submodule "web/ui/vendors/jmesnil/stomp-websocket"]
 	path = web/ui/vendors/jmesnil/stomp-websocket
 	url = https://github.com/jmesnil/stomp-websocket.git
+    ignore = untracked
 [submodule "web/ui/vendors/probonogeek/extjs"]
 	path = web/ui/vendors/probonogeek/extjs
 	url = https://github.com/probonogeek/extjs.git
+    ignore = untracked
 [submodule "web/ucall_backend/vendors/formunculous"]
 	path = web/ucall_backend/vendors/formunculous
 	url = git://github.com/rstets/formunculous.git
+    ignore = untracked
