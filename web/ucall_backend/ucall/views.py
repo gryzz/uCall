@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
 from config.models import Config
+from channel_message import ChannelMessage
 
 @login_required()
 def main(request):
@@ -34,5 +35,4 @@ def profile_save(request):
     user.first_name = request.GET['firstname']
     user.save()
     return render_to_response('ucall/profile.html', {'user': user, 'message': message})
-
 

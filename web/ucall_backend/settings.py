@@ -2,6 +2,7 @@ import os
 import sys
 
 PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "..", "..", "utils", "channel"))
 
 # formunculous settings start
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "formunculous"))
