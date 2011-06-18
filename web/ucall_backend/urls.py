@@ -1,12 +1,13 @@
-import os
-import sys
+# import os
+# import sys
 
 from django.conf.urls.defaults import patterns, include, url
 from ucall.rpc import Router
 from django.contrib import admin
+import formunculous
 
-PROJECT_ROOT = os.path.dirname(__file__)
-FORMUNCULOUS_STATIC_MEDIA_PATH = os.path.join(PROJECT_ROOT, "vendors", "formunculous", "formunculous", "media", "formunculous")
+# PROJECT_ROOT = os.path.dirname(__file__)
+# FORMUNCULOUS_STATIC_MEDIA_PATH = os.path.join(PROJECT_ROOT, "vendors", "formunculous", "formunculous", "media", "formunculous")
 
 admin.autodiscover()
 router = Router()
@@ -25,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^config/urls/', 'ucall.views.config_urls', name="config_urls"),
     
     # include formunculous urls
-    (r'^', include('formunculous.urls')),
+    (r'^$', include('formunculous.urls')),
     # formunculous static urls
-    (r'formunculous/(?P<path>.*)$', 'django.views.static.serve', {'document_root': FORMUNCULOUS_STATIC_MEDIA_PATH, 'show_indexes': False}),    
+    # (r'formunculous/(?P<path>.*)$', 'django.views.static.serve', {'document_root': FORMUNCULOUS_STATIC_MEDIA_PATH, 'show_indexes': False}),    
 )
