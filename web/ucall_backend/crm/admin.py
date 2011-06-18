@@ -8,13 +8,6 @@ class CrmCustomerAdmin(admin.ModelAdmin):
 admin.site.register(CrmCustomer, CrmCustomerAdmin)
 
 class CrmCustomerNumberAdmin(admin.ModelAdmin):
-    #list_display_links = list_display = ('section', 'key', 'value',)
-    pass
+    list_display_links = list_display = ('phone_number', 'dialog_form')
 
 admin.site.register(CrmCustomerNumber, CrmCustomerNumberAdmin)
-
-class CrmDialogFormAdmin(admin.ModelAdmin):
-    #list_display_links = list_display = ('section', 'key', 'value',)
-    pass
-
-admin.site.register(CrmDialogForm, CrmDialogFormAdmin)
