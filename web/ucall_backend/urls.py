@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     url(r'^config/urls/', 'ucall.views.config_urls', name="config_urls"),
     
     # include formunculous urls
-    (r'^admin/forms/', include('formunculous.urls')),
+    (r'^', include('formunculous.urls')),
     # formunculous static urls
     (r'formunculous/(?P<path>.*)$', 'django.views.static.serve', {'document_root': FORMUNCULOUS_STATIC_MEDIA_PATH, 'show_indexes': False}),    
 )
