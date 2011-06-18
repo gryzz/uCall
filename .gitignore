@@ -9,4 +9,4 @@
 lighttpd*
 web/ui/vendors/kembuco/
 .pydevproject
-
+utils/asterisk-connector-mock/*.txt
