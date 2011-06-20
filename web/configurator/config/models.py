@@ -6,4 +6,4 @@ class Config(models.Model):
     value = models.CharField(max_length=255)
 
     def __unicode__(self):
-	return self.key
+        return self.key
