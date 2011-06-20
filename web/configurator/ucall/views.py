@@ -10,9 +10,6 @@ def main(request):
 @login_required()
 def config_stomp(request):
     config = Config.objects.get()
-
-    print config
-
     #TODO is it possible to gzip/cache???
     return render_to_response('config/stomp.json', {'config': config}, mimetype = 'application/json')
 
