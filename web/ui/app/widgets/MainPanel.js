@@ -28,12 +28,6 @@ Ext.define('uCall.widgets.MainPanel', {
                 region: 'north',
                 xtype: 'MainTopToolbar'
             },
-    
-//            {
-//                region: 'south',
-//                xtype: 'MainBottomToolbar'
-//            },
-            
             {
                 region: 'east',
                 xtype: 'GrowlMessaging'

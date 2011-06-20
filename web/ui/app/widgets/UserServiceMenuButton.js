@@ -8,19 +8,36 @@
 Ext.define('uCall.widgets.UserServiceMenuButton', {
     extend: 'Ext.Button',
     alias: 'widget.UserServiceMenuButton',
+
+    requires: "uCall.widgets.UserSettingsWindow",
+
+    iconSrc: "/ui/resources/images/user_settings/gear.png",
     
-    onMenuItemClick: function(){
-        console.log("TODO: UserServiceMenuButton.onClick. Handle!");
+    onMenuItemClick: function(menu, item, event){
+        console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
+
+        switch(item.id) {
+            case 'UserServiceMenuProfile':
+    		var userSettingsWindow = Ext.getCmp("UserSettingsWindow");
+    		if (userSettingsWindow == undefined) {
+        	    userSettingsWindow = Ext.create("uCall.widgets.UserSettingsWindow");
+    		}
+    		userSettingsWindow.show();
+                break;
+        }
     },
 
     config: {
         id: 'UserServiceMenuButton',
         handler: this.onClick,
-        text: "Service Menu",
         menu: {
             xtype: 'menu',
-            items: [{text: "Not Implemented"}]
+            items: [
+                {text: "Edit profile", id: "UserServiceMenuProfile"}
+            ]
         }
+
+
     },
     
     constructor: function(){
@@ -30,6 +47,8 @@ Ext.define('uCall.widgets.UserServiceMenuButton', {
 
         // Event Handlers
         this.menu.on("click", this.onMenuItemClick);
+
+        this.setIcon(this.iconSrc);
 
         console.log("TODO: UserServiceMenuButton(). Implement!");
     }
