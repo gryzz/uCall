@@ -39,7 +39,7 @@
 
    <security-settings>
       <!--security for example queue-->
-      <security-setting match="jms.topic.chat">
+      <security-setting match="/topic/sip1001">
          <permission type="createDurableQueue" roles="guest"/>
          <permission type="deleteDurableQueue" roles="guest"/>
          <permission type="createNonDurableQueue" roles="guest"/>

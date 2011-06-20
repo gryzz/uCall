@@ -12,8 +12,8 @@
    </connection-factory>
 
    <!--the topic used by the example-->
-   <topic name="chat">
-      <entry name="/topic/chat"/>
+   <topic name="sip1001">
+      <entry name="/topic/sip1001"/>
    </topic>
 
 </configuration>
