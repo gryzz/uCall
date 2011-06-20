@@ -8,9 +8,11 @@
 Ext.define('uCall.App', {
     requires: [
         'uCall.widgets.MainPanel',
-        'uCall.controllers.MessagesDeck',
         'uCall.data.stomp.StompClientAdapterFactory',
-        'uCall.controllers.ChannelEventController'
+        'uCall.controllers.ChannelEventController',
+        'uCall.controllers.GrowlController',
+        'uCall.controllers.MessageController',
+        'uCall.l10n.L10n'
     ],
     
     extend: 'Ext.container.Viewport',
@@ -23,7 +25,8 @@ Ext.define('uCall.App', {
         ,reconnectTimeout: 1000
     },
     // Declare members
-    messageDeck: null,
+    messageController: null,
+    growlController: null,
     stompClientAdapterFactory: null,
     stompClientAdapter: null,
     channelEventController: null,
@@ -49,10 +52,21 @@ Ext.define('uCall.App', {
         /*
          * Init app components
          */
-        // Message deck
-        this.messageDeck = Ext.create('uCall.controllers.MessagesDeck');
-
-        // performChannelReconnect
+        // Channel messages controller
+        this.growlController = Ext.create('uCall.controllers.GrowlController');
+        this.messageController = Ext.create('uCall.controllers.MessageController', {
+            onShow: function(id, message) {
+                that.growlController.add(id, [ {
+            xtype: 'component',
+            html: message,
+        }]);
+            },
+            onHide: function(id) {
+                that.growlController.remove(id);
+            }
+        });
+        
+        // Channel status indicator
         this.channelStatusIndicator = Ext.getCmp("ChannelStatusIndicator");
 
         // Create channel event controller
@@ -60,13 +74,13 @@ Ext.define('uCall.App', {
             onConnect: function(){
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 
-                // Undset on click handler for channel status indicator
+                // Unset on click handler for channel status indicator
                 that.channelStatusIndicator.un("click", manualChannelReconnect);
                 // Hide popup
                 uCall.widgets.ChannelStatusInactivePopup.hide();
             },
-            onMessage: function(){
-                console.log("onMessage");
+            onMessage: function(message){
+                that.messageController.parseMessage(message);
             },
             onDisconnect: function(){
                 // Propagate event to channel status indicator
@@ -83,7 +97,7 @@ Ext.define('uCall.App', {
                 that.channelStatusIndicator.on("click", manualChannelReconnect);
                 // Show manual reconnect message
                 uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
-            },
+            }
         });
 
         // Stomp client adapter factory
@@ -120,3 +134,4 @@ Ext.define('uCall.App', {
         this.stompClientAdapter.performConnect();
     }    
 });
+

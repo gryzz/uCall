@@ -6,7 +6,10 @@
  */
 
 Ext.define('uCall.LoginApp', {
-    requires: ['uCall.widgets.LoginWindow'],
+    requires: [
+        'uCall.l10n.L10n',
+    	'uCall.widgets.LoginWindow'
+    ],
     extend: 'Ext.container.Viewport',
     
     config: {
