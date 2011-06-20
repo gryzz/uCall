@@ -143,8 +143,3 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
-
-#TODO build system
-FIXTURE_DIRS = {
-    '/opt/ucall/web/ucall_backend/fixtures',
-}
