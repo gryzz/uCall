@@ -143,3 +143,7 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
+
+FIXTURE_DIRS = {
+    '/opt/ucall/web/configurator/fixtures',
+}
