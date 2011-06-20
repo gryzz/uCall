@@ -1,5 +1,3 @@
-# Django settings for configurator project.
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -95,15 +93,17 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'configurator.disable.DisableCSRF',
+    'disable.DisableCSRF',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'configurator.urls'
+#TODO buil system
+ROOT_URLCONF = 'ucall_backend.urls'
 
+#TODO buil system
 TEMPLATE_DIRS = (
-    '/opt/ucall/web/configurator/templates',
+    '/opt/ucall/web/ucall_backend/templates',
 )
 
 INSTALLED_APPS = (
@@ -144,6 +144,7 @@ LOGGING = {
 
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
 
+#TODO build system
 FIXTURE_DIRS = {
-    '/opt/ucall/web/configurator/fixtures',
+    '/opt/ucall/web/ucall_backend/fixtures',
 }
