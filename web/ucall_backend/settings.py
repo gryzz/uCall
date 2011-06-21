@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'ucall_ui',
     'ucall',
     'django.contrib.admin',
+    'form_designer',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -146,5 +147,5 @@ AUTH_PROFILE_MODULE = 'ucall.UserProfile'
 
 #TODO build system
 FIXTURE_DIRS = {
-    '/opt/ucall/web/ucall_backend/fixtures',
+    '/opt/ucall/web/ucall_backend/fixtures'
 }
