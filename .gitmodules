@@ -4,3 +4,6 @@
 [submodule "web/ui/vendors/probonogeek/extjs"]
 	path = web/ui/vendors/probonogeek/extjs
 	url = https://github.com/probonogeek/extjs.git
+[submodule "web/ucall_backend/form_designer"]
+	path = web/ucall_backend/form_designer
+	url = https://github.com/philomat/django-form-designer.git
