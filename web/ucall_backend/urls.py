@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^config/stomp/', 'ucall.views.config_stomp', name="config_stomp"),
     url(r'^config/current_user/', 'ucall.views.config_current_user', name="config_current_user"),
     url(r'^config/urls/', 'ucall.views.config_urls', name="config_urls"),
-    url(r'^forms/', 'form_designer.urls', name="forms"),
-    url(r'^admin/form_designer/', 'form_designer.admin_urls', name="form_designer"),
+    
+    # include formunculous urls
 )

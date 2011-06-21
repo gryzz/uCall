@@ -2,7 +2,9 @@ import os
 import sys
 
 PROJECT_ROOT = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "philomat", "form_designer"))
+
+# add vendor dirs to PYTHONPATH
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "formunculous"))
 
 
 DEBUG = True
@@ -125,7 +127,6 @@ INSTALLED_APPS = (
     'ucall_ui',
     'ucall',
     'django.contrib.admin',
-    'form_designer',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -154,6 +155,6 @@ LOGGING = {
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
 
 #TODO build system
-FIXTURE_DIRS = {
-    '/opt/ucall/web/ucall_backend/fixtures'
-}
+#FIXTURE_DIRS = {
+#    '/opt/ucall/web/ucall_backend/fixtures'
+#}
