@@ -11,15 +11,14 @@ Ext.define('uCall.widgets.GrowlMessage', {
 		resizable: false,
 		cls: 'x-message-box',
 		closable: false,
-//		items: {
-//			xtype: 'button',
-//			text: 'test',
-//        },
     },
 
     constructor: function(config){
         Ext.apply(this, config, this.config);
 		this.callParent(arguments);
-		
+    },
+    
+    show: function(){
+        this.parent
     }
 });

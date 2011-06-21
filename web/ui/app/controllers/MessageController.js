@@ -11,17 +11,19 @@ Ext.define('uCall.controllers.MessageController', {
 
     constants: {
         RING: 'r',
+        UNLINK: 'u'
     },
 
     parseMessage: function(m) {
         var message = Ext.JSON.decode(m.message.data.body);
         switch(message.e){
             case this.constants.RING:
-                this.fireEvent(uCall.constants.MessageEvent.SHOW, message.u, 'User ' + message.x + ' is waiting ...'); 
+                this.fireEvent(uCall.constants.MessageEvent.SHOW, message.u, 'User ' + message.u + ' is waiting ...'); 
+            break;
+            case this.constants.UNLINK:
+                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
             break;
         }
-//        this.fire
-        
     },
     
     config: {

@@ -12,8 +12,7 @@
 Ext.define('uCall.widgets.MainPanel', {
 	requires: [
         'uCall.widgets.MainTopToolbar',
-//        'uCall.widgets.MainBottomToolbar',
-        'uCall.widgets.GrowlMessaging'
+        'uCall.widgets.GrowlMessagingContainer'
     ],
     extend: 'Ext.panel.Panel',
     alias: 'widget.MainPanel',
@@ -28,15 +27,9 @@ Ext.define('uCall.widgets.MainPanel', {
                 region: 'north',
                 xtype: 'MainTopToolbar'
             },
-    
-//            {
-//                region: 'south',
-//                xtype: 'MainBottomToolbar'
-//            },
-            
             {
                 region: 'east',
-                xtype: 'GrowlMessaging'
+                xtype: 'GrowlMessagingContainer'
             },
             {
                 region: 'center',
