@@ -20,32 +20,11 @@
     <script type="text/javascript" src="/ui/vendors/probonogeek/extjs/ext-all-debug.js"></script>
 
     {% block content %}
-    <script type="text/javascript">
-        var currentUser = {
-            username: "{{user.username}}",
-            firstName: "{{user.first_name}}",
-            lastName: "{{user.last_name}}",
-            agentId: "{{user.get_profile.agentKey}}",
-            isAdmin: '{{user.is_staff|yesno:"true,false"}}'
-        };
-
-        var urls = {
-            {% if user.is_staff %}
-            adminUrl: "/admin/",
-            {% endif %}
-            
-            logoutUrl: "{% url logout %}"
-        };
-
-        var controlChannel = {
-            url: "ws://rstets.ucserv.dev:61614/stomp"
-        };
-
-        console.log("FIXME: Load global settings from server instead!");
-    </script>
+    <script type="text/javascript" src="/config/current_user/"></script>
+    <script type="text/javascript" src="/config/urls/"></script>
+    <script type="text/javascript" src="/config/stomp/"></script>
     <script type="text/javascript" src="/ui/bootstrap.js"></script>
     {% endblock %}
-
 </head>
 <body>
 </body>
