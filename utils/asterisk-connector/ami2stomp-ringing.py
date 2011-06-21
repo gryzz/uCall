@@ -12,7 +12,7 @@ stomp.connect('guest', 'password')
       
 def handle_link():
     #message = json.dumps({'event': 'link', 'remote':'131313', 'local':'40-70-41'}, separators=(',',':'))
-    message = json.dumps({'event': 'ringing', 'ext':407040, 'agent':'SIP/1313', 'uid':'1234'}, separators=(',',':'))
+    message = json.dumps({'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}, separators=(',',':'))
 
     #conf={'expires':'30000000', 'expiration':'30000000'}
     conf={}
