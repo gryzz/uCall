@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "crm.crmdialogform", "fields": {"title": "Test Dialog Form"}}, {"pk": 1, "model": "crm.crmcustomernumber", "fields": {"phone_number": "09703", "dialog_form": 1}}, {"pk": 1, "model": "crm.crmcustomer", "fields": {"phone_number": 1, "title": "ambulance"}}]
