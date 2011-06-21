@@ -33,7 +33,7 @@ Ext.define('uCall.widgets.UserServiceMenuButton', {
         menu: {
             xtype: 'menu',
             items: [
-                {text: "Edit profile", id: "UserServiceMenuProfile"}
+                {text: "Edit profile", id: "UserServiceMenuProfile", icon: "/ui/resources/images/user_settings/settings.png"}
             ]
         }
 
