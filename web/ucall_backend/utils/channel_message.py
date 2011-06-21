@@ -21,14 +21,14 @@ class ChannelMessage:
         return json.dumps(data, separators=(',',':'))
 
     def  form_json_schema(self):
-        data = {
+        data = (
             self.USER_KEY,
             self.EVENT_KEY,
             self.EXTENTION_KEY,
             self.AGENT_KEY
-        }
+        )
 
-        return json.dumps(data, separators=(','))
+        return json.dumps(data, separators=(',',':'))
 
 
     def print_message(self):
