@@ -17,6 +17,8 @@ Ext.define('uCall.App', {
     
     extend: 'Ext.container.Viewport',
     
+    id: 'ucall-app',
+    
     config: {
         layout: 'fit',
         items: [{xtype: 'MainPanel', width: "100%", height: "100%"}]
@@ -75,7 +77,8 @@ Ext.define('uCall.App', {
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 
                 // Unset on click handler for channel status indicator
-                that.channelStatusIndicator.un("click", manualChannelReconnect);
+                // TODO: uncomment
+                // that.channelStatusIndicator.un("click", manualChannelReconnect);
                 // Hide popup
                 uCall.widgets.ChannelStatusInactivePopup.hide();
             },
@@ -94,11 +97,60 @@ Ext.define('uCall.App', {
                 }
 
                 // Define on click handler for channel status indicator
-                that.channelStatusIndicator.on("click", manualChannelReconnect);
+                // TODO: uncomment
+                // that.channelStatusIndicator.on("click", manualChannelReconnect);
+                
                 // Show manual reconnect message
                 uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
             }
         });
+        
+        // TODO: move to growl controller
+        this.popups = [];
+        this.alignPopupsTo = this.channelStatusIndicator.el;
+        
+        var testTip = function() {
+            var v = this;
+            var t = new Ext.Tip({
+                floating: {
+                    shadow: false,
+                    shim: false
+                },
+                width: 200,
+                height: 50,
+                title: 'Tip ' + v.popups.length,
+                html: 'Hello world ' + v.popups.length,
+                autoHide: false,
+                closable: true,
+                closeAction: 'destroy' 
+            });
+            t.showAt([0,0]); // ensure it's rendered and visible so that it has dimensions for following calc
+            t.showAt(t.el.getAlignToXY(this.alignPopupsTo, 'tl-bl', [0, 10]));
+            // t.hide();
+            // t.el.slideIn('l');
+            
+            t.on("close", function(event){
+                console.log(event);
+                console.log(t);
+                
+                var ti = v.popups.indexOf(this);
+                delete v.popups[ti];
+                v.alignPopupsTo = v.channelStatusIndicator.el;
+                
+                for(i in v.popups) {
+                    var p = v.popups[i]; 
+                    p.showAt(p.el.getAlignToXY(v.alignPopupsTo, 'tl-bl', [0, 10]));
+                    v.alignPopupsTo = p.el;       
+                }
+            }, t);
+            
+            this.popups.push(t);
+            this.alignPopupsTo = t.el;
+        }
+        
+        that.channelStatusIndicator.on("click", testTip, this);
+        // TODO: remove code above
+                
 
         // Stomp client adapter factory
         this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {

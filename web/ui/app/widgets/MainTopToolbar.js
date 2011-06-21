@@ -9,7 +9,6 @@ Ext.define('uCall.widgets.MainTopToolbar', {
     requires: [
         'uCall.widgets.UserStatusMenuButton',
         'uCall.widgets.UserServiceMenuButton',
-        'uCall.widgets.UserSettingsButton',
         'uCall.widgets.ChannelStatusIndicator'
     ],
     extend: 'Ext.toolbar.Toolbar',
@@ -28,9 +27,7 @@ Ext.define('uCall.widgets.MainTopToolbar', {
             '-',
             {xtype: 'UserStatusMenuButton'},
             '-',
-            {xtype: 'UserServiceMenuButton'},
-            '-',
-            {xtype: 'UserSettingsButton'}
+            {xtype: 'UserServiceMenuButton'}
         ]
     },
     

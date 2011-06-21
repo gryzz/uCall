@@ -1,0 +1,7 @@
+        var urls = {
+            {% if user.is_staff %}
+            adminUrl: "/admin/",
+            {% endif %}
+            
+            logoutUrl: "{% url logout %}"
+        };

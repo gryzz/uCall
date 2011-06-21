@@ -1,10 +1,27 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.contrib.auth.models import User
+from config.models import Config
 
 @login_required()
 def main(request):
     return render_to_response('ucall/profile.html', {'user': request.user})
+
+@login_required()
+def config_stomp(request):
+    config = Config.objects.get()
+    #TODO is it possible to gzip/cache???
+    return render_to_response('config/stomp.json', {'config': config}, mimetype = 'application/json')
+
+@login_required()
+def config_current_user(request):
+    #TODO is it possible to gzip/cache???
+    return render_to_response('config/current_user.json', {'user': request.user}, mimetype = 'application/json')
+
+@login_required()
+def config_urls(request):
+    #TODO is it possible to gzip/cache???
+    return render_to_response('config/urls.json', {'user': request.user}, mimetype = 'application/json')
 
 @login_required()
 def profile_save(request):

@@ -17,9 +17,9 @@ Ext.define('uCall.widgets.LoginWindow', {
     
     items: {
         xtype: 'form',
+        /* TODO: from config */ 
         url: '/accounts/login/',
         standardSubmit : true,
-        //layout: 'vbox',
         layout: 'anchor',
         height: '100%',
         width: '100%',
