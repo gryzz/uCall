@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^config/urls/', 'ucall.views.config_urls', name="config_urls"),
     
     # include formunculous urls
+    (r'^func/', include('formunculous.urls')),
 )
