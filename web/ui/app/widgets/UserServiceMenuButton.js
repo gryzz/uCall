@@ -30,6 +30,7 @@ Ext.define('uCall.widgets.UserServiceMenuButton', {
     config: {
         id: 'UserServiceMenuButton',
         handler: this.onClick,
+	text: window.currentUser.firstName + ' ' + window.currentUser.lastName,
         menu: {
             xtype: 'menu',
             items: [
