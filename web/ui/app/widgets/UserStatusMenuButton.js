@@ -28,11 +28,11 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         menu: {
             xtype: 'menu',
             items: [
-                {text: "Available"},
-                {text: "Away"},
-                {text: "N/A", id: "StatusItemNA"},
+                {text: "Available", icon: "/ui/resources/images/user_status/online.png"},
+                {text: "Away", icon: "/ui/resources/images/user_status/away.png"},
+                {text: "N/A", icon: "/ui/resources/images/user_status/offline.png", id: "StatusItemNA"},
                 '-',
-                {text: "Logout", id: "StatusItemLogout"}
+                {text: "Logout", icon: "/ui/resources/images/user_status/logout.png", id: "StatusItemLogout"}
             ]
         }
     },
