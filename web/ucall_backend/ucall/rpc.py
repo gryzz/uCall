@@ -7,8 +7,8 @@ from utils.extjs_form_encoder import ExtJSONEncoder
 from formunculous.models import ApplicationDefinition, Application
 from formunculous.forms import ApplicationForm
 
-class MainApiClass(object):
-    
+class FormsApiClass(object):
+
     def getForm(self, application_definition_id, request):
         # retrieve required data
         application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
@@ -24,6 +24,9 @@ class MainApiClass(object):
 
     getForm._args_len = 1
 
+
+class ProfileApiClass(object):
+    
     def getBasicInfo(self, request):
         return {
             "success":"true",
@@ -90,8 +93,8 @@ class Router(RpcRouter):
         self.url = 'router'
 
         self.actions = {
-            'Profile': MainApiClass(),
-            'Forms': MainApiClass(),
+            'Profile': ProfileApiClass(),
+            'Forms': FormsApiClass(),
         }
 
         self.enable_buffer = 50
