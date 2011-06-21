@@ -118,14 +118,13 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'config',
     'ucall_ui',
     'ucall',
     'django.contrib.admin',
-    'form_designer',
+    'crm'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -152,8 +151,3 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
-
-#TODO build system
-FIXTURE_DIRS = {
-    '/opt/ucall/web/ucall_backend/fixtures'
-}

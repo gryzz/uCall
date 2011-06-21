@@ -1,4 +1,4 @@
 var controlChannel = {
-    url: "{{ config.value }}"
-};
+{% for c in config %}	{{ c.key }}: "{{ c.value }}"{% if not forloop.last %},{% endif %}
+{% endfor %}};
 
