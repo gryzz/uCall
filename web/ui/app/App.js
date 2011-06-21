@@ -77,6 +77,7 @@ Ext.define('uCall.App', {
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 
                 // Unset on click handler for channel status indicator
+                // TODO: uncomment
                 // that.channelStatusIndicator.un("click", manualChannelReconnect);
                 // Hide popup
                 uCall.widgets.ChannelStatusInactivePopup.hide();
@@ -96,12 +97,15 @@ Ext.define('uCall.App', {
                 }
 
                 // Define on click handler for channel status indicator
+                // TODO: uncomment
                 // that.channelStatusIndicator.on("click", manualChannelReconnect);
                 
                 // Show manual reconnect message
                 uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
             }
         });
+        
+        // TODO: move to growl controller
         this.popups = [];
         this.alignPopupsTo = this.channelStatusIndicator.el;
         
@@ -144,7 +148,9 @@ Ext.define('uCall.App', {
             this.alignPopupsTo = t.el;
         }
         
-        that.channelStatusIndicator.on("click", testTip, this);        
+        that.channelStatusIndicator.on("click", testTip, this);
+        // TODO: remove code above
+                
 
         // Stomp client adapter factory
         this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
