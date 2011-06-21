@@ -3,21 +3,21 @@ Ext.define('uCall.controllers.GrowlController', {
     growlContainer: null,
 
     constructor: function(){
-       this.growlMessaging = Ext.getCmp('grows-messaging');
+       this.growlMessaging = Ext.getCmp('growl-messaging-container');
     },
     
     add: function(id, items) {
-        
-//        var items
-        var messageBox = Ext.create('uCall.widgets.GrowlMessage', {items: items, id: id});
-//        messageBox.add(items);
-		this.growlMessaging.getComponent('GrowlMessagingContainer').add(messageBox);
+        var messageBox = Ext.create('uCall.widgets.GrowlMessage', {items: items, id: this.generateId(id)});
+		this.growlMessaging.add(messageBox);
         messageBox.show();
     },
-
-    remove: function(id) {
-        var messageBox = this.growlMessaging.getComponent('GrowlMessagingContainer').getComponent(id);
-		this.growlMessaging.getComponent('GrowlMessagingContainer').remove(messageBox, true);
-    }
     
+    remove: function(id) {
+        var messageBox = this.growlMessaging.getComponent('GrowlMessagingContainer').getComponent(this.generateId(id));
+		this.growlMessaging.remove(messageBox, true);
+    },
+    
+    generateId: function(str){
+        return str ? 'growl_messaging_' + str : '';
+    }
 });

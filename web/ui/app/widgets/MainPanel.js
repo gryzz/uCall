@@ -12,8 +12,7 @@
 Ext.define('uCall.widgets.MainPanel', {
 	requires: [
         'uCall.widgets.MainTopToolbar',
-//        'uCall.widgets.MainBottomToolbar',
-        'uCall.widgets.GrowlMessaging'
+        'uCall.widgets.GrowlMessagingContainer'
     ],
     extend: 'Ext.panel.Panel',
     alias: 'widget.MainPanel',
