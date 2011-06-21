@@ -12,29 +12,36 @@
 Ext.define('uCall.widgets.MainPanel', {
 	requires: [
         'uCall.widgets.MainTopToolbar',
-//        'uCall.widgets.MainBottomToolbar',
-        'uCall.widgets.GrowlMessaging'
+        'uCall.widgets.GrowlMessagingContainer'
     ],
     extend: 'Ext.panel.Panel',
     alias: 'widget.MainPanel',
     
     config: {
         id: 'MainPanel',
-        layout: 'border',
+        // layout: 'border',
+        layout: 'anchor',
         // title: 'uCall UI',
+        tbar: {xtype:'MainTopToolbar'}, 
         
-        items:[
+        popups:[
             {
-                region: 'north',
-                xtype: 'MainTopToolbar'
+                width: 150,
+                height: 50,
+                title: "test 1",
+                anchor: {
+                    right: 0
+                }
             },
             {
-                region: 'east',
-                xtype: 'GrowlMessaging'
+                width: 150,
+                height: 50,
+                title: "test 2"
             },
             {
-                region: 'center',
-                id: 'center-container'
+                width: 150,
+                height: 50,
+                title: "test 3"
             }
         ]
     },
@@ -42,6 +49,10 @@ Ext.define('uCall.widgets.MainPanel', {
     constructor: function(){
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
+        
+        // test
+        // for(var p in this.popups) {
+            // new Ext.Window(this.popups[p]).show();
+        // }
     }
-
 });
