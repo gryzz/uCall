@@ -21,10 +21,10 @@ Ext.define('uCall.App', {
     
     config: {
         layout: 'fit',
-        items: [{xtype: 'MainPanel', width: "100%", height: "100%"}]
-        ,autoReconnectLimit: 3
-        ,autoReconnectTimeout: 1000
-        ,reconnectTimeout: 1000
+        items: [{xtype: 'MainPanel', width: "100%", height: "100%"}],
+        autoReconnectLimit: 3,
+        autoReconnectTimeout: 1000,
+        reconnectTimeout: 1000
     },
     // Declare members
     messageController: null,
@@ -82,9 +82,11 @@ Ext.define('uCall.App', {
                 // Hide popup
                 uCall.widgets.ChannelStatusInactivePopup.hide();
             },
+            
             onMessage: function(message){
-                that.messageController.parseMessage(message);
+                that.messageController.handle(message);
             },
+            
             onDisconnect: function(){
                 // Propagate event to channel status indicator
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
@@ -186,4 +188,3 @@ Ext.define('uCall.App', {
         this.stompClientAdapter.performConnect();
     }    
 });
-
