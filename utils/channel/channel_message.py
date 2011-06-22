@@ -1,31 +1,45 @@
 import simplejson as json
 
 class ChannelMessage:
+
+    EVENT_RINGING = 'ringing'
+    EVENT_HANGUP_CLEANUP = 'cleanup'
+    EVENT_LINK = 'link'
+
     message = {'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}
-    (USER_KEY, EVENT_KEY, EXTENTION_KEY, AGENT_KEY) = ('u', 'e', 'ex', 'a')
+    
+    (ID_KEY, CALLER_KEY, EVENT_KEY, EXTENTION_KEY) = ('i', 'c', 't', 'e')
 
-    user = None
+    caller = None
     event = None
-    extention = None
+    extension = None
     agent = None
+    id = None
 
+    def dump_data_json(self):
 
-    def form_json_data(self):
-        data = {
-            self.USER_KEY: self.user,
-            self.EVENT_KEY: self.event,
-            self.EXTENTION_KEY: self.extention,
-            self.AGENT_KEY:  self.agent
-        }
+	data = {}
+        
+        if self.caller:
+    	    data[self.CALLER_KEY] = self.caller    
+        
+        if self.event:
+    	    data[self.EVENT_KEY] = self.event    
+
+        if self.extension:
+	    data[self.EXTENTION_KEY] = self.extension    
+
+        if self.id:
+    	    data[self.ID_KEY] = self.id    
 
         return json.dumps(data, separators=(',',':'))
 
     def  form_json_schema(self):
         data = (
-            self.USER_KEY,
+            self.CALLER_KEY,
             self.EVENT_KEY,
             self.EXTENTION_KEY,
-            self.AGENT_KEY
+            self.ID_KEY
         )
 
         return json.dumps(data, separators=(',',':'))
@@ -34,26 +48,32 @@ class ChannelMessage:
     def print_message(self):
         print json.dumps(self.message, separators=(',',':'))
 
-    def get_user(self):
-        return self.user
+    def get_caller(self):
+        return self.caller
 
     def get_event(self):
         return self.event
 
-    def get_extention(self):
-        return self.extention
+    def get_extension(self):
+        return self.extension
 
     def get_agent(self):
         return self.agent
 
-    def set_user(self, user):
-        self.user = user
+    def get_id(self):
+        return self.id
+
+    def set_caller(self, caller):
+        self.caller = caller
 
     def set_event(self, event):
         self.event = event
 
-    def set_extention(self, extention):
-        self.extention = extention
+    def set_extension(self, extension):
+        self.extension = extension
 
     def set_agent(self, agent):
         self.agent = agent
+
+    def set_id(self, id):
+        self.id = id

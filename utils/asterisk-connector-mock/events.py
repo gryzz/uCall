@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import csv
+import sys,os
 from time import *
 from datetime import *
 from handlers import *
@@ -8,7 +9,18 @@ import simplejson as json
 from stompy.simple import Client
 import ConfigParser
 
-myfileobj = open("events.txt","read")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+from channel.channel_message import ChannelMessage as ChannelMessage
+
+try:
+    file = sys.argv[1]
+except:
+    print "Usage: %s filename" % sys.argv[0]
+
+    sys.exit()
+
+myfileobj = open(file,"read")
 csv_read = csv.reader(myfileobj,dialect=csv.excel_tab)
 
 config = ConfigParser.ConfigParser()
@@ -23,14 +35,14 @@ stomp.connect(config.get('STOMP', 'username'), config.get('STOMP', 'password'))
 timestamp_prev = None
 
 callbacks = {
-    'Dial':handle_Dial,
-    'Hangup':handle_Hangup,
+##    'Dial':handle_Dial,
+#    'Hangup':handle_Hangup,
     'Link':handle_Link,
-    'Newcallerid':handle_Newcallerid,
-    'Newchannel':handle_Newchannel,
-    'Newexten':handle_Newexten,
-    'Newstate':handle_Newstate,
-    'Unlink':handle_Unlink,
+##    'Newcallerid':handle_Newcallerid,
+##    'Newchannel':handle_Newchannel,
+##    'Newexten':handle_Newexten,
+#    'Newstate':handle_Newstate,
+##    'Unlink':handle_Unlink,
 }
 
 for line in csv_read:
@@ -40,17 +52,24 @@ for line in csv_read:
 
 	if delta.seconds > 0:
 	    print 'sleep for ', delta, delta.seconds
-            sleep(delta.seconds)
+            #sleep(delta.seconds)
 
     timestamp_prev = timestamp_curr
 
     event = line[2]
     event_data = eval(line[4])
 
-    print event
     
+#    try:
     message = callbacks[event](event_data)
-    json_message = json.dumps(message, separators=(',',':'))
-    destination = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
+    if message:
+	destination = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
+	
+	print event_data
     
-    stomp.put(json_message, destination=destination)
+	print event
+	print message
+    
+	#stomp.put(json_message, destination=destination)
+#    except:
+#	pass
