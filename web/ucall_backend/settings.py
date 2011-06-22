@@ -2,8 +2,15 @@ import os
 import sys
 
 PROJECT_ROOT = os.path.dirname(__file__)
-sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "philomat", "form_designer"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "..", "..", "utils", "channel"))
+
+# formunculous settings start
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "formunculous"))
+FORMUNCULOUS_REVIEW_PAGE_SIZE = 10
+APP_STORAGE_ROOT = '/tmp'
+APP_STORAGE_URL = '/apply/'
+LOGIN_REDIRECT_URL = '/'
+# formunculous settings end
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -124,7 +131,8 @@ INSTALLED_APPS = (
     'ucall_ui',
     'ucall',
     'django.contrib.admin',
-    'crm'
+    'formunculous',
+    'crm',
 )
 
 # A sample logging configuration. The only tangible logging
