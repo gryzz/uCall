@@ -15,8 +15,9 @@ class MainApiClass(object):
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
         
-        # remove pk field from form
+        # remove pk and Company fields from form
         del application_form.fields["pk"]
+        del application_form.fields["company"]
         
         # return extjs-encoded form
         return ExtJSONEncoder().default(application_form)
@@ -89,7 +90,8 @@ class Router(RpcRouter):
         self.url = 'router'
 
         self.actions = {
-            'Profile': MainApiClass()
+            'Profile': MainApiClass(),
+            'Forms': MainApiClass(),
         }
 
         self.enable_buffer = 50

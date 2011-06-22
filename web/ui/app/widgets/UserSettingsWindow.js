@@ -1,4 +1,5 @@
-Ext.Direct.addProvider({"url": "/router/", "enableBuffer": 50, "type": "remoting", "actions": {"Profile": [{"name": "getBasicInfo", "len": 0}, {"formHandler": true, "name": "updateBasicInfo", "len": 1}]}});
+Ext.Direct.addProvider(directSchema);
+
 Ext.define('uCall.widgets.UserSettingsWindow', {
     requires: [
 	    'Ext.direct.*',
