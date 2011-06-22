@@ -21,10 +21,6 @@ Ext.define('uCall.widgets.MainTopToolbar', {
             '->',
             'uCall UI',
             '-',
-            'Agent: ' + window.currentUser.agentId,
-            '-',
-            'User Name: ' + window.currentUser.username,
-            '-',
             {xtype: 'UserStatusMenuButton'},
             '-',
             {xtype: 'UserServiceMenuButton'}

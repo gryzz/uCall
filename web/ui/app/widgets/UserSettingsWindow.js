@@ -92,6 +92,19 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
                             that.up('form').getForm().reset();
                             that.up('window').hide();
                             Ext.MessageBox.alert('Thank you!', 'Your profile has been saved.');
+                        },
+                        failure: function(form, action){
+                             var messageBox = Ext.create('uCall.widgets.GrowlMessage', {
+                                items: {
+                                    xtype: 'component',
+                                    html: 'Something went wrong',
+                                },
+                                floating: true,
+                                closable: true,
+                                id: 'id'}
+                             );
+
+                             messageBox.show();
                         }
                     });
         	    }

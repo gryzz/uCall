@@ -156,13 +156,13 @@ Ext.define('uCall.App', {
 
         // Stomp client adapter factory
         this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
-            url: window.controlChannel.url,
-            login: 'guest',
-            passcode: 'password',
-            destination: '/queue/messages/SIP/1001',
+            url: window.controlChannel.ws_url,
+            login: window.controlChannel.username,
+            passcode: window.controlChannel.password,
+            destination: '/queue/messages/' + window.currentUser.agentId,
             sendDestination: '/queue/control',
             pingDestination: '/queue/ping',
-            pingMessage: 'SIP/1001',
+            pingMessage: window.currentUser.agentId,
             debug: true, 
 
             onConnectCallback: function(){

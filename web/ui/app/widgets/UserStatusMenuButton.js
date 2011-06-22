@@ -24,15 +24,15 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
 
     config: {
         id: 'UserStatusMenuButton',
-        text: "Status Menu",
+        text: 'Agent: ' + window.currentUser.agentId,
         menu: {
             xtype: 'menu',
             items: [
-                {text: "Available"},
-                {text: "Away"},
-                {text: "N/A", id: "StatusItemNA"},
+                {text: "Available", icon: "/ui/resources/images/user_status/online.png"},
+                {text: "Away", icon: "/ui/resources/images/user_status/away.png"},
+                {text: "N/A", icon: "/ui/resources/images/user_status/offline.png", id: "StatusItemNA"},
                 '-',
-                {text: "Logout", id: "StatusItemLogout"}
+                {text: "Logout", icon: "/ui/resources/images/user_status/logout.png", id: "StatusItemLogout"}
             ]
         }
     },
@@ -41,9 +41,11 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         // Initialize
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
-
+	
+	this.setIcon("/ui/resources/images/user_status/offline.png");
         // Event Handlers
         this.menu.on("click", this.onMenuItemClick);
+    
 
         console.log("TODO: UserStatusMenuButton(). Pass a 'User' model!");
         console.log("TODO: UserStatusMenuButton(). Create 'real' events and add listeners!");

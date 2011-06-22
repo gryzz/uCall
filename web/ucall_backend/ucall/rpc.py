@@ -3,7 +3,26 @@ from utils.extjs import RpcRouter
 from django.contrib.auth.models import User
 import traceback
 
+from utils.extjs_form_encoder import ExtJSONEncoder
+from formunculous.models import ApplicationDefinition, Application
+from formunculous.forms import ApplicationForm
+
 class MainApiClass(object):
+    
+    def getForm(self, slug, request):
+        # retrieve required data
+        application_definition = ApplicationDefinition.objects.get(slug=slug)
+        application = Application(app_definition = application_definition, user = request.user)
+        application_form = ApplicationForm(application_definition, application)
+        
+        # remove pk field from form
+        del application_form.fields["pk"]
+        
+        # return extjs-encoded form
+        return ExtJSONEncoder().default(application_form)
+				
+
+    getForm._args_len = 1
 
     def getBasicInfo(self, request):
         return {
