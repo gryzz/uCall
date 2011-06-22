@@ -1,24 +1,22 @@
 Ext.define('uCall.widgets.GrowlMessage', {
 
-    extend: 'Ext.window.Window',
+    extend: 'Ext.Tip',
     alias: 'widget.GrowlMessage',
     
     config: {
-		height: 90,
-		width: 250,
-		floating: false,
-		draggable: false,
-		resizable: false,
-		cls: 'x-message-box',
-		closable: false,
-    },
-
-    constructor: function(config){
-        Ext.apply(this, config, this.config);
-		this.callParent(arguments);
+        floating: {
+            shadow: false,
+            shim: false
+        },
+        width: 200,
+        height: 50,
+        autoHide: false,
+        closable: true,
+        closeAction: 'destroy'
     },
     
-    show: function(){
-        this.parent
-    }
+    constructor: function(config){
+        Ext.applyIf(this, this.config);
+		this.callParent(arguments);
+    },
 });
