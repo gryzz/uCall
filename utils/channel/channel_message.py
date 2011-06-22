@@ -34,15 +34,23 @@ class ChannelMessage:
 
         return json.dumps(data, separators=(',',':'))
 
-    def  form_json_schema(self):
-        data = (
-            self.CALLER_KEY,
-            self.EVENT_KEY,
-            self.EXTENTION_KEY,
-            self.ID_KEY
-        )
+    def  dump_schema_json(self):
+        schema  = '{'
+        schema += "EVENT_RINGING:'" + self.EVENT_RINGING + "',"         
+        schema += "EVENT_HANGUP_CLEANUP:'" + self.EVENT_HANGUP_CLEANUP + "',"         
+        schema += "EVENT_LINK:'" + self.EVENT_LINK + "'"         
+        schema += '}'
+        
+        return schema
+        
+        #data = (
+        #    self.CALLER_KEY,
+        #    self.EVENT_KEY,
+        #    self.EXTENTION_KEY,
+        #    self.ID_KEY
+        #)
 
-        return json.dumps(data, separators=(',',':'))
+        #return json.dumps(data, separators=(',',':'))
 
 
     def print_message(self):

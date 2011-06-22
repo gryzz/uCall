@@ -17,6 +17,10 @@ Ext.define('uCall.widgets.UserServiceMenuButton', {
         console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
 
         switch(item.id) {
+            case 'StatusItemLogout':
+                window.location = window.urls.logoutUrl;
+                break;
+
             case 'UserServiceMenuProfile':
     		var userSettingsWindow = Ext.getCmp("UserSettingsWindow");
     		if (userSettingsWindow == undefined) {
@@ -34,7 +38,9 @@ Ext.define('uCall.widgets.UserServiceMenuButton', {
         menu: {
             xtype: 'menu',
             items: [
-                {text: "Edit profile", id: "UserServiceMenuProfile", icon: "/ui/resources/images/user_settings/settings.png"}
+                {text: "Edit profile", id: "UserServiceMenuProfile", icon: "/ui/resources/images/user_settings/settings.png"},
+                '-',
+                {text: "Logout", icon: "/ui/resources/images/user_status/logout.png", id: "StatusItemLogout"}
             ]
         }
 
