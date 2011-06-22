@@ -3,7 +3,7 @@ import sys
 
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "vendors", "philomat", "form_designer"))
-
+sys.path.insert(0, os.path.join(PROJECT_ROOT, "..", "..", "utils", "channel"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
