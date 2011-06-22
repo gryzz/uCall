@@ -8,14 +8,12 @@
 Ext.define('uCall.controllers.MessageController', {
     requires: ['uCall.constants.MessageEvent'],
     extend: 'Ext.util.Observable',
-
-    mappedEvents: {
-        RING: 'r',
-        UNLINK: 'u',
-    },
-
+    
+    mappedEvents: chanelEventSchema,
+    
     handle: function(m) {
         var message = Ext.JSON.decode(m.message.data.body);
+
         switch(message.e){
             case this.mappedEvents.RING:
                 this.fireEvent(uCall.constants.MessageEvent.SHOW, message.u, 'User ' + message.u + ' is waiting ...');
@@ -30,7 +28,7 @@ Ext.define('uCall.controllers.MessageController', {
         onShow: Ext.emptyFn,
         onHide: Ext.emptyFn
     },
-
+    
     constructor: function(config) {
         // Parent
         this.callParent(arguments);

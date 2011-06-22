@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^profile/', 'ucall.views.main', name="profile"),
     url(r'^config/stomp/', 'ucall.views.config_stomp', name="config_stomp"),
     url(r'^config/current_user/', 'ucall.views.config_current_user', name="config_current_user"),
+    url(r'^config/channel_event_schema/', 'ucall.views.config_channel_event_schema', name="config_channel_event_schema"),
     url(r'^config/urls/', 'ucall.views.config_urls', name="config_urls"),
     
     # include formunculous urls

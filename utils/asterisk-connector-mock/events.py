@@ -36,12 +36,12 @@ timestamp_prev = None
 
 callbacks = {
 ##    'Dial':handle_Dial,
-#    'Hangup':handle_Hangup,
-    'Link':handle_Link,
+    'Hangup':handle_Hangup,
+#    'Link':handle_Link,
 ##    'Newcallerid':handle_Newcallerid,
 ##    'Newchannel':handle_Newchannel,
 ##    'Newexten':handle_Newexten,
-#    'Newstate':handle_Newstate,
+    'Newstate':handle_Newstate,
 ##    'Unlink':handle_Unlink,
 }
 
@@ -52,7 +52,7 @@ for line in csv_read:
 
 	if delta.seconds > 0:
 	    print 'sleep for ', delta, delta.seconds
-            #sleep(delta.seconds)
+            sleep(delta.seconds)
 
     timestamp_prev = timestamp_curr
 
@@ -70,6 +70,6 @@ for line in csv_read:
 	print event
 	print message
     
-	#stomp.put(json_message, destination=destination)
+	stomp.put(message, destination=destination)
 #    except:
 #	pass

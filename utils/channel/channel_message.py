@@ -2,9 +2,9 @@ import simplejson as json
 
 class ChannelMessage:
 
-    EVENT_RINGING = 'ringing'
-    EVENT_HANGUP_CLEANUP = 'cleanup'
-    EVENT_LINK = 'link'
+    EVENT_RINGING = 'rg'
+    EVENT_HANGUP_CLEANUP = 'cl'
+    EVENT_LINK = 'ln'
 
     message = {'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}
     

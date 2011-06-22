@@ -1,0 +1,5 @@
+    var chanelEventSchema = {
+        'EVENT_RINGING': 'rg',
+        'EVENT_HANGUP_CLEANUP': 'cl',
+        'EVENT_LINK': 'ln'
+    };
