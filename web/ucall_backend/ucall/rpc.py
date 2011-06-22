@@ -14,19 +14,22 @@ class FormsApiClass(object):
         application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
-        
+
         # remove pk and Company fields from form
         del application_form.fields["pk"]
         del application_form.fields["company"]
-        
+
         # return extjs-encoded form
         return ExtJSONEncoder().default(application_form)
 
     getForm._args_len = 1
 
+    def  saveForm(self, fake, request):
+        pass
+
 
 class ProfileApiClass(object):
-    
+
     def getBasicInfo(self, request):
         return {
             "success":"true",
