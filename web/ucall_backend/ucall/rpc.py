@@ -9,18 +9,18 @@ from formunculous.forms import ApplicationForm
 
 class MainApiClass(object):
     
-    def getForm(self, slug, request):
+    def getForm(self, application_definition_id, request):
         # retrieve required data
-        application_definition = ApplicationDefinition.objects.get(slug=slug)
+        application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
         
-        # remove pk field from form
+        # remove pk and Company fields from form
         del application_form.fields["pk"]
+        del application_form.fields["company"]
         
         # return extjs-encoded form
         return ExtJSONEncoder().default(application_form)
-				
 
     getForm._args_len = 1
 
@@ -90,7 +90,8 @@ class Router(RpcRouter):
         self.url = 'router'
 
         self.actions = {
-            'Profile': MainApiClass()
+            'Profile': MainApiClass(),
+            'Forms': MainApiClass(),
         }
 
         self.enable_buffer = 50

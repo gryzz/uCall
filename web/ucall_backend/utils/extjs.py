@@ -63,7 +63,7 @@ class RpcRouter(object):
         <script src="{% url api_url_name %}"></script>
         """
         obj = simplejson.dumps(self, cls=RpcRouterJSONEncoder, url_args=args, url_kwargs=kwargs)
-        return HttpResponse('Ext.Direct.addProvider(%s)' % obj)
+        return HttpResponse('var directSchema = %s;' % obj)
 
     def __call__(self, request, *args, **kwargs):
         """
