@@ -1,9 +1,3 @@
 
-    var channelEventSchema = {
-        'EVENT_RINGING': 'rg',
-        'EVENT_HANGUP_CLEANUP': 'cl',
-        'EVENT_LINK': 'ln'
-    };
-
-    // var chanelEventSchema = {{ schema|safe }};
+    var channelEventSchema = {{ schema|safe }};
 
