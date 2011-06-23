@@ -9,16 +9,19 @@ Ext.define('uCall.controllers.MessageController', {
     requires: ['uCall.constants.MessageEvent'],
     extend: 'Ext.util.Observable',
     
-    mappedEvents: chanelEventSchema,
+    mappedEvents: channelEventSchema,
     
     handle: function(m) {
         var message = Ext.JSON.decode(m.message.data.body);
 
-        switch(message.e){
-            case this.mappedEvents.RING:
+        switch(message.t){
+            case this.mappedEvents.EVENT_RINGING:
                 this.fireEvent(uCall.constants.MessageEvent.SHOW, message.u, 'User ' + message.u + ' is waiting ...');
             break;
-            case this.mappedEvents.UNLINK:
+            case this.mappedEvents.EVENT_HANGUP_CLEANUP:
+                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
+            break;
+            case this.mappedEvents.EVENT_LINK:
                 this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
             break;
         }

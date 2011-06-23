@@ -9,5 +9,6 @@ Ext.define('uCall.constants.MessageEvent', {
 
     // Event types
     SHOW: "MessageShow",
-    HIDE: "MessageHide"
+    HIDE: "MessageHide",
+    WINDOW: "WindowShow"
 });

@@ -28,3 +28,4 @@ Ext.define('uCall.widgets.GrowlMessagingContainer', {
         growl.show();
 	}
 });
+

@@ -1,4 +1,4 @@
-Ext.Direct.addProvider(directSchema);
+//Ext.Direct.addProvider(directSchema);
 
 Ext.define('uCall.widgets.UserSettingsWindow', {
     requires: [
