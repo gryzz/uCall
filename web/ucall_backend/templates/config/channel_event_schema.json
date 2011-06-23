@@ -5,5 +5,5 @@
         'EVENT_LINK': 'ln'
     };
 
-    var chanelEventSchema = {{ schema|safe }};
+    // var chanelEventSchema = {{ schema|safe }};
 

@@ -12,6 +12,7 @@ Ext.define('uCall.App', {
         'uCall.controllers.ChannelEventController',
         'uCall.controllers.GrowlController',
         'uCall.controllers.MessageController',
+        'uCall.controllers.ApplicationWindowController',
         'uCall.l10n.L10n'
     ],
     
@@ -28,6 +29,7 @@ Ext.define('uCall.App', {
     },
     // Declare members
     messageController: null,
+    applicationWindowController: null,
     growlController: null,
     stompClientAdapterFactory: null,
     stompClientAdapter: null,
@@ -55,8 +57,12 @@ Ext.define('uCall.App', {
          * Init app components
          */
         // Channel messages controller
+        this.applicationWindowController = Ext.create('uCall.controllers.ApplicationWindowController');
         this.growlController = Ext.create('uCall.controllers.GrowlController');
         this.messageController = Ext.create('uCall.controllers.MessageController', {
+            onEventLinkCallback: function(message) {
+                that.applicationWindowController.fireEvent(uCall.constants.MessageEvent.WINDOW, message);
+            },
             onShow: function(id, message) {
                 that.growlController.add(id, [ {
                     xtype: 'component',
@@ -83,8 +89,8 @@ Ext.define('uCall.App', {
                 uCall.widgets.ChannelStatusInactivePopup.hide();
             },
             
-            onMessage: function(message){
-                that.messageController.handle(message);
+            onMessage: function(eventData){
+                that.messageController.handleMessage(eventData);
             },
             
             onDisconnect: function(){

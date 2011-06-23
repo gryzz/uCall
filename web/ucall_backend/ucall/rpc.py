@@ -10,10 +10,10 @@ from formunculous.forms import ApplicationForm
 class FormsApiClass(object):
 
     def getForm(self, data, request):
-        
+
         # get id from input data
         application_definition_id = data['id']
-        
+
         # retrieve required data
         application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
         application = Application(app_definition = application_definition, user = request.user)
@@ -40,11 +40,18 @@ class FormsApiClass(object):
             application = Application(app_definition = application_definition, user = user)
 
             form = ApplicationForm(application_definition, application, False, request.POST, request.FILES)
-            form.save()
 
-            return {
-                "success":True
-            }
+            if not (form.is_valid() and form.check_required()):
+                return {
+                    "errors": form.errors,
+                    "success": False
+                }
+            else:
+                form.save()
+
+                return {
+                    "success": True
+                }
 
     saveForm._args_len = 1
     saveForm._form_handler = True
