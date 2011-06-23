@@ -9,7 +9,8 @@ from stompy.simple import Client
 stomp = Client('127.0.0.1') 
 stomp.connect('guest', 'password')
 stomp.subscribe("/queue/control")
+
 message = stomp.get()
 print message.body
-#stomp.unsubscribe("/queue2/test")
-#stomp.disconnect()
+
+stomp.disconnect()
