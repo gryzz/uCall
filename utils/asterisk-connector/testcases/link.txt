@@ -1,1 +1,1 @@
-4836670	2011-06-01 10:52:43.007918	Link	\N	{'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'CallerID2': '380352407040', 'CallerID1': '430913', 'Channel2': 'SIP/1313-19ba26d0', 'Channel1': 'SIP/430913-19be0080', 'Privilege': 'call,all', 'Event': 'Link'}
+4836670	2011-06-01 10:52:43.007918	Link	\N	{'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'CallerID2': '407040', 'CallerID1': '430913', 'Channel2': 'SIP/1313-19ba26d0', 'Channel1': 'SIP/430913-19be0080', 'Privilege': 'call,all', 'Event': 'Link'}
