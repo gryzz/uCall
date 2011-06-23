@@ -24,8 +24,23 @@ class FormsApiClass(object):
 
     getForm._args_len = 1
 
-    def  saveForm(self, fake, request):
-        pass
+    def saveForm(self, fake, request):
+        if 'application_definition_id' in request.POST and request.POST['application_definition_id']:
+            application_definition = ApplicationDefinition.objects.get(id = request.POST['application_definition_id'])
+            user = request.user
+            application = Application(app_definition = application_definition, user = user)
+
+            form = ApplicationForm(application_definition, application, False, request.POST, request.FILES)
+            form.save()
+
+            return {
+                "success":True
+            }
+
+    saveForm._args_len = 1
+    saveForm._form_handler = True
+
+
 
 
 class ProfileApiClass(object):
