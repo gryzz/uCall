@@ -10,26 +10,25 @@ Ext.define('uCall.controllers.GrowlController', {
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
         console.log(arguments);
-//       alert(this.alignMessagesTo)
     },
     
     add: function(id, items) {
-        var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {html: 'asdf'});
+        var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {items: items});
         this.messages[id] = growlMessage;
         growlMessage.showAt([0,0]);
-        growlMessage.showAt(growlMessage.el.getAlignToXY(this.alignMessagesTo, 'tl-bl', [0, 10]));
+        growlMessage.showAt(growlMessage.el.getAlignToXY(this.alignMessagesTo, 'tl-bl', [ this.alignMessagesTo == this.topElement ? 5 : 0, 5]));
         var that = this;
-        growlMessage.on("close", function(event){
-                console.log(event);
-                console.log(this);
-                
-                var id = that.messages.indexOf(this);
+        growlMessage.on('close', function(event){
+                var id = Ext.Object.getKey(that.messages, this);
+                if(id == -1)
+                    return;
                 delete that.messages[id];
+                this.destroy();
                 that.alignMessagesTo = that.topElement;
-                
+                console.log('closing ...');
                 for(i in that.messages) {
                     var p = that.messages[i];
-                    p.showAt(p.el.getAlignToXY(that.alignMessagesTo, 'tl-bl', [0, 10]));
+                    p.showAt(p.el.getAlignToXY(that.alignMessagesTo, 'tl-bl', [that.alignMessagesTo == that.topElement ? 5 : 0, 5]));
                     that.alignMessagesTo = p.el;
                 }
             }, growlMessage);
@@ -38,8 +37,7 @@ Ext.define('uCall.controllers.GrowlController', {
     },
     
     remove: function(id) {
-        var messageBox = this.growlMessaging.getComponent('GrowlMessagingContainer').getComponent(this.generateId(id));
-		this.growlMessaging.remove(messageBox, true);
+        this.messages[id].fireEvent('close')
     },
     
     generateId: function(str){
