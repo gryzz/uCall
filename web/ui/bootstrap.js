@@ -4,6 +4,13 @@ Ext.Loader.setPath('uCall', '/ui/app');
 
 // Includes
 Ext.require('uCall.App');
+Ext.require('Ext.direct.*');
+Ext.require('Ext.form.*');
+Ext.require('Ext.tip.QuickTipManager');
+
+// Init
+Ext.direct.Manager.addProvider(directSchema); 
+Ext.tip.QuickTipManager.init();
 
 // Application
 Ext.application({
@@ -14,45 +21,60 @@ Ext.application({
     }
 });
 
+Ext.require('uCall.model.ApplicationDefinition');
+Ext.require('uCall.widgets.ApplicationFormWindow');
+Ext.onReady(function(){
+    uCall.model.ApplicationDefinition.load(1, {
+        success: function(result) {
+            
+            var applicationDefinition = result.data;
+            var applicationFormItems = applicationDefinition.application_form;
+            applicationFormItems.push({
+                xtype: 'hiddenfield',
+                name: 'application_definition_id',
+                value: applicationDefinition.id
+            });
+            
+            // TODO: Do something with this!
+            for (var item in applicationFormItems) {
+                applicationFormItems[item].labelWidth = 200;
+                applicationFormItems[item].labelAlign = "right";
+            }
+            
+            Ext.create('uCall.widgets.ApplicationFormWindow', {
+                title: applicationDefinition.slug, // TODO: use app.def. title!
+                formItems: applicationFormItems,
+                onSubmit: function() {
+                    // TODO: Implement! (Copy-Paste from update profile)
+                    
+            	    var form = this.up('form').getForm();
+                    if (form.isValid()) {
+                        that = this;
+                        form.submit({
+                            waitMsg: 'Submitting your data...',
+                            success: function(form, action){
+                                //TODO: Add messageBox that exdent common one
+                                that.up('form').getForm().reset();
+                                that.up('window').hide();
+                                Ext.MessageBox.alert('Thank you!', 'Your application has been saved.');
+                            },
+                            failure: function(form, action){
+                                 var messageBox = Ext.create('uCall.widgets.GrowlMessage', {
+                                    items: {
+                                        xtype: 'component',
+                                        html: 'Something went wrong',
+                                    },
+                                    floating: true,
+                                    closable: true,
+                                    id: 'id'}
+                                 );
 
-   //  // add a handler for a 'message' event sent by the server
-   //  Ext.direct.Manager.on('event', function(event){
-   //      
-   //      var w = Ext.create('Ext.window.Window', {
-   //          // id: 'UserSettingsWindow',
-   //       title: 'Dialog Form',
-   //       layout: 'fit',
-   //       height: 400,
-   //       width: 600,
-   //       modal: false,
-   //          closable: true,
-   //          maximizable: true,
-   //          
-   //          
-   //          items:
-   //       {
-   //           xtype: 'form',
-   //              // id: 'UserSettingsForm',
-   //           standardSubmit : false,
-   //           layout: 'anchor',
-   //           height: '100%',
-   //           width: '100%',
-   //           border: false,
-   //           bodyPadding: 10,
-   // 
-   //              // baseParams: {next: '/'},
-   //              // 
-   //              // api: {
-   //                  // The server-side must mark the submit handler as a 'formHandler'
-   //                  // submit: Forms.submitForm
-   //              // },
-   // 
-   //           items: event.result
-   //       }
-   //      });
-   //      
-   //      w.show();
-   //  });
-   // 
-   // Forms.getForm(2);
-// });
+                                 messageBox.show();
+                            }
+                        });
+            	    }
+                }
+            });
+        }
+    });
+});

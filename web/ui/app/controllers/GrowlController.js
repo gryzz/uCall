@@ -5,10 +5,11 @@ Ext.define('uCall.controllers.GrowlController', {
     alignMessagesTo: null,
     topElement: null,
     
-    constructor: function(alignMessagesTo) {
-       this.alignMessagesTo = alignMessagesTo;
-       this.topElement = alignMessagesTo;
-       console.log(arguments);
+    constructor: function() {
+        var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
+        this.alignMessagesTo = alignMessagesTo;
+        this.topElement = alignMessagesTo;
+        console.log(arguments);
 //       alert(this.alignMessagesTo)
     },
     
@@ -16,7 +17,7 @@ Ext.define('uCall.controllers.GrowlController', {
         var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {html: 'asdf'});
         this.messages[id] = growlMessage;
         growlMessage.showAt([0,0]);
-        growlMessage.showAt(growlMessage.el.getAlignToXY(this.alignMessagesTo.el, 'tl-bl', [0, 10]));
+        growlMessage.showAt(growlMessage.el.getAlignToXY(this.alignMessagesTo, 'tl-bl', [0, 10]));
         var that = this;
         growlMessage.on("close", function(event){
                 console.log(event);
@@ -28,10 +29,12 @@ Ext.define('uCall.controllers.GrowlController', {
                 
                 for(i in that.messages) {
                     var p = that.messages[i];
-                    p.showAt(p.el.getAlignToXY(that.alignMessagesTo.el, 'tl-bl', [0, 10]));
-                    that.alignMessagesTo.el = p.el;
+                    p.showAt(p.el.getAlignToXY(that.alignMessagesTo, 'tl-bl', [0, 10]));
+                    that.alignMessagesTo = p.el;
                 }
             }, growlMessage);
+            
+        this.alignMessagesTo = growlMessage.el;
     },
     
     remove: function(id) {
