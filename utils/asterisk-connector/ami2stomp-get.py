@@ -5,11 +5,32 @@
 import sys,time
 import simplejson as json
 from stompy.simple import Client
+import ConfigParser
 
-stomp = Client('127.0.0.1') 
-stomp.connect('guest', 'password')
+config = ConfigParser.ConfigParser()
+devel_config = ConfigParser.ConfigParser()
+
+config.read('/opt/ucall/etc/config.ini')
+devel_config.read('/opt/ucall/etc/devel_config.ini')
+
+stomp_host = config.get('STOMP', 'host')
+stomp_username = config.get('STOMP', 'username')
+stomp_password = config.get('STOMP', 'password')
+stomp_queue = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
+
+print '='*80
+print 'Stomp host:', stomp_host 
+print 'Stomp username:', stomp_username 
+print 'Stomp password:', stomp_password 
+print 'Stomp queue:', stomp_queue
+print '='*80
+
+stomp = Client(stomp_host)
+stomp.connect(stomp_username, stomp_password)
 stomp.subscribe("/queue/control")
+
 message = stomp.get()
+
 print message.body
-#stomp.unsubscribe("/queue2/test")
-#stomp.disconnect()
+
+stomp.disconnect()
