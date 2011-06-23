@@ -89,7 +89,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
                         success: function(form, action){
                             //TODO: Add messageBox that exdent common one
                             that.up('form').getForm().reset();
-                            that.up('window').hide();
+                            that.up('window').close();
                             Ext.MessageBox.alert('Thank you!', 'Your profile has been saved.');
                         },
                         failure: function(form, action){
