@@ -11,7 +11,7 @@ def handle_Dial(raw):
 
 def handle_Hangup(event):
     if event['Cause-txt'] == 'Normal Clearing':
-	handle_hangup_clearing(event)
+	return handle_hangup_clearing(event)
 
 def handle_Link(event):
 
@@ -62,7 +62,7 @@ def handle_newstate_ringing(event):
     message.set_event(ChannelMessage.EVENT_RINGING)
     message.set_id(event['Uniqueid'])
     message.set_extension(event['CallerID'])
-    message.set_caller('cn') #find in db
+    message.set_caller('!') #find in db
     
     return message.dump_data_json()
 
@@ -76,7 +76,5 @@ def handle_hangup_clearing(event):
 
     message.set_event(ChannelMessage.EVENT_HANGUP_CLEANUP)
     message.set_id(event['Uniqueid'])
-    
-    print message.dump_data_json()
     
     return message.dump_data_json()

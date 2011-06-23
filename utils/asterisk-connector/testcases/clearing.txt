@@ -1,0 +1,1 @@
+4836667	2011-06-01 10:52:42.996394	Hangup	1306915128.7017	{'Cause-txt': 'Normal Clearing', 'Uniqueid': '1306915128.7017', 'Privilege': 'call,all', 'Cause': '16', 'Event': 'Hangup', 'Channel': 'SIP/1001-19d291e0'}

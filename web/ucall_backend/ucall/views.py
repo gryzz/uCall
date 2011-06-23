@@ -12,21 +12,23 @@ def main(request):
 def config_stomp(request):
     config = Config.objects.filter(section=u"stomp")
     #TODO is it possible to gzip/cache???
-    return render_to_response('config/stomp.json', {'config': config}, mimetype = 'application/json')
+    return render_to_response('config/stomp.json', {'config': config}, mimetype = 'text/javascript')
 
 @login_required()
 def config_current_user(request):
     #TODO is it possible to gzip/cache???
-    return render_to_response('config/current_user.json', {'user': request.user}, mimetype = 'application/json')
+    return render_to_response('config/current_user.json', {'user': request.user}, mimetype = 'text/javascript')
 
+@login_required()
 def config_channel_event_schema(request):
     #TODO is it possible to gzip/cache???
-    return render_to_response('config/channel_event_schema.json', mimetype = 'text/javascript')
+    message = ChannelMessage()
+    return render_to_response('config/channel_event_schema.json', {'schema': message.dump_schema_json()}, mimetype = 'text/javascript')
 
 @login_required()
 def config_urls(request):
     #TODO is it possible to gzip/cache???
-    return render_to_response('config/urls.json', {'user': request.user}, mimetype = 'application/json')
+    return render_to_response('config/urls.json', {'user': request.user}, mimetype = 'text/javascript')
 
 @login_required()
 def profile_save(request):

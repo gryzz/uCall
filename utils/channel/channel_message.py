@@ -6,8 +6,12 @@ class ChannelMessage:
     EVENT_HANGUP_CLEANUP = 'cl'
     EVENT_LINK = 'ln'
 
+    EVENT_RINGING_KEY = 'EVENT_RINGING'
+    EVENT_HANGUP_CLEANUP_KEY = 'EVENT_HANGUP_CLEANUP'
+    EVENT_LINK_KEY = 'EVENT_LINK'
+
     message = {'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}
-    
+
     (ID_KEY, CALLER_KEY, EVENT_KEY, EXTENTION_KEY) = ('i', 'c', 't', 'e')
 
     caller = None
@@ -18,30 +22,33 @@ class ChannelMessage:
 
     def dump_data_json(self):
 
-	data = {}
-        
+        data = {}
+
         if self.caller:
-    	    data[self.CALLER_KEY] = self.caller    
-        
+    	    data[self.CALLER_KEY] = self.caller
+
         if self.event:
-    	    data[self.EVENT_KEY] = self.event    
+    	    data[self.EVENT_KEY] = self.event
 
         if self.extension:
-	    data[self.EXTENTION_KEY] = self.extension    
+	    data[self.EXTENTION_KEY] = self.extension
 
         if self.id:
-    	    data[self.ID_KEY] = self.id    
+    	    data[self.ID_KEY] = self.id
 
-        return json.dumps(data, separators=(',',':'))
+        return self.json_dump(data)
 
-    def  form_json_schema(self):
-        data = (
-            self.CALLER_KEY,
-            self.EVENT_KEY,
-            self.EXTENTION_KEY,
-            self.ID_KEY
-        )
+    def dump_schema_json(self):
 
+        data = {
+            self.EVENT_RINGING_KEY: self.EVENT_RINGING,
+            self.EVENT_HANGUP_CLEANUP_KEY: self.EVENT_HANGUP_CLEANUP,
+            self.EVENT_LINK_KEY: self.EVENT_LINK
+        }
+
+        return self.json_dump(data)
+
+    def json_dump(self, data):
         return json.dumps(data, separators=(',',':'))
 
 

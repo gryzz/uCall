@@ -8,16 +8,23 @@
 Ext.define('uCall.widgets.UserStatusMenuButton', {
     extend: 'Ext.Button',
     alias: 'widget.UserStatusMenuButton',
+
+    iconStatusOnline: "/ui/resources/images/user_status/online.png",
+    iconStatusAway: "/ui/resources/images/user_status/away.png",
+    iconStatusOffline: "/ui/resources/images/user_status/offline.png",
     
     onMenuItemClick: function(menu, item, event){
-        console.log("TODO: UserStatusMenuButton.onItemClick. Handle!");
-
         switch(item.id) {
-            case 'StatusItemLogout':
-                window.location = window.urls.logoutUrl;
+            case 'StatusItemOffline':
+		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOffline);
                 break;
-            case 'StatusItemNA':
-                Ext.getCmp('ucall-controllers-messagesdeck').add('id', 'message');
+
+            case 'StatusItemOnline':
+		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOnline);
+                break;
+
+            case 'StatusItemAway':
+		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusAway);
                 break;
         }
     },
@@ -28,11 +35,9 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         menu: {
             xtype: 'menu',
             items: [
-                {text: "Available", icon: "/ui/resources/images/user_status/online.png"},
-                {text: "Away", icon: "/ui/resources/images/user_status/away.png"},
-                {text: "N/A", icon: "/ui/resources/images/user_status/offline.png", id: "StatusItemNA"},
-                '-',
-                {text: "Logout", icon: "/ui/resources/images/user_status/logout.png", id: "StatusItemLogout"}
+                {text: "Available", icon: "/ui/resources/images/user_status/online.png", id: "StatusItemOnline"},
+                {text: "Away", icon: "/ui/resources/images/user_status/away.png", id: "StatusItemAway"},
+                {text: "Offline", icon: "/ui/resources/images/user_status/offline.png", id: "StatusItemOffline"}
             ]
         }
     },
@@ -42,12 +47,8 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
 	
-	this.setIcon("/ui/resources/images/user_status/offline.png");
+	this.setIcon(this.iconStatusOffline);
         // Event Handlers
-        this.menu.on("click", this.onMenuItemClick);
-    
-
-        console.log("TODO: UserStatusMenuButton(). Pass a 'User' model!");
-        console.log("TODO: UserStatusMenuButton(). Create 'real' events and add listeners!");
+        this.menu.on("click", this.onMenuItemClick, this);
     }
 });
