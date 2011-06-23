@@ -29,5 +29,5 @@ urlpatterns = patterns('',
     (r'^func/', include('formunculous.urls')),
     # formunculous static urls
 
-    # (r'formunculous/(?P<path>.*)$', 'django.views.static.serve', {'document_root': FORMUNCULOUS_STATIC_MEDIA_PATH, 'show_indexes': False}),    
+    (r'formunculous/(?P<path>.*)$', 'django.views.static.serve', {'document_root': FORMUNCULOUS_STATIC_MEDIA_PATH, 'show_indexes': False}),    
 )

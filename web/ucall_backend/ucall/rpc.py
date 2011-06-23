@@ -9,23 +9,47 @@ from formunculous.forms import ApplicationForm
 
 class FormsApiClass(object):
 
-    def getForm(self, application_definition_id, request):
+    def getForm(self, data, request):
+        
+        # get id from input data
+        application_definition_id = data['id']
+        
         # retrieve required data
         application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
 
         # remove pk and Company fields from form
+        # FIXME: brutal hack
         del application_form.fields["pk"]
         del application_form.fields["company"]
 
         # return extjs-encoded form
-        return ExtJSONEncoder().default(application_form)
+        return {
+            'id': application_definition.id,
+            'slug': application_definition.slug,
+            'application_form': ExtJSONEncoder().default(application_form)
+        }
 
     getForm._args_len = 1
 
-    def  saveForm(self, fake, request):
-        pass
+    def saveForm(self, fake, request):
+        if 'application_definition_id' in request.POST and request.POST['application_definition_id']:
+            application_definition = ApplicationDefinition.objects.get(id = request.POST['application_definition_id'])
+            user = request.user
+            application = Application(app_definition = application_definition, user = user)
+
+            form = ApplicationForm(application_definition, application, False, request.POST, request.FILES)
+            form.save()
+
+            return {
+                "success":True
+            }
+
+    saveForm._args_len = 1
+    saveForm._form_handler = True
+
+
 
 
 class ProfileApiClass(object):

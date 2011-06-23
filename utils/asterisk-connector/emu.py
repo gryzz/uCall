@@ -71,13 +71,13 @@ for line in csv_read:
     event = line[2]
     event_data = eval(line[4])
 
-    
 #    try:
     message = callbacks[event](event_data)
+
     if message:
-	print event_data
-	print event
-	print message
+	print 'Event:', event
+	print 'Original data:', event_data
+	print 'Produced message:', message
     
 	stomp.put(message, destination=stomp_queue)
 #    except:
