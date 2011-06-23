@@ -5,7 +5,7 @@
  * Message controller.
  */
 
-Ext.define('uCall.controllers.MessageController', {
+Ext.define('uCall.controllers.ApplicationWindowController', {
     requires: ['uCall.constants.MessageEvent'],
     extend: 'Ext.util.Observable',
     
@@ -22,10 +22,14 @@ Ext.define('uCall.controllers.MessageController', {
                 this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
             break;
             case this.mappedEvents.EVENT_LINK:
-                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
+                this.fireEvent(uCall.constants.MessageEvent.WINDOW, message.u);
             break;
         }
     },
+    
+    onShow: function(m){
+	alert('!!!!');
+    }
     
     config: {
         onShow: Ext.emptyFn,
@@ -38,14 +42,7 @@ Ext.define('uCall.controllers.MessageController', {
         // Merge configs
         Ext.apply(this.config, config);
         Ext.applyIf(this, this.config);
-        // Register events
-        this.addEvents(
-            uCall.constants.MessageEvent.SHOW,
-            uCall.constants.MessageEvent.HIDE,
-            uCall.constants.MessageEvent.WINDOW
-        );
-        // Add listeners
-        this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
-        this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);
+
+        this.on(uCall.constants.MessageEvent.WINDOW, this.onShow, this);
     }
 });
