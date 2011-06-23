@@ -2,6 +2,7 @@ from django.db import models
 from formunculous.models import ApplicationDefinition
 
 class CrmCustomerNumber(models.Model):
+    # TODO: one-to-one relationship
     phone_number = models.CharField(max_length=255)
     dialog_form = models.ForeignKey(ApplicationDefinition)
 

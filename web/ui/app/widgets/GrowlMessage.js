@@ -11,7 +11,7 @@ Ext.define('uCall.widgets.GrowlMessage', {
         width: 200,
         height: 50,
         autoHide: false,
-        closable: true,
+        closable: false,
         closeAction: 'destroy'
     },
     

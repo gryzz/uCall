@@ -6,21 +6,21 @@ import traceback
 from utils.extjs_form_encoder import ExtJSONEncoder
 from formunculous.models import ApplicationDefinition, Application
 from formunculous.forms import ApplicationForm
+from crm.models import CrmCustomerNumber
 
 class FormsApiClass(object):
 
     def getForm(self, data, request):
 
-        # get id from input data
-        application_definition_id = data['id']
+        # get extension from input data
+        customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
 
         # retrieve required data
-        application_definition = ApplicationDefinition.objects.get(id = application_definition_id)
+        application_definition = customer.dialog_form
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
 
         # remove pk and Company fields from form
-        # FIXME: brutal hack
         del application_form.fields["pk"]
         del application_form.fields["company"]
 

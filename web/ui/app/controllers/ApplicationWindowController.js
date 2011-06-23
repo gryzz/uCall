@@ -19,7 +19,7 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
 	    console.log("TODO: pass the message to RPC router");
 	    console.log(message);
 
-        uCall.model.ApplicationDefinition.load({'ext':09703}, {
+        uCall.model.ApplicationDefinition.load(message.e, {
             success: function(result) {
         
                 var applicationDefinition = result.data;

@@ -15,20 +15,18 @@ def handle_Hangup(event):
 
 def handle_Link(event):
 
+    # Event: Link
+    # Original data: {'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'Channel1': 'SIP/430913-19be0080', 'Channel2': 'SIP/1313-19ba26d0', 'CallerID2': '380352407040', 'Privilege': 'call,all', 'CallerID1': '430913', 'Event': 'Link'}
+    # Produced message: {"t":"ln"}
+
     message = ChannelMessage()
 
     message.set_event(ChannelMessage.EVENT_LINK)
-    #message.set_id(event['Uniqueid'])
-    #message.set_extension(event['CallerID'])
+    message.set_id(event['Uniqueid1'])
+    message.set_extension(event['CallerID1'])
+    message.set_caller(event['CallerID2'])
     
     return message.dump_data_json()
-
-    agent = getLocalNumber(event['Channel2'])
-    message = json.dumps({'event': 'link', 'remote': event.get_header('CallerID1'), 'local':agent}, separators=(',',':'))
-
-    stomp.put(message, destination="/queue/"+agent, persistent=False)
-    print "Incomming answered - %s - %s - %s" % (event.get_header('Uniqueid1'), event.get_header('CallerID1'), getLocalNumber(event.get_header('Channel2')))
-    return raw
 
 def handle_Newcallerid(raw):
     return raw

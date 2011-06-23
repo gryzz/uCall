@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src='extras/jquery/js/jquery-1.4.2.min.js'></script>
+    <script type="text/javascript" src="extras/jquery/js/jquery-ui-1.8.6.custom.min.js"></script>
+    <script type="text/javascript" src="extras/jquery/js/jquery.cookie.js"></script>
+    <link type="text/css" href="extras/jquery/css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />	
+    <script type="text/javascript" src='extras/jquery/js/jquery.toastmessage.js'></script>
+    <link type="text/css" href='extras/jquery/js/jquery.toastmessage.css' rel="stylesheet" />	
+    <script src='stomple.js'></script>
+    <script>
+	var queue = 'ws://ucall.org:61614/stomp';
+
+
+if (Stomple) {//feature detection: is stomple available?
+    Stomple.debug = true;//enable debug logging of messages
+    var client = Stomple.create_client({
+        url: queue,
+        destination: "/queue/messages/SIP/1001",
+        login: "guest",
+        passcode: "password"
+    });
+    client.subscribe({
+        handler: function(f) {
+            console.log('received frame');
+            console.log(f);
+            console.log("Message: "+f.body);
+            console.log("'this' is bound to 'scope'");
+            console.log("Session:"+this.session);
+            client.send({
+                success: function() {},//handle successful send
+                failure: function() {},//handle failed send
+                timeout: 5000//wait max 5 seconds before failing
+            });
+        },
+        scope: client,
+        success: function() {//did subscription succeed?
+            console.log("sub ok..");
+        },
+        failure: function() {//did subscription fail?
+            console.log("sub fail");
+        }
+    });
+} 
+
+    </script>
+  </head>
+  <body>
+  <table width="100%">
+  <tr valign="top">
+    <td id="state">offline</td>
+    <td align="right"><span id="counter_answered">0</span> / <span id="counter_unanswered">0</span></td>
+    </tr>
+  <tr valign="top">
+    <td colspan="2">
+	<hr>
+	<pre id="debug"></pre>
+    </td>
+    </tr>
+    </table>    
+    <div id="dialog" style="display: none;" title="Incomming Call..."></div>
+  </body>
+</html>
