@@ -26,9 +26,9 @@ Ext.define('uCall.controllers.MessageController', {
                 this.fireEvent(uCall.constants.MessageEvent.SHOW, message.u, 'User ' + message.u + ' is waiting ...');
                 break;
             case this.mappedEvents.EVENT_HANGUP_CLEANUP:
-            //     this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
-            //     break;
-            // case this.mappedEvents.EVENT_LINK:
+                // this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
+                break;
+            case this.mappedEvents.EVENT_LINK:
                 // this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
                 
                 if (this.onEventLinkCallback) {

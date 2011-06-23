@@ -17,8 +17,9 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
     onShow: function(message){
 	    console.log("ApplicationWindowController::onShow");
 	    console.log("TODO: pass the message to RPC router");
+	    console.log(message);
 
-        uCall.model.ApplicationDefinition.load(1, {
+        uCall.model.ApplicationDefinition.load({'ext':09703}, {
             success: function(result) {
         
                 var applicationDefinition = result.data;
