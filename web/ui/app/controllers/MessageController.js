@@ -30,7 +30,7 @@ Ext.define('uCall.controllers.MessageController', {
                 this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
                 break;
             case this.mappedEvents.EVENT_LINK:
-                // this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
+                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
                 
                 if (this.onEventLinkCallback) {
                     this.onEventLinkCallback(message);
@@ -52,6 +52,7 @@ Ext.define('uCall.controllers.MessageController', {
             uCall.constants.MessageEvent.SHOW,
             uCall.constants.MessageEvent.HIDE
         );
+
         // Add listeners
         this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
         this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);
