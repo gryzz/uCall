@@ -81,13 +81,17 @@ a:hover { color: #036; }
 /*
     // ========================================== \\
    ||                                              ||
-   ||               Your styles !                  ||
+   ||                Our styles !                  ||
    ||                                              ||
     \\ ========================================== //
 */
 
 
 
+.mainPanelBg {
+    background: url("/ui/resources/images/logo/receptionist_256.png") no-repeat scroll right bottom;
+    opacity: 0.2; # TODO: remove opacity 
+}
 
 
 
@@ -95,6 +99,13 @@ a:hover { color: #036; }
 
 
 
+/*
+    // ========================================== \\
+   ||                                              ||
+   ||                Our styles !                  ||
+   ||                                              ||
+    \\ ========================================== //
+*/
 
 
 
