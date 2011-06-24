@@ -9,6 +9,7 @@ admin.site.register(CrmCustomer, CrmCustomerAdmin)
 
 class CrmCustomerNumberAdmin(admin.ModelAdmin):
     list_display_links = list_display = ('phone_number', 'dialog_form', 'crm_adapter')
+    list_filter = ('crm_adapter',)
 
 admin.site.register(CrmCustomerNumber, CrmCustomerNumberAdmin)
 
