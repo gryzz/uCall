@@ -7,16 +7,19 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 from channel.channel_message import ChannelMessage as ChannelMessage
 
 def handle_Dial(event, manager=None):
+    global stomp
     print event
     return 
 
 def handle_Hangup(event, manager=None):
+    global stomp
     print event
 
     if event['Cause-txt'] == 'Normal Clearing':
         return handle_hangup_clearing(event)
 
 def handle_Link(event, manager=None):
+    global stomp
 
     print event
 
@@ -32,14 +35,17 @@ def handle_Link(event, manager=None):
     return message.dump_data_json()
 
 def handle_Newcallerid(event, manager=None):
+    global stomp
     print event    
     return
 
 def handle_Newchannel(event, manager=None):
+    global stomp
     print event    
     return
 
 def handle_Newexten(event, manager=None):
+    global stomp
     print event    
     if manager != None:
 	event = event.headers
@@ -47,6 +53,7 @@ def handle_Newexten(event, manager=None):
     return
 
 def handle_Newstate(event, manager=None):
+    global stomp
     if manager != None:
 	event = event.headers
     print event    
@@ -57,6 +64,7 @@ def handle_Newstate(event, manager=None):
     return None
 
 def handle_Unlink(event, manager=None):
+    global stomp
     print event    
     return
 
@@ -65,7 +73,10 @@ def handle_Unlink(event, manager=None):
 def getLocalNumber(channel):
     return channel.split('-')[0]
 
+# ======================================
+
 def handle_newstate_ringing(event):
+    global stomp
     channel = event['Channel']
 
     if channel == None:
@@ -83,6 +94,7 @@ def handle_newstate_ringing(event):
     return message.dump_data_json()
 
 def handle_hangup_clearing(event):
+    global stomp
     channel = event['Channel']
     
     if channel == None:
