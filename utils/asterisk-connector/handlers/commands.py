@@ -11,14 +11,12 @@ def handle_Dial(event, manager=None):
 
 def handle_Hangup(event, manager=None):
     print event
-    print manager
 
     if event['Cause-txt'] == 'Normal Clearing':
         return handle_hangup_clearing(event)
 
 def handle_Link(event, manager=None):
 
-    print type(event)
     print event
 
     # Original data: {'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'Channel1': 'SIP/430913-19be0080', 'Channel2': 'SIP/1313-19ba26d0', 'CallerID2': '380352407040', 'Privilege': 'call,all', 'CallerID1': '430913', 'Event': 'Link'}
@@ -33,12 +31,15 @@ def handle_Link(event, manager=None):
     return message.dump_data_json()
 
 def handle_Newcallerid(event, manager=None):
+    print event    
     return raw
 
 def handle_Newchannel(event, manager=None):
+    print event    
     return raw
 
 def handle_Newexten(event, manager=None):
+    print event    
     if manager != None:
 	event = event.headers
 
@@ -47,6 +48,7 @@ def handle_Newexten(event, manager=None):
 def handle_Newstate(event, manager=None):
     if manager != None:
 	event = event.headers
+    print event    
    
     if event['State'] == 'Ringing':
 	return handle_newstate_ringing(event)
@@ -54,6 +56,7 @@ def handle_Newstate(event, manager=None):
     return None
 
 def handle_Unlink(event, manager=None):
+    print event    
     return raw
 
 # ======================================
@@ -66,6 +69,8 @@ def handle_newstate_ringing(event):
 
     if channel == None:
         return None
+
+    print event    
 
     message = ChannelMessage()
 
@@ -81,6 +86,8 @@ def handle_hangup_clearing(event):
     
     if channel == None:
         return None
+
+    print event    
 
     message = ChannelMessage()
 
