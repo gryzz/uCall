@@ -7,7 +7,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 from channel.channel_message import ChannelMessage as ChannelMessage
 
 def handle_Dial(event, manager=None):
-    return raw
+    print event
+    return 
 
 def handle_Hangup(event, manager=None):
     print event
