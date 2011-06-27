@@ -13,6 +13,10 @@ def handle_Dial(event, manager=None):
 
 def handle_Hangup(event, manager=None):
     global stomp
+
+    if manager != None:
+	event = event.headers
+
     print event
 
     if event['Cause-txt'] == 'Normal Clearing':
@@ -54,8 +58,10 @@ def handle_Newexten(event, manager=None):
 
 def handle_Newstate(event, manager=None):
     global stomp
+
     if manager != None:
 	event = event.headers
+
     print event    
    
     if event['State'] == 'Ringing':
@@ -91,7 +97,7 @@ def handle_newstate_ringing(event):
     message.set_extension(event['CallerID'])
     message.set_caller('!') #find in db
     
-    return message.dump_data_json()
+    stomp.put(message.dump_data_json(), destination=getLocalNumber(channel))
 
 def handle_hangup_clearing(event):
     global stomp
