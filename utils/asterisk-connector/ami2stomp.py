@@ -62,12 +62,31 @@ def handle_event(event, manager):
     
     AsteriskEvent(event=event.get_header('Event'), raw=str(event.headers), uniqueid=uniqueid)
 
+stomp_host = config.get('STOMP', 'host')
+stomp_username = config.get('STOMP', 'username')
+stomp_password = config.get('STOMP', 'password')
+
+print '='*80
+print 'Stomp host:', stomp_host 
+print 'Stomp username:', stomp_username 
+print 'Stomp password:', stomp_password 
+print '='*80
+
+ami_host = config.get('AMI', 'host')
+ami_username = config.get('AMI', 'username')
+ami_password = config.get('AMI', 'password')
+
+print 'AMI host:', ami_host 
+print 'AMI username:', ami_username 
+print 'AMI password:', ami_password 
+print '='*80
+
 manager = asterisk.manager.Manager()
 
 #try:
 #try:
-manager.connect(config.get('AMI', 'host'))
-manager.login(config.get('AMI', 'username'), config.get('AMI', 'password'))
+manager.connect(ami_host)
+manager.login(ami_username, ami_password)
 
 manager.register_event('Shutdown', handle_shutdown)
 manager.register_event('Newstate', handlers.handle_Newstate)
