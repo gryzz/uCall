@@ -23,6 +23,10 @@ class CrmGateway:
 
         elif type is 'Django CRM':
             pass
+            
+        else:
+    	    #TODO rise exception
+    	    pass
 
 
 
