@@ -32,18 +32,18 @@ def handle_Link(event, manager=None):
 
 def handle_Newcallerid(event, manager=None):
     print event    
-    return raw
+    return
 
 def handle_Newchannel(event, manager=None):
     print event    
-    return raw
+    return
 
 def handle_Newexten(event, manager=None):
     print event    
     if manager != None:
 	event = event.headers
 
-    return raw
+    return
 
 def handle_Newstate(event, manager=None):
     if manager != None:
@@ -57,7 +57,7 @@ def handle_Newstate(event, manager=None):
 
 def handle_Unlink(event, manager=None):
     print event    
-    return raw
+    return
 
 # ======================================
 
