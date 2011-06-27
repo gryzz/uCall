@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
 
-def handle_Dial(raw):
+def handle_Dial(event, manager=None):
     return raw
 
 def handle_Hangup(event, manager=None):
@@ -32,13 +32,16 @@ def handle_Link(event, manager=None):
     
     return message.dump_data_json()
 
-def handle_Newcallerid(raw):
+def handle_Newcallerid(event, manager=None):
     return raw
 
-def handle_Newchannel(raw):
+def handle_Newchannel(event, manager=None):
     return raw
 
-def handle_Newexten(raw):
+def handle_Newexten(event, manager=None):
+    if manager != None:
+	event = event.headers
+
     return raw
 
 def handle_Newstate(event, manager=None):
@@ -50,7 +53,7 @@ def handle_Newstate(event, manager=None):
 
     return None
 
-def handle_Unlink(raw):
+def handle_Unlink(event, manager=None):
     return raw
 
 # ======================================
