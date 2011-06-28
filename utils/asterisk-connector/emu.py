@@ -13,6 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
 
+class FakeAmiManager:
+    pass
+
 try:
     file = sys.argv[1]
 except:
@@ -57,7 +60,12 @@ callbacks = {
     'Unlink':handle_Unlink,
 }
 
+manager = FakeAmiManager()
+manager.stomp = stomp
+
 for line in csv_read:
+    print line
+
     timestamp_curr = datetime.strptime(line[1], '%Y-%m-%d %H:%M:%S.%f')
     if timestamp_prev <> None and timestamp_prev <> timestamp_curr:
 	delta = timestamp_curr - timestamp_prev
@@ -72,13 +80,13 @@ for line in csv_read:
     event_data = eval(line[4])
 
 #    try:
-    message = callbacks[event](event_data)
+    message = callbacks[event](event_data, manager)
 
-    if message:
-	print 'Event:', event
-	print 'Original data:', event_data
-	print 'Produced message:', message
+#    if message:
+#	print 'Event:', event
+#	print 'Original data:', event_data
+#	print 'Produced message:', message
     
-	stomp.put(message, destination=stomp_queue)
+#	stomp.put(message, destination=stomp_queue)
 #    except:
 #	pass

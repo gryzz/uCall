@@ -93,6 +93,7 @@ manager = asterisk.manager.Manager()
 #try:
 manager.connect(ami_host)
 manager.login(ami_username, ami_password)
+manager.stomp = stomp
 
 manager.register_event('Shutdown', handle_shutdown)
 manager.register_event('Newstate', handlers.handle_Newstate)
