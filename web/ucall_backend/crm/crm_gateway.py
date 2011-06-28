@@ -28,4 +28,4 @@ class CrmGateway:
 
     def findUserByPhoneNumber(self, phone_number):
 
-        self.crm_adapter.findUserByPhone(phone_number)
+        return self.crm_adapter.findUserByPhone(phone_number)

@@ -60,7 +60,7 @@ def handle_newstate_ringing(event):
     message.set_event(ChannelMessage.EVENT_RINGING)
     message.set_id(event['Uniqueid'])
     message.set_extension(event['CallerID'])
-    message.set_caller('!') #find in db
+    message.set_caller('0676729097') #find in db
     
     return message.dump_data_json()
 

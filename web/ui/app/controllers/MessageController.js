@@ -23,7 +23,10 @@ Ext.define('uCall.controllers.MessageController', {
         
         switch(message.t){
             case this.mappedEvents.EVENT_RINGING:
-                this.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + message.i + ' is waiting ... (' + message.e + ')');
+	    	    that = this;
+	            UserInfo.getUserInfo(message.c, message.e, function(value) {
+		            that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + value.user + ' is waiting ... <br> Notes: ' + value.title);
+		        });
                 break;
             case this.mappedEvents.EVENT_HANGUP_CLEANUP:
                 console.log('hidding ...');

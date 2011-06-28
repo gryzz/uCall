@@ -9,7 +9,11 @@ class VtigerAdapter:
     def findUserByPhone(self, phone_number):
         cursor = self.db.cursor();
 
-        cursor.execute("select firstname, lastname from vtiger_contactdetails where phone=%s", phone_number)
+        cursor.execute("select firstname, lastname, title from vtiger_contactdetails where phone=%s", phone_number)
         data = cursor.fetchone()
-
         cursor.close()
+
+        #TODO: Fix it
+        result = {'firstname': data[0], 'lastname': data[1], 'title': data[2]}
+
+        return result
