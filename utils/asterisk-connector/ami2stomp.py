@@ -62,7 +62,7 @@ print '='*80
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
 
-connection = connectionForURI(config.get('SQL', 'dsn'))
+connection = connectionForURI(sql_dsn)
 sqlhub.processConnection = connection
 
 def send_message(message, agent):
@@ -96,13 +96,12 @@ manager.login(ami_username, ami_password)
 manager.stomp = stomp
 
 manager.register_event('Shutdown', handle_shutdown)
-manager.register_event('Newstate', handlers.handle_Newstate)
 manager.register_event('Hangup', handlers.handle_Hangup)
 manager.register_event('Link', handlers.handle_Link)
-manager.register_event('Unlink', handlers.handle_Unlink)
+#manager.register_event('Unlink', handlers.handle_Unlink)
 manager.register_event('Dial', handlers.handle_Dial)
 manager.register_event('Newstate', handlers.handle_Newstate)
-manager.register_event('*', handle_event)
+#manager.register_event('*', handle_event)
 
 manager.message_loop()
 

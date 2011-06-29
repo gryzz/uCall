@@ -30,18 +30,15 @@ config = ConfigParser.ConfigParser()
 devel_config = ConfigParser.ConfigParser()
 
 config.read('/opt/ucall/etc/config.ini')
-devel_config.read('/opt/ucall/etc/devel_config.ini')
 
 stomp_host = config.get('STOMP', 'host')
 stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
-stomp_queue = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
 
 print '='*80
 print 'Stomp host:', stomp_host 
 print 'Stomp username:', stomp_username 
 print 'Stomp password:', stomp_password 
-print 'Stomp queue:', stomp_queue
 print '='*80
 
 stomp = Client(stomp_host)
@@ -53,11 +50,11 @@ callbacks = {
     'Dial':handle_Dial,
     'Hangup':handle_Hangup,
     'Link':handle_Link,
-    'Newcallerid':handle_Newcallerid,
-    'Newchannel':handle_Newchannel,
-    'Newexten':handle_Newexten,
+#    'Newcallerid':handle_Newcallerid,
+#   'Newchannel':handle_Newchannel,
+#    'Newexten':handle_Newexten,
     'Newstate':handle_Newstate,
-    'Unlink':handle_Unlink,
+#    'Unlink':handle_Unlink,
 }
 
 manager = FakeAmiManager()
