@@ -26,6 +26,7 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
                 for (var i in applicationFormItems) {
                     if (applicationFormItems[i].fieldHidden) {
                         applicationFormItems[i].hidden = true;
+                        // TODO: try setting it on server-side
                         applicationFormItems[i].allowBlank = true;
                     }
                 }
