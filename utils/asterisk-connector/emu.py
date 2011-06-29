@@ -13,6 +13,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
 
+class FakeAmiManager:
+    pass
+
 try:
     file = sys.argv[1]
 except:
@@ -24,25 +27,29 @@ myfileobj = open(file,"read")
 csv_read = csv.reader(myfileobj,dialect=csv.excel_tab)
 
 config = ConfigParser.ConfigParser()
-devel_config = ConfigParser.ConfigParser()
 
 config.read('/opt/ucall/etc/config.ini')
-devel_config.read('/opt/ucall/etc/devel_config.ini')
 
 stomp_host = config.get('STOMP', 'host')
 stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
-stomp_queue = "/queue/messages/" + devel_config.get('GENERAL', 'agent')
 
 print '='*80
 print 'Stomp host:', stomp_host 
 print 'Stomp username:', stomp_username 
 print 'Stomp password:', stomp_password 
-print 'Stomp queue:', stomp_queue
+print '='*80
+
+sql_dsn = config.get('SQL', 'dsn')
+
+print 'SQL:', sql_dsn 
 print '='*80
 
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
+
+connection = connectionForURI(sql_dsn)
+sqlhub.processConnection = connection
 
 timestamp_prev = None
 
@@ -50,14 +57,19 @@ callbacks = {
     'Dial':handle_Dial,
     'Hangup':handle_Hangup,
     'Link':handle_Link,
-    'Newcallerid':handle_Newcallerid,
-    'Newchannel':handle_Newchannel,
-    'Newexten':handle_Newexten,
+#    'Newcallerid':handle_Newcallerid,
+#   'Newchannel':handle_Newchannel,
+#    'Newexten':handle_Newexten,
     'Newstate':handle_Newstate,
-    'Unlink':handle_Unlink,
+#    'Unlink':handle_Unlink,
 }
 
+manager = FakeAmiManager()
+manager.stomp = stomp
+
 for line in csv_read:
+    print line
+
     timestamp_curr = datetime.strptime(line[1], '%Y-%m-%d %H:%M:%S.%f')
     if timestamp_prev <> None and timestamp_prev <> timestamp_curr:
 	delta = timestamp_curr - timestamp_prev
@@ -72,13 +84,13 @@ for line in csv_read:
     event_data = eval(line[4])
 
 #    try:
-    message = callbacks[event](event_data)
+    message = callbacks[event](event_data, manager)
 
-    if message:
-	print 'Event:', event
-	print 'Original data:', event_data
-	print 'Produced message:', message
+#    if message:
+#	print 'Event:', event
+#	print 'Original data:', event_data
+#	print 'Produced message:', message
     
-	stomp.put(message, destination=stomp_queue)
+#	stomp.put(message, destination=stomp_queue)
 #    except:
 #	pass

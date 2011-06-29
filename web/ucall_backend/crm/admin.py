@@ -20,6 +20,7 @@ admin.site.register(CrmAdapterType, CrmAdapterTypeAdmin)
 
 class CrmAdapterOptionAdmin(admin.ModelAdmin):
     list_display_links = list_display = ('adapter', 'key', 'value')
+    list_filter = ('adapter',)
 
 admin.site.register(CrmAdapterOption, CrmAdapterOptionAdmin)
 
