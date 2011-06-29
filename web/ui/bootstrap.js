@@ -27,5 +27,4 @@ Ext.application({
 
 
 Ext.syncRequire('Ext.env.FeatureDetector');
-var featureDetector = Ext.create('Ext.env.FeatureDetector');
-console.log("Websockets supported: " + featureDetector.tests.Websockets());        
+console.log("Websockets supported: " + Ext.features.has('Websockets'));
