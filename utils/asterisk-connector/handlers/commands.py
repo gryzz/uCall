@@ -35,7 +35,7 @@ def handle_Dial(event, manager=None):
     #TODO: 
     # - put into db
     # - cleanup rule
-    AsteriskEvent(event=u'test', raw=u'test', uniqueid=u'test')
+    AsteriskEvent(event=event['Event'], raw=str(event), uniqueid=event['DestUniqueID'])
 
 #    try:
 #	srcuniqueid=event.get_header('Uniqueid')

@@ -8,6 +8,7 @@ import simplejson as json
 from stompy.simple import Client
 import ConfigParser
 import handlers
+from sqlobject import *
 
 #sys.stdout = open("/var/log/requests/connector2.log","a")
 #sys.stderr = open("/var/log/requests/connector-err2.log","a")
