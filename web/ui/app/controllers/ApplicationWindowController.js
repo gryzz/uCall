@@ -15,15 +15,21 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
     extend: 'Ext.util.Observable',
     
     onShow: function(message){
-	    console.log("ApplicationWindowController::onShow");
-	    console.log("TODO: pass the message to RPC router");
-	    console.log(message);
-
         uCall.model.ApplicationDefinition.load(message.e, {
             success: function(result) {
         
                 var applicationDefinition = result.data;
                 var applicationFormItems = applicationDefinition.application_form;
+                
+                // // FIXME: Brutal hack!
+                // // ExtJS serializer is too old and sets the wrong attribute to hide a field
+                for (var i in applicationFormItems) {
+                    if (applicationFormItems[i].fieldHidden) {
+                        applicationFormItems[i].hidden = true;
+                        applicationFormItems[i].allowBlank = true;
+                    }
+                }
+                
                 applicationFormItems.push({
                     xtype: 'hiddenfield',
                     name: 'application_definition_id',
