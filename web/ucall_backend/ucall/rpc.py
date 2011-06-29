@@ -1,6 +1,7 @@
 #rpc.py
 from utils.extjs import RpcRouter
 from django.contrib.auth.models import User
+from crm.crm_gateway import CrmGateway
 import traceback
 
 from utils.extjs_form_encoder import ExtJSONEncoder
@@ -9,7 +10,21 @@ from formunculous.forms import ApplicationForm
 from crm.models import CrmCustomerNumber
 import datetime
 
-class FormsApiClass(object):
+class UserInfoApi(object):
+    def getUserInfo(self, phone_number, extention, request):
+        crm_gateway = CrmGateway(extention)
+        user_data = crm_gateway.findUserByPhoneNumber(phone_number)
+
+        user = user_data['firstname'] + ' ' + user_data['lastname']
+        title = user_data['title']
+
+        return {
+	        'user': user,
+            'title': title
+	    }
+    getUserInfo._args_len=2
+
+class FormsApi(object):
 
     def getForm(self, data, request):
 
@@ -65,7 +80,7 @@ class FormsApiClass(object):
 
 
 
-class ProfileApiClass(object):
+class ProfileApi(object):
 
     def getBasicInfo(self, request):
         return {
@@ -133,8 +148,9 @@ class Router(RpcRouter):
         self.url = 'router'
 
         self.actions = {
-            'Profile': ProfileApiClass(),
-            'Forms': FormsApiClass(),
+            'Profile': ProfileApi(),
+            'Forms': FormsApi(),
+	        'UserInfo': UserInfoApi()
         }
 
         self.enable_buffer = 50

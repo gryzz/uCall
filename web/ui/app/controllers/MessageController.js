@@ -23,14 +23,17 @@ Ext.define('uCall.controllers.MessageController', {
         
         switch(message.t){
             case this.mappedEvents.EVENT_RINGING:
-                this.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + message.i + ' is waiting ... (' + message.e + ')');
+	    	    that = this;
+	            UserInfo.getUserInfo(message.c, message.e, function(value) {
+		            that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + value.user + ' is waiting ... <br> Notes: ' + value.title);
+		        });
                 break;
             case this.mappedEvents.EVENT_HANGUP_CLEANUP:
                 console.log('hidding ...');
                 this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
                 break;
             case this.mappedEvents.EVENT_LINK:
-                // this.fireEvent(uCall.constants.MessageEvent.HIDE, message.u);
+                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
                 
                 if (this.onEventLinkCallback) {
                     this.onEventLinkCallback(message);
@@ -52,6 +55,7 @@ Ext.define('uCall.controllers.MessageController', {
             uCall.constants.MessageEvent.SHOW,
             uCall.constants.MessageEvent.HIDE
         );
+
         // Add listeners
         this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
         this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);

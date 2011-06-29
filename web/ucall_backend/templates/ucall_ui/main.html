@@ -26,9 +26,18 @@
     <script type="text/javascript" src="/config/stomp/"></script>
     <script type="text/javascript" src="/ui/bootstrap.js"></script>
     <script type="text/javascript" src="/config/channel_event_schema/"></script>
-    
     {% endblock %}
 </head>
 <body>
+    <div id="loader-indicator" style="width: 100%;">
+        <div style="margin: 100px auto; width: 300px;">
+            <div style="width: 64px; margin: 0 auto;"><img src="/ui/resources/images/logo/receptionist_64.png"/></div>
+            <div style="width: 220px; margin: 0 auto;"><img src="/ui/resources/images/progress_indicator/loader-bar.gif"/></div>
+        </div>
+    <script>
+        Ext.onReady(function(){
+            Ext.get('loader-indicator').hide(true);
+        })
+    </script>
 </body>
 </html>

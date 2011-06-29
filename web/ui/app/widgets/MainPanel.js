@@ -23,7 +23,7 @@ Ext.define('uCall.widgets.MainPanel', {
         layout: 'anchor',
         // title: 'uCall UI',
         tbar: {xtype:'MainTopToolbar'}, 
-        
+        bodyCls: 'mainPanelBg',
         popups:[
             {
                 width: 150,
