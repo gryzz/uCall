@@ -1,10 +1,17 @@
 #!/usr/bin/python
 
 import sys,os
+from sqlobject import *
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
+
+class AsteriskEvent(SQLObject):
+    added=DateTimeCol(default=sqlbuilder.func.NOW())
+    event = StringCol()
+    uniqueid = StringCol(default=None)
+    raw = StringCol(default=None)
 
 def send_message(stomp, message, agent):
     print '='*80
@@ -17,7 +24,6 @@ def send_message(stomp, message, agent):
     #conf={"expires":(int(time()) + int(connect(config.get('GENERAL', 'message_ttl'))) * 1000}  
     stomp.put(message, destination="/queue/messages/"+agent, persistent=False, conf=conf)
 
-
 def handle_Dial(event, manager=None):
     """
     {'CallerID': '1133', 'SrcUniqueID': '1306919118.7245', 'Destination': 'SIP/214-19bceeb0', 'DestUniqueID': '1306919118.7246', 'Source': 'SIP/1133-19ba80e0', 'CallerIDName': 'tamila', 'Privilege': 'call,all', 'Event': 'Dial'}
@@ -29,9 +35,17 @@ def handle_Dial(event, manager=None):
     #TODO: 
     # - put into db
     # - cleanup rule
+    AsteriskEvent(event=u'test', raw=u'test', uniqueid=u'test')
+
+#    try:
+#	srcuniqueid=event.get_header('Uniqueid')
+#    except:
+#	srcuniqueid=None
+#
+#    print event.get_header('Event'), event.headers
     
-    print event
-    return 
+#    AsteriskEvent(event=event.get_header('Event'), raw=str(event.headers), uniqueid=uniqueid)
+
 
 def handle_Hangup(event, manager=None):
     """
@@ -80,6 +94,10 @@ def handle_Newstate(event, manager=None):
 
     return None
 
+def handle_Shutdown(event, manager):
+    print "Recieved shutdown event"
+    manager.close()
+
 def getLocalNumber(channel):
     return channel.split('-')[0]
 
@@ -112,3 +130,5 @@ def handle_hangup_clearing(event, stomp):
     message.set_id(event['Uniqueid'])
     
     send_message(stomp, message.dump_data_json(), getLocalNumber(channel))
+
+global connection, sqlhub

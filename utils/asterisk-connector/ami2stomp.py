@@ -7,11 +7,7 @@ import sys,os,time
 import simplejson as json
 from stompy.simple import Client
 import ConfigParser
-from sqlobject import *
 import handlers
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from channel.channel_message import ChannelMessage as ChannelMessage
 
 #sys.stdout = open("/var/log/requests/connector2.log","a")
 #sys.stderr = open("/var/log/requests/connector-err2.log","a")
@@ -25,12 +21,6 @@ except IOError:
     print "Another instance is already running, quitting."                                                                                                                                      
     time.sleep(1)                                                                                                                                                                               
     sys.exit(-1)    
-
-class AsteriskEvent(SQLObject):
-    added=DateTimeCol(default=sqlbuilder.func.NOW())
-    event = StringCol()
-    uniqueid = StringCol(default=None)
-    raw = StringCol(default=None)
 
 config = ConfigParser.ConfigParser()
 config.read('/opt/ucall/etc/config.ini')
@@ -65,28 +55,6 @@ stomp.connect(stomp_username, stomp_password)
 connection = connectionForURI(sql_dsn)
 sqlhub.processConnection = connection
 
-def send_message(message, agent):
-    #conf={"expires":(int(time()) + int(connect(config.get('GENERAL', 'message_ttl'))) * 1000}  
-    stomp.put(message, destination="/queue/messages/"+agent, persistent=False, conf=conf)
-
-def handle_shutdown(event, manager):
-    print "Recieved shutdown event"
-    manager.close()
-    # we could analize the event and reconnect here
-
-def handle_event(event, manager):
-    return 
-    
-    try:
-	srcuniqueid=event.get_header('Uniqueid')
-    except:
-	srcuniqueid=None
-
-    print event.get_header('Event'), event.headers
-    
-    AsteriskEvent(event=event.get_header('Event'), raw=str(event.headers), uniqueid=uniqueid)
-
-
 manager = asterisk.manager.Manager()
 
 #try:
@@ -95,7 +63,7 @@ manager.connect(ami_host)
 manager.login(ami_username, ami_password)
 manager.stomp = stomp
 
-manager.register_event('Shutdown', handle_shutdown)
+manager.register_event('Shutdown', handlers.handle_Shutdown)
 manager.register_event('Hangup', handlers.handle_Hangup)
 manager.register_event('Link', handlers.handle_Link)
 #manager.register_event('Unlink', handlers.handle_Unlink)

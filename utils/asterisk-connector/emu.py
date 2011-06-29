@@ -27,7 +27,6 @@ myfileobj = open(file,"read")
 csv_read = csv.reader(myfileobj,dialect=csv.excel_tab)
 
 config = ConfigParser.ConfigParser()
-devel_config = ConfigParser.ConfigParser()
 
 config.read('/opt/ucall/etc/config.ini')
 
@@ -41,8 +40,16 @@ print 'Stomp username:', stomp_username
 print 'Stomp password:', stomp_password 
 print '='*80
 
+sql_dsn = config.get('SQL', 'dsn')
+
+print 'SQL:', sql_dsn 
+print '='*80
+
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
+
+connection = connectionForURI(sql_dsn)
+sqlhub.processConnection = connection
 
 timestamp_prev = None
 
