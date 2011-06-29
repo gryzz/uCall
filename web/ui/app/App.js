@@ -130,7 +130,7 @@ Ext.define('uCall.App', {
                 html: 'Hello world ' + v.popups.length,
                 autoHide: false,
                 closable: true,
-                closeAction: 'destroy' 
+                closeAction: 'destroy'
             });
             t.showAt([0,0]); // ensure it's rendered and visible so that it has dimensions for following calc
             t.showAt(t.el.getAlignToXY(this.alignPopupsTo, 'tl-bl', [0, 10]));
