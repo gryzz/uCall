@@ -9,39 +9,62 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
     requires: [
         'uCall.constants.MessageEvent',
         'uCall.model.ApplicationDefinition',
-        'uCall.widgets.ApplicationFormWindow'
+        'uCall.widgets.ApplicationFormWindow',
+        'uCall.widgets.GrowlMessage'
     ],
     
     extend: 'Ext.util.Observable',
     
     onShow: function(message){
-	    console.log("ApplicationWindowController::onShow");
-	    console.log("TODO: pass the message to RPC router");
-	    console.log(message);
-
         uCall.model.ApplicationDefinition.load(message.e, {
-            success: function(result) {
-        
-                var applicationDefinition = result.data;
+            scope: this,
+            failure: function(record, operation) {
+                var messageBox = Ext.create('uCall.widgets.GrowlMessage', {
+                   items: {
+                       xtype: 'component',
+                       html: 'Unknown customer number: ' + message.e,
+                   },
+                   floating: true,
+                   closable: true
+               });
+                
+                messageBox.show();
+            },
+            callback: function(record, operation) {
+                // void
+            },
+            success: function(record, operation) {
+                var applicationDefinition = record.data;
                 var applicationFormItems = applicationDefinition.application_form;
+
+                // FIXME: Brutal hack!
+                // ExtJS serializer is too old and sets the wrong attribute to hide a field
+                for (var i in applicationFormItems) {
+                    if (applicationFormItems[i].fieldHidden) {
+                        applicationFormItems[i].hidden = true;
+                        // TODO: try setting it on server-side
+                        applicationFormItems[i].allowBlank = true;
+                    }
+                }
+
                 applicationFormItems.push({
                     xtype: 'hiddenfield',
                     name: 'application_definition_id',
                     value: applicationDefinition.id
                 });
-        
+
                 // TODO: Do something with this!
                 for (var item in applicationFormItems) {
                     applicationFormItems[item].labelWidth = 200;
                     applicationFormItems[item].labelAlign = "right";
                 }
-        
+
                 Ext.create('uCall.widgets.ApplicationFormWindow', {
                     title: applicationDefinition.slug, // TODO: use app.def. title!
                     formItems: applicationFormItems,
                     onSubmit: function() {
                         // TODO: Implement! (Copy-Paste from update profile)
-        
+
                      var form = this.up('form').getForm();
                         if (form.isValid()) {
                             that = this;
@@ -63,7 +86,7 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
                                         closable: true,
                                         id: 'id'}
                                      );
-        
+
                                      messageBox.show();
                                 }
                             });
@@ -72,7 +95,6 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
                 });
             }
         });
-
     },
     
     constructor: function(config) {

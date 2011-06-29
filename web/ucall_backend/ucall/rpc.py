@@ -1,28 +1,55 @@
 #rpc.py
 from utils.extjs import RpcRouter
 from django.contrib.auth.models import User
+from crm.crm_gateway import CrmGateway
 import traceback
 
 from utils.extjs_form_encoder import ExtJSONEncoder
 from formunculous.models import ApplicationDefinition, Application
 from formunculous.forms import ApplicationForm
 from crm.models import CrmCustomerNumber
+import datetime
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 
-class FormsApiClass(object):
+class UserInfoApi(object):
+    def getUserInfo(self, phone_number, extention, request):
+        crm_gateway = CrmGateway(extention)
+        user_data = crm_gateway.findUserByPhoneNumber(phone_number)
+
+        user = user_data['firstname'] + ' ' + user_data['lastname']
+        title = user_data['title']
+
+        return {
+	        'user': user,
+            'title': title
+	    }
+    getUserInfo._args_len=2
+
+class FormsApi(object):
 
     def getForm(self, data, request):
 
         # get extension from input data
-        customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
+        try:
+            customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
+        except CrmCustomerNumber.DoesNotExist as e:
+            return {
+                "success": False, 
+                "msg": e.message
+            }
 
         # retrieve required data
         application_definition = customer.dialog_form
         application = Application(app_definition = application_definition, user = request.user)
         application_form = ApplicationForm(application_definition, application)
 
-        # remove pk and Company fields from form
+        # hide Company field (HoneyPot bot protection field)
+        application_form.fields["company"].widget.attrs['hidden'] = True
+        # make Company field not required
+        application_form.fields["company"].required = False
+        # delete Pk field
+        # TODO: in case we need to re-fill dialog forms comment this out
         del application_form.fields["pk"]
-        del application_form.fields["company"]
 
         # return extjs-encoded form
         return {
@@ -38,6 +65,7 @@ class FormsApiClass(object):
             application_definition = ApplicationDefinition.objects.get(id = request.POST['application_definition_id'])
             user = request.user
             application = Application(app_definition = application_definition, user = user)
+            application.submission_date = datetime.datetime.now()
 
             form = ApplicationForm(application_definition, application, False, request.POST, request.FILES)
 
@@ -59,7 +87,7 @@ class FormsApiClass(object):
 
 
 
-class ProfileApiClass(object):
+class ProfileApi(object):
 
     def getBasicInfo(self, request):
         return {
@@ -127,8 +155,9 @@ class Router(RpcRouter):
         self.url = 'router'
 
         self.actions = {
-            'Profile': ProfileApiClass(),
-            'Forms': FormsApiClass(),
+            'Profile': ProfileApi(),
+            'Forms': FormsApi(),
+	        'UserInfo': UserInfoApi()
         }
 
         self.enable_buffer = 50

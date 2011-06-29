@@ -37,7 +37,9 @@ Ext.define('uCall.controllers.GrowlController', {
     },
     
     remove: function(id) {
-        this.messages[id].fireEvent('close')
+        if (this.messages[id]) {
+            this.messages[id].fireEvent('close')
+        }
     },
     
     generateId: function(str){
