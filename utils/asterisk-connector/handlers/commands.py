@@ -13,6 +13,8 @@ class AsteriskEvent(SQLObject):
     uniqueid = StringCol(default=None)
     raw = StringCol(default=None)
 
+#PhoneNumber.createTable(ifNotExists=True)
+
 def send_message(stomp, message, agent):
     print '='*80
     print 'Agent:', agent 
@@ -115,7 +117,7 @@ def handle_newstate_ringing(event, stomp):
     message.set_id(event['Uniqueid'])
     message.set_extension(event['CallerID'])
     
-    parent_event = AsteriskEvent(event = 'Dial', uniqueid = event['Uniqueid'])
+    parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
     
     print parent_event
     
