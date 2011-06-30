@@ -7,7 +7,6 @@ import sys,os,time
 import simplejson as json
 from stompy.simple import Client
 import ConfigParser
-import handlers
 from sqlobject import *
 
 #sys.stdout = open("/var/log/requests/connector2.log","a")
@@ -64,13 +63,18 @@ manager.connect(ami_host)
 manager.login(ami_username, ami_password)
 manager.stomp = stomp
 
-manager.register_event('Shutdown', handlers.handle_Shutdown)
-manager.register_event('Hangup', handlers.handle_Hangup)
-manager.register_event('Link', handlers.handle_Link)
-#manager.register_event('Unlink', handlers.handle_Unlink)
-manager.register_event('Dial', handlers.handle_Dial)
-manager.register_event('Newstate', handlers.handle_Newstate)
-#manager.register_event('*', handle_event)
+if manager.version == '1.1':
+    from handlers import commands_1_1 as commands
+elif manager.version == '1.0':
+    from handlers import commands_1_0 as commands
+else:
+    sys.exit()
+
+manager.register_event('Shutdown', commands.handle_Shutdown)
+manager.register_event('Hangup', commands.handle_Hangup)
+manager.register_event('Link', commands.handle_Link)
+manager.register_event('Dial', commands.handle_Dial)
+manager.register_event('Newstate', commands.handle_Newstate)
 
 manager.message_loop()
 

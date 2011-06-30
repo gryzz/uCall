@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from channel.channel_message import ChannelMessage as ChannelMessage
 
 class FakeAmiManager:
-    pass
+    version = '1.0'
 
 try:
     file = sys.argv[1]
@@ -48,8 +48,7 @@ print '='*80
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
 
-connection = connectionForURI(sql_dsn)
-sqlhub.processConnection = connection
+sqlhub.processConnection = connectionForURI(sql_dsn)
 
 timestamp_prev = None
 
