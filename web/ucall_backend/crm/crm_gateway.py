@@ -20,12 +20,12 @@ class CrmGateway:
 
         type = crm_customer_number.crm_adapter.type
 
-        if type.title == 'VTiger1':
+        if type.title == 'VTiger':
             crm_adapter = VtigerAdapter(crm_adapter_parameters)
 
             return crm_adapter
 
-        elif type.title == 'Django CRM1':
+        elif type.title == 'Django CRM':
             pass
 
         else:
