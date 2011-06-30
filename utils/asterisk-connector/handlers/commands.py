@@ -117,11 +117,11 @@ def handle_newstate_ringing(event, stomp):
     message.set_id(event['Uniqueid'])
     message.set_extension(event['CallerID'])
     
-    # parent_event = AsteriskEvent(event = 'Dial', uniqueid = event['Uniqueid'])
-    # print parent_event
+    parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
     
-    message.set_caller('0676729097') #find in db
+    raw = eval(parent_event.raw)
     
+    message.set_caller(raw['CallerID'])
 
     send_message(stomp, message.dump_data_json(), getLocalNumber(channel))
 
