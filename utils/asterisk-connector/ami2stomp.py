@@ -73,7 +73,8 @@ else:
 manager.register_event('Shutdown', commands.handle_Shutdown)
 manager.register_event('Hangup', commands.handle_Hangup)
 manager.register_event('Link', commands.handle_Link)
-manager.register_event('Dial', commands.handle_Dial)
+manager.register_event('Bridge', commands.handle_Bridge)
+#manager.register_event('Dial', commands.handle_Dial)
 manager.register_event('Newstate', commands.handle_Newstate)
 
 manager.message_loop()

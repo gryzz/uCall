@@ -4,10 +4,11 @@ import csv
 import sys,os
 from time import *
 from datetime import *
-from handlers import *
+from handlers import commands_1_0 as commands
 import simplejson as json
 from stompy.simple import Client
 import ConfigParser
+from sqlobject import *
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
@@ -48,18 +49,19 @@ print '='*80
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
 
-sqlhub.processConnection = connectionForURI(sql_dsn)
+connection = connectionForURI(sql_dsn)
+sqlhub.processConnection = connection
 
 timestamp_prev = None
 
 callbacks = {
-    'Dial':handle_Dial,
-    'Hangup':handle_Hangup,
-    'Link':handle_Link,
+    'Dial': commands.handle_Dial,
+    'Hangup': commands.handle_Hangup,
+    'Link': commands.handle_Link,
 #    'Newcallerid':handle_Newcallerid,
 #   'Newchannel':handle_Newchannel,
 #    'Newexten':handle_Newexten,
-    'Newstate':handle_Newstate,
+    'Newstate': commands.handle_Newstate,
 #    'Unlink':handle_Unlink,
 }
 

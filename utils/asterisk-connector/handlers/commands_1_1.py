@@ -67,10 +67,11 @@ def handle_Hangup(event, manager=None):
     if not isinstance(event, dict):
 	event = event.headers
 
-    if event['Cause-txt'] == 'Normal Clearing':
-        return handle_hangup_clearing(event, manager.stomp)
+    #if event['Cause-txt'] == 'Normal Clearing':
+    return handle_hangup_clearing(event, manager.stomp)
 
 def handle_Link(event, manager=None):
+    pass
     if not isinstance(event, dict):
 	event = event.headers
     """
@@ -85,6 +86,31 @@ def handle_Link(event, manager=None):
     message.set_caller(event['CallerID2'])
     
     send_message(manager.stomp, message.dump_data_json(), getLocalNumber(event['Channel1']))
+
+def handle_Bridge(event, manager=None):
+    if not isinstance(event, dict):
+	event = event.headers
+    """
+Event: Bridge                                                                                                                                                                                   
+Privilege: call,all                                                                                                                                                                             
+Bridgestate: Link                                                                                                                                                                               
+Bridgetype: core                                                                                                                                                                                
+Channel1: SIP/101-00000058                                                                                                                                                                      
+Channel2: SIP/104-00000059                                                                                                                                                                      
+Uniqueid1: 1309443548.88                                                                                                                                                                        
+Uniqueid2: 1309443548.89                                                                                                                                                                        
+CallerID1: 101                                                                                                                                                                                  
+CallerID2: 104
+    """
+
+    message = ChannelMessage()
+
+    message.set_event(ChannelMessage.EVENT_LINK)
+    message.set_id(event['Uniqueid2'])
+    message.set_extension(event['CallerID2'])
+    message.set_caller(event['CallerID1'])
+    
+    send_message(manager.stomp, message.dump_data_json(), getLocalNumber(event['Channel2']))
 
 
 def handle_Newstate(event, manager=None):
