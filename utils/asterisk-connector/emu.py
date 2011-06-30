@@ -83,8 +83,8 @@ for line in csv_read:
     event = line[2]
     event_data = eval(line[4])
 
-#    try:
-    message = callbacks[event](event_data, manager)
+    try:
+	message = callbacks[event](event_data, manager)
 
 #    if message:
 #	print 'Event:', event
@@ -92,5 +92,5 @@ for line in csv_read:
 #	print 'Produced message:', message
     
 #	stomp.put(message, destination=stomp_queue)
-#    except:
-#	pass
+    except:
+	pass
