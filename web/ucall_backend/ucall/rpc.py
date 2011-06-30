@@ -14,7 +14,14 @@ from django.shortcuts import get_object_or_404, render_to_response, redirect
 class UserInfoApi(object):
     def getUserInfo(self, phone_number, extention, request):
         crm_gateway = CrmGateway()
-        crm_adapter = crm_gateway.retrieveCrmAdapter(extention)
+
+        try:
+            crm_adapter = crm_gateway.retrieveCrmAdapter(extention)
+        except Exception as e:
+            return {
+                "success": False,
+                "msg": e.message
+            }
 
         user_data = crm_adapter.findUserByPhone(phone_number)
 
@@ -36,7 +43,7 @@ class FormsApi(object):
             customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
         except CrmCustomerNumber.DoesNotExist as e:
             return {
-                "success": False, 
+                "success": False,
                 "msg": e.message
             }
 

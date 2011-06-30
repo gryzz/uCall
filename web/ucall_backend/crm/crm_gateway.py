@@ -9,26 +9,24 @@ class CrmGateway:
         #TODO: phone_number=extention fix it
         crm_customer_number = CrmCustomerNumber.objects.get(phone_number=extention)
 
-        if crm_customer_number:
-            crm_adapter_options = CrmAdapterOption.objects.filter(adapter=crm_customer_number.crm_adapter)
+        if crm_customer_number is None:
+            raise Exception('Extention is not recognized')
 
-            crm_adapter_parameters = {}
-            for option in crm_adapter_options:
-                crm_adapter_parameters[option.key] = option.value
+        crm_adapter_options = CrmAdapterOption.objects.filter(adapter=crm_customer_number.crm_adapter)
 
-            type = crm_customer_number.crm_adapter.type
+        crm_adapter_parameters = {}
+        for option in crm_adapter_options:
+            crm_adapter_parameters[option.key] = option.value
 
-            if type.title == 'VTiger':
-                crm_adapter = VtigerAdapter(crm_adapter_parameters)
+        type = crm_customer_number.crm_adapter.type
 
-                return crm_adapter
+        if type.title == 'VTiger1':
+            crm_adapter = VtigerAdapter(crm_adapter_parameters)
 
-            elif type is 'Django CRM':
-                pass
+            return crm_adapter
 
-            else:
-    	        #TODO rise exception
-    	        pass
+        elif type.title == 'Django CRM1':
+            pass
+
         else:
-			#TODO rise exception
-			pass
+	        raise Exception('CRM adapter not found')
