@@ -1,6 +1,7 @@
 import MySQLdb
+from crm.adapters.abstract_adapter import AbstractAdapter
 
-class VtigerAdapter:
+class VtigerAdapter(AbstractAdapter):
     db = None
 
     def __init__(self, params):
