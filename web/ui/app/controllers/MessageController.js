@@ -25,7 +25,7 @@ Ext.define('uCall.controllers.MessageController', {
             case this.mappedEvents.EVENT_RINGING:
 	    	    that = this;
 	            UserInfo.getUserInfo(message.c, message.e, function(value) {
-		            if (value.success == true) {
+		            if (value.success) {
 					    that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + value.user + ' is waiting ... <br> Notes: ' + value.title);
 					} else {
 					    that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, value.msg);

@@ -115,9 +115,8 @@ def handle_newstate_ringing(event, stomp):
     message.set_id(event['Uniqueid'])
     message.set_extension(event['CallerID'])
     
-    parent_event = AsteriskEvent(event = 'Dial', uniqueid = event['Uniqueid'])
-    
-    print parent_event
+    # parent_event = AsteriskEvent(event = 'Dial', uniqueid = event['Uniqueid'])
+    # print parent_event
     
     message.set_caller('0676729097') #find in db
     
