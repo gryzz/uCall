@@ -13,6 +13,8 @@ class AsteriskEvent(SQLObject):
     uniqueid = StringCol(default=None)
     raw = StringCol(default=None)
 
+#PhoneNumber.createTable(ifNotExists=True)
+
 def send_message(stomp, message, agent):
     print '='*80
     print 'Agent:', agent 
