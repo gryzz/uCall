@@ -4,6 +4,8 @@ from crm.adapters.vtiger import VtigerAdapter
 import pprint
 
 class CrmGateway:
+    VTIGER_CRM = 'VTiger'
+    DJANGO_CRM = 'Django CRM'
 
     def retrieveCrmAdapter(self, extention):
         #TODO: phone_number=extention fix it
@@ -20,12 +22,12 @@ class CrmGateway:
 
         type = crm_customer_number.crm_adapter.type
 
-        if type.title == 'VTiger':
+        if type.title == self.VTIGER_CRM:
             crm_adapter = VtigerAdapter(crm_adapter_parameters)
 
             return crm_adapter
 
-        elif type.title == 'Django CRM':
+        elif type.title == self.DJANGO_CRM:
             pass
 
         else:
