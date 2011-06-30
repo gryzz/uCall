@@ -12,8 +12,10 @@ import datetime
 
 class UserInfoApi(object):
     def getUserInfo(self, phone_number, extention, request):
-        crm_gateway = CrmGateway(extention)
-        user_data = crm_gateway.findUserByPhoneNumber(phone_number)
+        crm_gateway = CrmGateway()
+        crm_adapter = crm_gateway.retrieveCrmAdapter(extention)
+
+        user_data = crm_adapter.findUserByPhone(phone_number)
 
         user = user_data['firstname'] + ' ' + user_data['lastname']
         title = user_data['title']
