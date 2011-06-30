@@ -1,5 +1,7 @@
 // Configuration
 Ext.Loader.setConfig({enabled: true});
+
+// Map paths
 Ext.Loader.setPath('uCall', '/ui/app');
 Ext.Loader.setPath('Ext.env', '/ui/vendors/probonogeek/extjs/src/core/src/env');
 
@@ -11,14 +13,14 @@ Ext.require('Ext.direct.*');
 Ext.require('Ext.form.*');
 Ext.require('Ext.tip.QuickTipManager');
 
+// Load feature detecot before app launch
+Ext.syncRequire('Ext.env.FeatureDetector');
+
 // Init
 Ext.direct.Manager.addProvider(directSchema);
 Ext.tip.QuickTipManager.init();
 
 // Application
-
-Ext.syncRequire('Ext.env.FeatureDetector');
-
 Ext.application({
     name: 'uCall',
     launch: function() {
