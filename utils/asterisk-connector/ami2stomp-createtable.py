@@ -6,7 +6,7 @@ from sqlobject import *
 import ConfigParser
 
 config = ConfigParser.ConfigParser()
-config.read('/opt/etc/asterisk/config.ini')
+config.read('/opt/ucall/etc/config.ini')
 
 class AsteriskEvent(SQLObject):
     added=DateTimeCol(default=sqlbuilder.func.NOW())
@@ -18,4 +18,3 @@ connection = connectionForURI(config.get('SQL', 'dsn'))
 sqlhub.processConnection = connection
 
 AsteriskEvent.createTable()
-AsteriskEvent(event="John", uniqueid="Doe")

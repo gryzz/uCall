@@ -4,32 +4,29 @@ from crm.adapters.vtiger import VtigerAdapter
 import pprint
 
 class CrmGateway:
-    crm_adapter = None
-    crm_adapter_parameters = {}
 
-    def  __init__(self, extention):
+    def retrieveCrmAdapter(self, extention):
         #TODO: phone_number=extention fix it
         crm_customer_number = CrmCustomerNumber.objects.get(phone_number=extention)
+
+        if crm_customer_number is None:
+            raise Exception('Extention is not recognized')
+
         crm_adapter_options = CrmAdapterOption.objects.filter(adapter=crm_customer_number.crm_adapter)
 
+        crm_adapter_parameters = {}
         for option in crm_adapter_options:
-            self.crm_adapter_parameters[option.key] = option.value
+            crm_adapter_parameters[option.key] = option.value
 
         type = crm_customer_number.crm_adapter.type
 
+        if type.title == 'VTiger1':
+            crm_adapter = VtigerAdapter(crm_adapter_parameters)
 
-        if type.title == 'VTiger':
-            self.crm_adapter = VtigerAdapter(self.crm_adapter_parameters)
+            return crm_adapter
 
-        elif type is 'Django CRM':
+        elif type.title == 'Django CRM1':
             pass
-            
+
         else:
-    	    #TODO rise exception
-    	    pass
-
-
-
-    def findUserByPhoneNumber(self, phone_number):
-
-        return self.crm_adapter.findUserByPhone(phone_number)
+	        raise Exception('CRM adapter not found')

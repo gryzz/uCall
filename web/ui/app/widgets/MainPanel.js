@@ -19,11 +19,8 @@ Ext.define('uCall.widgets.MainPanel', {
     
     config: {
         id: 'MainPanel',
-        // layout: 'border',
         layout: 'anchor',
-        // title: 'uCall UI',
-        tbar: {xtype:'MainTopToolbar'}, 
-        bodyCls: 'mainPanelBg',
+        tbar: {xtype:'MainTopToolbar'},
         popups:[
             {
                 width: 150,
@@ -50,9 +47,11 @@ Ext.define('uCall.widgets.MainPanel', {
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
         
-        // test
-        // for(var p in this.popups) {
-            // new Ext.Window(this.popups[p]).show();
-        // }
+        var c = Ext.create('Ext.Component', {
+            floating: true,
+            cls: 'mainPanelBg'
+        });
+        c.show();
+        c.alignTo(document.body, 'br-br');
     }
 });

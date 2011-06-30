@@ -10,6 +10,11 @@ Ext.define('uCall.model.ApplicationDefinition', {
         type: 'direct',
         api: {
             read: Forms.getForm
+        },
+        listeners: {
+            exception: function(/* Object */ response, /* Ext.data.Operation */ operation, /* Object */ options ){
+                console.log("[ERROR] " + this.model.$className + ": " + operation.result.msg);
+            }
         }
     }
 });
