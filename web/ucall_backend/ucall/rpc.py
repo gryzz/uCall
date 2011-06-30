@@ -29,6 +29,7 @@ class UserInfoApi(object):
         title = user_data['title']
 
         return {
+	        "success":True
 	        'user': user,
             'title': title
 	    }
