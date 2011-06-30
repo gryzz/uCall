@@ -9,6 +9,7 @@ from formunculous.models import ApplicationDefinition, Application
 from formunculous.forms import ApplicationForm
 from crm.models import CrmCustomerNumber
 import datetime
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 
 class UserInfoApi(object):
     def getUserInfo(self, phone_number, extention, request):
@@ -31,7 +32,13 @@ class FormsApi(object):
     def getForm(self, data, request):
 
         # get extension from input data
-        customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
+        try:
+            customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
+        except CrmCustomerNumber.DoesNotExist as e:
+            return {
+                "success": False, 
+                "msg": e.message
+            }
 
         # retrieve required data
         application_definition = customer.dialog_form
