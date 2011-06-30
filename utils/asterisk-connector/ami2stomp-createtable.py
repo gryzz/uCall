@@ -18,4 +18,3 @@ connection = connectionForURI(config.get('SQL', 'dsn'))
 sqlhub.processConnection = connection
 
 AsteriskEvent.createTable()
-AsteriskEvent(event="John", uniqueid="Doe")
