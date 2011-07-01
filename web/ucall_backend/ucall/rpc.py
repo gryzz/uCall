@@ -29,7 +29,7 @@ class UserInfoApi(object):
         title = user_data['title']
 
         return {
-	        "success": True,
+            'success': True,
 	        'user': user,
             'title': title
 	    }
@@ -63,6 +63,7 @@ class FormsApi(object):
 
         # return extjs-encoded form
         return {
+            'success': True,
             'id': application_definition.id,
             'slug': application_definition.slug,
             'application_form': ExtJSONEncoder().default(application_form)
@@ -101,7 +102,7 @@ class ProfileApi(object):
 
     def getBasicInfo(self, request):
         return {
-            "success":"true",
+            "success": True,
             "data": {"firstname": request.user.first_name, "lastname":request.user.last_name, "email":request.user.email}
         }
 
