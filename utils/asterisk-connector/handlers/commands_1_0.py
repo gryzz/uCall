@@ -3,6 +3,9 @@
 import sys,os
 from sqlobject import *
 
+PROTOCOL_VERSION_1_0 = '1.0'
+PROTOCOL_VERSION_1_1 = '1.1'
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../.."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
@@ -29,24 +32,18 @@ def send_message(stomp, message, agent):
 def handle_Dial(event, manager=None):
     """
     {'CallerID': '1133', 'SrcUniqueID': '1306919118.7245', 'Destination': 'SIP/214-19bceeb0', 'DestUniqueID': '1306919118.7246', 'Source': 'SIP/1133-19ba80e0', 'CallerIDName': 'tamila', 'Privilege': 'call,all', 'Event': 'Dial'}
+    1.1
+    {'Destination': 'SIP/102-0000002a', 'CallerIDNum': '101', 'DestUniqueID': '1309439116.42', 'SubEvent': 'Begin', 'Dialstring': '102', 'UniqueID': '1309439116.41', 'CallerIDName': 'Andrew Kornilov', 'Privilege': 'call,all', 'Event': 'Dial', 'Channel': 'SIP/101-00000029'}
     """
 
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
 
+    print event
     #TODO: 
     # - put into db
     # - cleanup rule
     AsteriskEvent(event=event['Event'], raw=str(event), uniqueid=event['DestUniqueID'])
-
-#    try:
-#	srcuniqueid=event.get_header('Uniqueid')
-#    except:
-#	srcuniqueid=None
-#
-#    print event.get_header('Event'), event.headers
-    
-#    AsteriskEvent(event=event.get_header('Event'), raw=str(event.headers), uniqueid=uniqueid)
 
 
 def handle_Hangup(event, manager=None):
@@ -66,7 +63,8 @@ def handle_Hangup(event, manager=None):
 
 def handle_Link(event, manager=None):
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
+
     """
     {'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'Channel1': 'SIP/430913-19be0080', 'Channel2': 'SIP/1313-19ba26d0', 'CallerID2': '380352407040', 'Privilege': 'call,all', 'CallerID1': '430913', 'Event': 'Link'}
     """
@@ -82,17 +80,17 @@ def handle_Link(event, manager=None):
 
 
 def handle_Newstate(event, manager=None):
+
     """
-    {'CallerID': '430913', 'State': 'Ring', 'Uniqueid': '1306914726.6994', 'CallerIDName': '430913', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/430913-19be0080'}
-    {'CallerID': '430913', 'State': 'Up', 'Uniqueid': '1306914726.6994', 'CallerIDName': '430913', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/430913-19be0080'}
+    V 1.0
     {'CallerID': '407040', 'State': 'Ringing', 'Uniqueid': '1306914757.6997', 'CallerIDName': '<unknown>', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/1119-19c5f0e0'}
     """
 
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
 
     if event['State'] == 'Ringing':
-	return handle_newstate_ringing(event, manager.stomp)
+        return handle_newstate_ringing(event, manager.stomp)
 
     return None
 
@@ -109,19 +107,30 @@ def handle_newstate_ringing(event, stomp):
     if channel == None:
         return None
 
-    print event    
-
     message = ChannelMessage()
 
     message.set_event(ChannelMessage.EVENT_RINGING)
     message.set_id(event['Uniqueid'])
-    message.set_extension(event['CallerID'])
     
-    parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
+    try:
+        parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
+    except Exception as e:
+        parent_event = None
+
+    if parent_event != None:
+        raw = eval(parent_event.raw)
+    else:
+        raw = None
     
-    raw = eval(parent_event.raw)
+    if raw != None:
+        caller = raw['CallerID']
+    else:
+        caller = 'unknown'
     
-    message.set_caller(raw['CallerID'])
+    extension = event['CallerID']
+
+    message.set_extension(extension)
+    message.set_caller(caller)
 
     send_message(stomp, message.dump_data_json(), getLocalNumber(channel))
 
@@ -138,4 +147,4 @@ def handle_hangup_clearing(event, stomp):
     
     send_message(stomp, message.dump_data_json(), getLocalNumber(channel))
 
-global connection, sqlhub
+global sqlhub
