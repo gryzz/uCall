@@ -37,22 +37,13 @@ def handle_Dial(event, manager=None):
     """
 
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
 
     print event
     #TODO: 
     # - put into db
     # - cleanup rule
     AsteriskEvent(event=event['Event'], raw=str(event), uniqueid=event['DestUniqueID'])
-
-#    try:
-#	srcuniqueid=event.get_header('Uniqueid')
-#    except:
-#	srcuniqueid=None
-#
-#    print event.get_header('Event'), event.headers
-    
-#    AsteriskEvent(event=event.get_header('Event'), raw=str(event.headers), uniqueid=uniqueid)
 
 
 def handle_Hangup(event, manager=None):
@@ -72,7 +63,8 @@ def handle_Hangup(event, manager=None):
 
 def handle_Link(event, manager=None):
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
+
     """
     {'Uniqueid2': '1306914758.6999', 'Uniqueid1': '1306914726.6994', 'Channel1': 'SIP/430913-19be0080', 'Channel2': 'SIP/1313-19ba26d0', 'CallerID2': '380352407040', 'Privilege': 'call,all', 'CallerID1': '430913', 'Event': 'Link'}
     """
@@ -92,25 +84,13 @@ def handle_Newstate(event, manager=None):
     """
     V 1.0
     {'CallerID': '407040', 'State': 'Ringing', 'Uniqueid': '1306914757.6997', 'CallerIDName': '<unknown>', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/1119-19c5f0e0'}
-
-    V 1.1
-    Event: Newstate
-    Privilege: call,all
-    Channel: SIP/102-00000023
-    ChannelState: 5
-    ChannelStateDesc: Ringing
-    CallerIDNum: 102
-    CallerIDName: 
-    Uniqueid: 1309436568.35
     """
 
     if not isinstance(event, dict):
-	event = event.headers
+        event = event.headers
 
-    if manager.version == PROTOCOL_VERSION_1_0 and event['State'] == 'Ringing':
-	return handle_newstate_ringing(event, manager.stomp, manager.version)
-    if manager.version == PROTOCOL_VERSION_1_1 and event['ChannelStateDesc'] == 'Ringing':
-	return handle_newstate_ringing(event, manager.stomp, manager.version)
+    if event['State'] == 'Ringing':
+        return handle_newstate_ringing(event, manager.stomp)
 
     return None
 
@@ -121,7 +101,7 @@ def handle_Shutdown(event, manager):
 def getLocalNumber(channel):
     return channel.split('-')[0]
 
-def handle_newstate_ringing(event, stomp, protocol_version):
+def handle_newstate_ringing(event, stomp):
     channel = event['Channel']
 
     if channel == None:
@@ -135,7 +115,6 @@ def handle_newstate_ringing(event, stomp, protocol_version):
     try:
         parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
     except Exception as e:
-        print e
         parent_event = None
 
     if parent_event != None:
@@ -143,9 +122,6 @@ def handle_newstate_ringing(event, stomp, protocol_version):
     else:
         raw = None
     
-   # if raw != None and protocol_version == PROTOCOL_VERSION_1_1:
-   #     caller = raw['CallerIDNum']
-   #	extension = event['CallerIDNum']
     if raw != None:
         caller = raw['CallerID']
     else:
