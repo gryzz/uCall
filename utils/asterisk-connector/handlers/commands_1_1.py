@@ -101,8 +101,11 @@ Uniqueid1: 1309443548.88
 Uniqueid2: 1309443548.89                                                                                                                                                                        
 CallerID1: 101                                                                                                                                                                                  
 CallerID2: 104
-    """
 
+    {'Uniqueid2': '1309506586.133', 'Uniqueid1': '1309506586.132', 'CallerID2': '104', 'Bridgestate': 'Link', 'CallerID1': '101', 'Channel2': 'SIP/104-00000085', 'Channel1': 'SIP/101-00000084', 'Bridgetype': 'core', 'Privilege': 'call,all', 'Event': 'Bridge'}
+
+    """
+    
     message = ChannelMessage()
 
     message.set_event(ChannelMessage.EVENT_LINK)
