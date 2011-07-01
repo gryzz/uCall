@@ -143,16 +143,16 @@ def handle_newstate_ringing(event, stomp, protocol_version):
     else:
         raw = None
     
-    if raw != None and protocol_version == PROTOCOL_VERSION_1_1:
-        caller = raw['CallerIDNum']
-        extension = event['CallerIDNum']
-    elif raw != None and protocol_version == PROTOCOL_VERSION_1_0:
+   # if raw != None and protocol_version == PROTOCOL_VERSION_1_1:
+   #     caller = raw['CallerIDNum']
+   #	extension = event['CallerIDNum']
+    if raw != None:
         caller = raw['CallerID']
-        extension = event['CallerID']
     else:
         caller = 'unknown'
-        extension = 'unknown'
     
+    extension = event['CallerID']
+
     message.set_extension(extension)
     message.set_caller(caller)
 
