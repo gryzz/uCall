@@ -11,7 +11,7 @@ Ext.define('uCall.controllers.GrowlController', {
         var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
-        this.taskManager = newExt.util.TaskRunner();
+        this.taskManager = new Ext.util.TaskRunner();
     },
     
     add: function(id, items) {
