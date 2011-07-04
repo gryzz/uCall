@@ -13,13 +13,23 @@ from django.shortcuts import get_object_or_404, render_to_response, redirect
 
 class UserInfoApi(object):
     def getUserInfo(self, phone_number, extention, request):
-        crm_gateway = CrmGateway(extention)
-        user_data = crm_gateway.findUserByPhoneNumber(phone_number)
+        crm_gateway = CrmGateway()
+
+        try:
+            crm_adapter = crm_gateway.retrieveCrmAdapter(extention)
+        except Exception as e:
+            return {
+                "success": False,
+                "msg": e.message
+            }
+
+        user_data = crm_adapter.findUserByPhone(phone_number)
 
         user = user_data['firstname'] + ' ' + user_data['lastname']
         title = user_data['title']
 
         return {
+            'success': True,
 	        'user': user,
             'title': title
 	    }
@@ -34,7 +44,7 @@ class FormsApi(object):
             customer = CrmCustomerNumber.objects.get(phone_number = data['id'])
         except CrmCustomerNumber.DoesNotExist as e:
             return {
-                "success": False, 
+                "success": False,
                 "msg": e.message
             }
 
@@ -53,6 +63,7 @@ class FormsApi(object):
 
         # return extjs-encoded form
         return {
+            'success': True,
             'id': application_definition.id,
             'slug': application_definition.slug,
             'application_form': ExtJSONEncoder().default(application_form)
@@ -91,7 +102,7 @@ class ProfileApi(object):
 
     def getBasicInfo(self, request):
         return {
-            "success":"true",
+            "success": True,
             "data": {"firstname": request.user.first_name, "lastname":request.user.last_name, "email":request.user.email}
         }
 

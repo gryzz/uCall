@@ -4,17 +4,18 @@ import csv
 import sys,os
 from time import *
 from datetime import *
-from handlers import *
+from handlers import commands_1_0 as commands
 import simplejson as json
 from stompy.simple import Client
 import ConfigParser
+from sqlobject import *
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from channel.channel_message import ChannelMessage as ChannelMessage
 
 class FakeAmiManager:
-    pass
+    version = '1.0'
 
 try:
     file = sys.argv[1]
@@ -54,13 +55,13 @@ sqlhub.processConnection = connection
 timestamp_prev = None
 
 callbacks = {
-    'Dial':handle_Dial,
-    'Hangup':handle_Hangup,
-    'Link':handle_Link,
+    'Dial': commands.handle_Dial,
+    'Hangup': commands.handle_Hangup,
+    'Link': commands.handle_Link,
 #    'Newcallerid':handle_Newcallerid,
 #   'Newchannel':handle_Newchannel,
 #    'Newexten':handle_Newexten,
-    'Newstate':handle_Newstate,
+    'Newstate': commands.handle_Newstate,
 #    'Unlink':handle_Unlink,
 }
 
@@ -83,8 +84,8 @@ for line in csv_read:
     event = line[2]
     event_data = eval(line[4])
 
-#    try:
-    message = callbacks[event](event_data, manager)
+    try:
+	message = callbacks[event](event_data, manager)
 
 #    if message:
 #	print 'Event:', event
@@ -92,5 +93,5 @@ for line in csv_read:
 #	print 'Produced message:', message
     
 #	stomp.put(message, destination=stomp_queue)
-#    except:
-#	pass
+    except:
+	pass
