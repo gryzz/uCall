@@ -11,7 +11,7 @@ Ext.define('uCall.controllers.GrowlController', {
         var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
-        this.taskManager = newExt.util.TaskRunner();
+        this.taskManager = new Ext.util.TaskRunner();
     },
     
     add: function(id, items) {
@@ -22,7 +22,7 @@ Ext.define('uCall.controllers.GrowlController', {
         var that = this;
         growlMessage.on('close', function(event){
                 var id = Ext.Object.getKey(that.messages, this);
-                if(id == -1)
+                if (id == -1)
                     return;
                 delete that.messages[id];
                 this.destroy();
