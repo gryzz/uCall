@@ -11,11 +11,36 @@ Ext.define('uCall.controllers.GrowlController', {
         var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
-        this.taskManager = new Ext.util.TaskRunner();
+        this.taskManager = new Ext.util.TaskRunner(180000);
     },
     
     add: function(id, items) {
-        var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {items: items});
+        var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {
+            items: items,
+//            headerPosition: 'right',
+//            tools: [{
+//                type: 'close',
+//                cls: 'ucall-growl-clsbtn-fix',
+//                id: id+'-close-btn',
+//                handler: function(){
+//                    this.up().up().close()
+//                },
+//                hidden: true
+//            }]
+        });
+        
+//        growlMessage.on({
+//            mouseover: {fn: function(){
+//                    this.getCmp(id+'-close-btn').show();                
+//                }, 
+//                scope: growlMessage
+//            },
+//            mouseout: {fn: function(){
+//                    this.getCmp(id+'-close-btn').hide();                
+//                }, 
+//                scope: growlMessage
+//            }
+//        });
         this.messages[id] = growlMessage;
         growlMessage.showAt([0,0]);
         growlMessage.showAt(growlMessage.el.getAlignToXY(this.alignMessagesTo, 'tl-bl', [ this.alignMessagesTo == this.topElement ? 5 : 0, 5]));
@@ -36,6 +61,17 @@ Ext.define('uCall.controllers.GrowlController', {
             }, growlMessage);
             
         this.alignMessagesTo = growlMessage.el;
+        
+        // auto-closing growl message
+        this.taskManager.start({
+            run: function(){
+                this.remove(id);
+                return false;
+            },
+            interval: 180000,
+            scope: this
+        });
+
     },
     
     remove: function(id) {

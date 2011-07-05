@@ -73,7 +73,7 @@ Ext.define('uCall.App', {
                 that.growlController.remove(id);
             }
         });
-        
+
         // Channel status indicator
         this.channelStatusIndicator = Ext.getCmp("ChannelStatusIndicator");
 

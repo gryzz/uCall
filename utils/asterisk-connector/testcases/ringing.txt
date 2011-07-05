@@ -1,1 +1,1 @@
-4836858	2011-06-01 10:58:48.372298	Newstate	1306915128.7017	{'CallerID': '205', 'State': 'Ringing', 'Uniqueid': '1306915128.7017', 'CallerIDName': '<unknown>', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/104-19d291e0'}
+4836858	2011-06-01 10:58:48.372298	Newstate	1306915128.7017	{'CallerID': '1', 'State': 'Ringing', 'Uniqueid': '1306915128.7017', 'CallerIDName': '<unknown>', 'Privilege': 'call,all', 'Event': 'Newstate', 'Channel': 'SIP/1001-19d291e0'}
