@@ -4,12 +4,14 @@ Ext.define('uCall.controllers.GrowlController', {
     messages: {},
     alignMessagesTo: null,
     topElement: null,
+    taskManager: null,
+    
     
     constructor: function() {
         var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
-        console.log(arguments);
+        this.taskManager = new Ext.util.TaskRunner();
     },
     
     add: function(id, items) {

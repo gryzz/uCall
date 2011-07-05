@@ -120,7 +120,7 @@ Ext.define('uCall.App', {
             sendDestination: '/queue/control',
             pingDestination: '/queue/ping',
             pingMessage: window.currentUser.agentId,
-            debug: true, 
+            debug: true,
 
             onConnectCallback: function(){
                 // Reset reconnect counter
@@ -143,5 +143,5 @@ Ext.define('uCall.App', {
 
         // Do connect
         this.stompClientAdapter.performConnect();
-    }    
+    }
 });
