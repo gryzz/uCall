@@ -6,6 +6,7 @@
  */
 
 Ext.define('uCall.widgets.UserStatusMenuButton', {
+    requires: ['uCall.controllers.AgentStatusController'],
     extend: 'Ext.Button',
     alias: 'widget.UserStatusMenuButton',
 
@@ -14,17 +15,21 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
     iconStatusOffline: "/ui/resources/images/user_status/offline.png",
     
     onMenuItemClick: function(menu, item, event){
+        var statusController = uCall.controllers.AgentStatusController;
         switch(item.id) {
             case 'StatusItemOffline':
-		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOffline);
+                statusController.offline();
+                Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOffline);
                 break;
 
             case 'StatusItemOnline':
-		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOnline);
+                statusController.available();
+                Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusOnline);
                 break;
 
             case 'StatusItemAway':
-		Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusAway);
+                statusController.away();
+                Ext.getCmp('UserStatusMenuButton').setIcon(this.iconStatusAway);
                 break;
         }
     },
@@ -46,8 +51,8 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         // Initialize
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
-	
-	this.setIcon(this.iconStatusOffline);
+        
+        this.setIcon(this.iconStatusOffline);
         // Event Handlers
         this.menu.on("click", this.onMenuItemClick, this);
     }

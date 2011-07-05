@@ -66,7 +66,7 @@ Ext.define('uCall.App', {
             onShow: function(id, message) {
                 that.growlController.add(id, [ {
                     xtype: 'component',
-                    html: message,
+                    html: message
                 }]);
             },
             onHide: function(id) {
