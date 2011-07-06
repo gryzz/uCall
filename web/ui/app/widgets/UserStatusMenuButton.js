@@ -13,7 +13,7 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
     iconStatusOnline: "/ui/resources/images/user_status/online.png",
     iconStatusAway: "/ui/resources/images/user_status/away.png",
     iconStatusOffline: "/ui/resources/images/user_status/offline.png",
-    
+
     config: {
         id: 'UserStatusMenuButton',
         text: 'Agent: ' + window.currentUser.agentId,
@@ -26,24 +26,24 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
             ]
         }
     },
-    
+
     setAvailable: function() {
-    	this.setIcon(this.iconStatusOffline);
+    	this.setIcon(this.iconStatusOnline);
     },
-    
+
     setAway: function() {
-        this.setIcon(this.iconStatusOnline);
-    },
-    
-    setOffline: function() {
         this.setIcon(this.iconStatusAway);
     },
-    
+
+    setOffline: function() {
+        this.setIcon(this.iconStatusOffline);
+    },
+
     constructor: function(){
         // Initialize
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
-        
+
         this.setIcon(this.iconStatusOffline);
     }
 });

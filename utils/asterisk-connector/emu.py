@@ -73,7 +73,9 @@ callbacks = {
     'Hangup': command_handler.handle_Hangup,
     'Link': command_handler.handle_Link,
     'Newstate': command_handler.handle_Newstate,
-    'QueueMemberAdded': command_handler.handle_QueueMemberAdded
+    'QueueMemberAdded': command_handler.handle_QueueMemberAdded,
+    'QueueMemberRemoved': command_handler.handle_QueueMemberRemoved,
+    'QueueMemberPaused': command_handler.handle_QueueMemberPaused
 }
 
 for line in csv_read:
