@@ -26,11 +26,19 @@ Ext.define('uCall.controllers.MessageController', {
 	    	    that = this;
 	            UserInfo.getUserInfo(message.c, message.e, function(value) {
 		            if (value.success) {
-					    that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, 'User ' + value.user + ' is waiting ... <br> Notes: ' + value.title);
+					    that.fireEvent(
+					       uCall.constants.MessageEvent.SHOW, 
+					       message.i, 
+					       'User ' + value.user + ' is waiting ... <br> Notes: ' + 
+					       value.title
+				       );
 					} else {
-					    that.fireEvent(uCall.constants.MessageEvent.SHOW, message.i, value.msg);
+					    that.fireEvent(
+					       uCall.constants.MessageEvent.SHOW, 
+					       message.i, 
+					       value.msg
+				       );
 					}
-
 		        });
                 break;
             case this.mappedEvents.EVENT_HANGUP_CLEANUP:

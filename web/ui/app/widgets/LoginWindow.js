@@ -81,8 +81,6 @@ Ext.define('uCall.widgets.LoginWindow', {
     closable: false,
     modal: true,
 
-    
-
     constructor: function(){
         Ext.apply(this, this.config);
 //        Ext.Array.each(this.config.items.items, function(item, index) {
