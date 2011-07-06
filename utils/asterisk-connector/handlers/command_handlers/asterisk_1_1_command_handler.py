@@ -26,22 +26,22 @@ class Asterisk11CommandHandler(AsteriskCommandHandler):
         DestUniqueID: 1309518189.213
         Dialstring: 104
         """
-        
+
         if event[Asterisk11.HEADER_SUBEVENT] == Asterisk11.SUBEVENT_BEGIN:
             AsteriskEvent(event = event[Asterisk11.HEADER_EVENT], raw = str(event), uniqueid = event[Asterisk11.HEADER_DESTUNIQUEID])
 
     @check_event
     def handle_Bridge(self, event, manager):
         """
-        Event: Bridge                                                                                                                                                                                   
-        Privilege: call,all                                                                                                                                                                             
-        Bridgestate: Link                                                                                                                                                                               
-        Bridgetype: core                                                                                                                                                                                
-        Channel1: SIP/101-00000058                                                                                                                                                                      
-        Channel2: SIP/104-00000059                                                                                                                                                                      
-        Uniqueid1: 1309443548.88                                                                                                                                                                        
-        Uniqueid2: 1309443548.89                                                                                                                                                                        
-        CallerID1: 101                                                                                                                                                                                  
+        Event: Bridge
+        Privilege: call,all
+        Bridgestate: Link
+        Bridgetype: core
+        Channel1: SIP/101-00000058
+        Channel2: SIP/104-00000059
+        Uniqueid1: 1309443548.88
+        Uniqueid2: 1309443548.89
+        CallerID1: 101
         CallerID2: 104
 
         {'Uniqueid2': '1309506586.133', 'Uniqueid1': '1309506586.132', 'CallerID2': '104', 'Bridgestate': 'Link', 'CallerID1': '101', 'Channel2': 'SIP/104-00000085', 'Channel1': 'SIP/101-00000084', 'Bridgetype': 'core', 'Privilege': 'call,all', 'Event': 'Bridge'}
@@ -66,6 +66,28 @@ class Asterisk11CommandHandler(AsteriskCommandHandler):
 
         message = ChannelMessage()
         message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_ADDED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberRemoved(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_REMOVED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberPaused(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_PAUSED)
         send_message(manager.destination, message.dump_data_json(), get_local_number(location))
 
     def handle_Shutdown(self, event, manager):
@@ -126,7 +148,7 @@ class Asterisk11CommandHandler(AsteriskCommandHandler):
         # TODO: Ignore hangup cause for now
         # if event[Asterisk10.HEADER_CAUSE] == Asterisk10.CAUSE_NORMAL_CLEARING:
         return True
-            
+
         # return False
 
     def _is_newstate_ringing(self, event):

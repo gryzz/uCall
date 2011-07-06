@@ -10,13 +10,13 @@ from handler_utils import get_local_number
 
 class Asterisk10CommandHandler(AsteriskCommandHandler):
     """Concrete command handler for Asterisk Call Manager/1.0 protocol"""
-    
+
     @check_event
     def handle_Dial(self, event, manager):
         """
         {'CallerID': '1133', 'SrcUniqueID': '1306919118.7245', 'Destination': 'SIP/214-19bceeb0', 'DestUniqueID': '1306919118.7246', 'Source': 'SIP/1133-19ba80e0', 'CallerIDName': 'tamila', 'Privilege': 'call,all', 'Event': 'Dial'}
         """
-        
+
         AsteriskEvent(event = event[Asterisk10.HEADER_EVENT], raw = str(event), uniqueid = event[Asterisk10.HEADER_DESTUNIQUEID])
 
     @check_event
@@ -44,6 +44,30 @@ class Asterisk10CommandHandler(AsteriskCommandHandler):
         message = ChannelMessage()
         message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_ADDED)
         send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberRemoved(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_REMOVED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberPaused(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_PAUSED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+
 
     def handle_Shutdown(self, event, manager):
         print AsteriskCommandHandler.SHUTDOWN_MESSAGE
@@ -99,11 +123,11 @@ class Asterisk10CommandHandler(AsteriskCommandHandler):
         # TODO: Ignore hangup cause for now
         # if event[Asterisk10.HEADER_CAUSE] == Asterisk10.CAUSE_NORMAL_CLEARING:
         return True
-            
+
         # return False
 
     def _is_newstate_ringing(self, event):
         if event[Asterisk10.HEADER_STATE] == Asterisk10.STATE_RINGING:
             return True
-        
+
         return False

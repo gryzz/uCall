@@ -11,5 +11,7 @@ Ext.define('uCall.constants.MessageEvent', {
     INCOMING_CALL_RINGING: 'incomingCallRinging',
     INCOMING_CALL_HANGUP:  'incomingCallHangup',
     WINDOW: "WindowShow",
-    STATUS_ONLINE: "StatusOnline"
+    STATUS_ONLINE: "StatusOnline",
+    STATUS_OFFLINE: "StatusOffline",
+    STATUS_AWAY: "StatusAway"
 });
