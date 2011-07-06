@@ -36,14 +36,14 @@ stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
 
 print '='*80
-print 'Stomp host:', stomp_host 
-print 'Stomp username:', stomp_username 
-print 'Stomp password:', stomp_password 
+print 'Stomp host:', stomp_host
+print 'Stomp username:', stomp_username
+print 'Stomp password:', stomp_password
 print '='*80
 
 sql_dsn = config.get('SQL', 'dsn')
 
-print 'SQL:', sql_dsn 
+print 'SQL:', sql_dsn
 print '='*80
 
 stomp = Client(stomp_host)
@@ -62,7 +62,9 @@ callbacks = {
 #   'Newchannel':handle_Newchannel,
 #    'Newexten':handle_Newexten,
     'Newstate': commands.handle_Newstate,
+    'QueueMemberAdded': commands.handle_QueueMemberAdded
 #    'Unlink':handle_Unlink,
+
 }
 
 manager = FakeAmiManager()
@@ -91,7 +93,7 @@ for line in csv_read:
 #	print 'Event:', event
 #	print 'Original data:', event_data
 #	print 'Produced message:', message
-    
+
 #	stomp.put(message, destination=stomp_queue)
     except:
 	pass

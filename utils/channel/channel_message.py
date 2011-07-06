@@ -5,10 +5,12 @@ class ChannelMessage:
     EVENT_RINGING = 'rg'
     EVENT_HANGUP_CLEANUP = 'cl'
     EVENT_LINK = 'ln'
+    EVENT_QUEUE_MEMBER_ADDED = 'qma'
 
     EVENT_RINGING_KEY = 'EVENT_RINGING'
     EVENT_HANGUP_CLEANUP_KEY = 'EVENT_HANGUP_CLEANUP'
     EVENT_LINK_KEY = 'EVENT_LINK'
+    EVENT_QUEUE_MEMBER_ADDED_KEY = 'EVENT_QUEUE_MEMBER_ADDED'
 
     message = {'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}
 
@@ -43,7 +45,8 @@ class ChannelMessage:
         data = {
             self.EVENT_RINGING_KEY: self.EVENT_RINGING,
             self.EVENT_HANGUP_CLEANUP_KEY: self.EVENT_HANGUP_CLEANUP,
-            self.EVENT_LINK_KEY: self.EVENT_LINK
+            self.EVENT_LINK_KEY: self.EVENT_LINK,
+            self.EVENT_QUEUE_MEMBER_ADDED_KEY: self.EVENT_QUEUE_MEMBER_ADDED
         }
 
         return self.json_dump(data)
