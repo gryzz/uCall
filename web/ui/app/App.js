@@ -61,18 +61,10 @@ Ext.define('uCall.App', {
         this.applicationWindowController = Ext.create('uCall.controllers.ApplicationWindowController');
         this.growlController = Ext.create('uCall.controllers.GrowlController');
         this.messageController = uCall.controllers.MessageController;
+        // TODO !!!
         /*Ext.create('uCall.controllers.MessageController', {
             onEventLinkCallback: function(message) {
                 that.applicationWindowController.fireEvent(uCall.constants.MessageEvent.WINDOW, message);
-            },
-            onShow: function(id, message) {
-                that.growlController.add(id, [ {
-                    xtype: 'component',
-                    html: message
-                }]);
-            },
-            onHide: function(id) {
-                that.growlController.remove(id);
             }
         });*/
 

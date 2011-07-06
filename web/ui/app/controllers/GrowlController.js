@@ -6,17 +6,34 @@ Ext.define('uCall.controllers.GrowlController', {
     topElement: null,
     taskManager: null,
     
-    
     constructor: function() {
         var alignMessagesTo = Ext.getCmp('MainTopToolbar').el;
         this.alignMessagesTo = alignMessagesTo;
         this.topElement = alignMessagesTo;
         this.taskManager = new Ext.util.TaskRunner(180000);
+        
+        uCall.controllers.MessageController.on(
+            uCall.constants.MessageEvent.INCOMING_CALL_RINGING,
+            function(id, message) {
+                this.add(id, [ {
+                    xtype: 'component',
+                    html: message
+                }]);
+            },
+            this
+        );
+        uCall.controllers.MessageController.on(
+            uCall.constants.MessageEvent.INCOMING_CALL_HANGUP,
+            function(id) {
+                this.remove(id);
+            },
+            this
+        );
     },
     
     add: function(id, items) {
         var growlMessage = Ext.create('uCall.widgets.GrowlMessage', {
-            items: items,
+            items: items
 //            headerPosition: 'right',
 //            tools: [{
 //                type: 'close',

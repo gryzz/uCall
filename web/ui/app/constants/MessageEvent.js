@@ -8,8 +8,8 @@ Ext.define('uCall.constants.MessageEvent', {
     singleton: true,
 
     // Event types
-    SHOW: "MessageShow",
-    HIDE: "MessageHide",
+    INCOMING_CALL_RINGING: 'incomingCallRinging',
+    INCOMING_CALL_HANGUP:  'incomingCallHangup',
     WINDOW: "WindowShow",
     STATUS_ONLINE: "StatusOnline"
 });

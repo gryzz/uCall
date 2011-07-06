@@ -13,10 +13,7 @@ Ext.define('uCall.controllers.MessageController', {
     mappedEvents: channelEventSchema,
 
     config: {
-        onEventLinkCallback: Ext.emptyFn,
-
-        onShow: Ext.emptyFn,
-        onHide: Ext.emptyFn
+        onEventLinkCallback: Ext.emptyFn
     },
 
     handleMessage: function(eventData) {
@@ -28,14 +25,14 @@ Ext.define('uCall.controllers.MessageController', {
 	            UserInfo.getUserInfo(message.c, message.e, function(value) {
 		            if (value.success) {
 					    that.fireEvent(
-					       uCall.constants.MessageEvent.SHOW, 
+					       uCall.constants.MessageEvent.INCOMING_CALL_RINGING, 
 					       message.i, 
 					       'User ' + value.user + ' is waiting ... <br> Notes: ' + 
 					       value.title
 				       );
 					} else {
 					    that.fireEvent(
-					       uCall.constants.MessageEvent.SHOW, 
+					       uCall.constants.MessageEvent.INCOMING_CALL_RINGING, 
 					       message.i, 
 					       value.msg
 				       );
@@ -44,10 +41,10 @@ Ext.define('uCall.controllers.MessageController', {
                 break;
             case this.mappedEvents.EVENT_HANGUP_CLEANUP:
                 console.log('hidding ...');
-                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
+                this.fireEvent(uCall.constants.MessageEvent.INCOMING_CALL_HANGUP, message.i);
                 break;
             case this.mappedEvents.EVENT_LINK:
-                this.fireEvent(uCall.constants.MessageEvent.HIDE, message.i);
+                this.fireEvent(uCall.constants.MessageEvent.INCOMING_CALL_HANGUP, message.i);
 
                 if (this.onEventLinkCallback) {
                     this.onEventLinkCallback(message);
@@ -78,12 +75,8 @@ Ext.define('uCall.controllers.MessageController', {
 
         // Register events
         this.addEvents(
-            uCall.constants.MessageEvent.SHOW,
-            uCall.constants.MessageEvent.HIDE
+            uCall.constants.MessageEvent.INCOMING_CALL_RINGING,
+            uCall.constants.MessageEvent.INCOMING_CALL_HANGUP
         );
-
-        // Add listeners
-        this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
-        this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);
     }
 });
