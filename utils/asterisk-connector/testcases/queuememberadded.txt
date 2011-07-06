@@ -1,1 +1,2 @@
 4836665	2011-06-01 10:51:49.996394	QueueMemberAdded	1306915125.7017	{'Event': 'QueueMemberAdded', 'Privilege': 'agent,all', 'Queue': 'test', 'Location': 'SIP/101', 'MemberName': 'SIP/101', 'Membership': 'dynamic', 'Penalty': '0', 'CallsTaken': '0', 'LastCall': '0', 'Status': '1', 'Paused': '0'}
+
