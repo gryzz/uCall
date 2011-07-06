@@ -44,6 +44,10 @@ Ext.define('uCall.controllers.MessageController', {
                     this.onEventLinkCallback(message);
                 }
                 break;
+            case this.mappedEvents.EVENT_QUEUE_MEMBER_ADDED:
+                this.fireEvent(uCall.constants.MessageEvent.STATUS_ONLINE);
+                break;
+
         }
     },
 
@@ -64,5 +68,6 @@ Ext.define('uCall.controllers.MessageController', {
         // Add listeners
         this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
         this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);
+        this.on(uCall.constants.MessageEvent.STATUS_ONLINE, this.onStatusOnline, this);
     }
 });
