@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-4836665	2011-06-01 10:51:49.996394	QueueMemberAdded	1306915125.7017	{'Event': 'QueueMemberAdded', 'Privilege': 'agent,all', 'Queue': 'test', 'Location': 'SIP/1001', 'MemberName': 'SIP/1001', 'Membership': 'dynamic', 'Penalty': '0', 'CallsTaken': '0', 'LastCall': '0', 'Status': '1', 'Paused': '0'}
-=======
 4836665	2011-06-01 10:51:49.996394	QueueMemberAdded	1306915125.7017	{'Event': 'QueueMemberAdded', 'Privilege': 'agent,all', 'Queue': 'test', 'Location': 'SIP/101', 'MemberName': 'SIP/101', 'Membership': 'dynamic', 'Penalty': '0', 'CallsTaken': '0', 'LastCall': '0', 'Status': '1', 'Paused': '0'}
->>>>>>> 391edb1097c6f87d0d3863a062706a989ec864ef
+
