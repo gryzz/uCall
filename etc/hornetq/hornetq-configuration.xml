@@ -34,12 +34,12 @@
       </acceptor>
    </acceptors>
 
-
+    <security-enabled>false</security-enabled>
    <!-- Other config -->
 
    <security-settings>
-      <!--security for example queue-->
-      <security-setting match="/topic/sip1001">
+
+      <security-setting match="jms.queue.messages_ctrl">
          <permission type="createDurableQueue" roles="guest"/>
          <permission type="deleteDurableQueue" roles="guest"/>
          <permission type="createNonDurableQueue" roles="guest"/>
@@ -47,6 +47,52 @@
          <permission type="consume" roles="guest"/>
          <permission type="send" roles="guest"/>
       </security-setting>
+
+      <security-setting match="jms.queue.messages_sip101">
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+      </security-setting>
+
+      <security-setting match="jms.queue.messages_sip102">
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+      </security-setting>
+
+      <security-setting match="jms.queue.messages_sip103">
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+      </security-setting>
+
+      <security-setting match="jms.queue.messages_sip104">
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+      </security-setting>
+
+      <security-setting match="jms.queue.messages_sip105">
+         <permission type="createDurableQueue" roles="guest"/>
+         <permission type="deleteDurableQueue" roles="guest"/>
+         <permission type="createNonDurableQueue" roles="guest"/>
+         <permission type="deleteNonDurableQueue" roles="guest"/>
+         <permission type="consume" roles="guest"/>
+         <permission type="send" roles="guest"/>
+      </security-setting>
+
    </security-settings>
 
 </configuration>

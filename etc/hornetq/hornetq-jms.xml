@@ -16,4 +16,28 @@
       <entry name="/topic/sip1001"/>
    </topic>
 
+   <queue name="messages_ctrl">
+      <entry name="/queue/messages_ctrl"/>
+   </queue>
+
+   <queue name="messages_sip101">
+      <entry name="/queue/messages_sip101"/>
+   </queue>
+
+   <queue name="messages_sip102">
+      <entry name="/queue/messages_sip102"/>
+   </queue>
+
+   <queue name="messages_sip103">
+      <entry name="/queue/messages_sip103"/>
+   </queue>
+
+   <queue name="messages_sip104">
+      <entry name="/queue/messages_sip104"/>
+   </queue>
+
+   <queue name="messages_sip105">
+      <entry name="/queue/messages_sip105"/>
+   </queue>
+
 </configuration>
