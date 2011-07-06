@@ -90,15 +90,17 @@ a:hover { color: #036; }
 
 .mainPanelBg {
     background: transparent url("/ui/resources/images/logo/receptionist_256.png") no-repeat scroll right bottom;
-    opacity: 0.2; # TODO: remove opacity;
+    opacity: 0.2;
     width: 256px;
     height: 256px;
 }
 
-
-
-
-
+.ucall-growl-clsbtn-fix {    
+left: 0 !important
+}
+.ucall-growl-clsbtn-fix img {
+    position: fixed;
+}
 
 
 /*

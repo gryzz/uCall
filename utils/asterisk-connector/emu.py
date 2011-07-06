@@ -37,14 +37,14 @@ stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
 
 print '='*80
-print 'Stomp host:', stomp_host 
-print 'Stomp username:', stomp_username 
-print 'Stomp password:', stomp_password 
+print 'Stomp host:', stomp_host
+print 'Stomp username:', stomp_username
+print 'Stomp password:', stomp_password
 print '='*80
 
 sql_dsn = config.get('SQL', 'dsn')
 
-print 'SQL:', sql_dsn 
+print 'SQL:', sql_dsn
 print '='*80
 
 stomp = Client(stomp_host)
@@ -55,17 +55,26 @@ sqlhub.processConnection = connection
 
 timestamp_prev = None
 
-command_handler = CommandHandlerFactory(Protocol.ASTERISK_1_0).create_command_handler()
+manager = FakeAmiManager()
+manager.destination = stomp
+
+asteriskProtocolVersion = None
+if manager.version == '1.0':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_0
+elif manager.version == '1.1':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_1
+else:
+    sys.exit()
+
+command_handler = CommandHandlerFactory(asteriskProtocolVersion).create_command_handler()
 
 callbacks = {
     'Dial': command_handler.handle_Dial,
     'Hangup': command_handler.handle_Hangup,
     'Link': command_handler.handle_Link,
     'Newstate': command_handler.handle_Newstate,
+    'QueueMemberAdded': command_handler.handle_QueueMemberAdded
 }
-
-manager = FakeAmiManager()
-manager.destination = stomp
 
 for line in csv_read:
     print line
@@ -90,7 +99,7 @@ for line in csv_read:
 #	print 'Event:', event
 #	print 'Original data:', event_data
 #	print 'Produced message:', message
-    
+
 #	stomp.put(message, destination=stomp_queue)
     except:
 	pass

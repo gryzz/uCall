@@ -18,5 +18,5 @@ Ext.define('uCall.widgets.GrowlMessage', {
     constructor: function(config){
         Ext.apply(this, this.config);
 		this.callParent(arguments);
-    },
+    }
 });

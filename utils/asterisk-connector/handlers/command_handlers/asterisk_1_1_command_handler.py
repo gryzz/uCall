@@ -57,6 +57,16 @@ class Asterisk11CommandHandler(AsteriskCommandHandler):
 
         send_message(manager.destination, message.dump_data_json(), get_local_number(event[Asterisk11.HEADER_CHANNEL2]))
 
+    @check_event
+    def handle_QueueMemberAdded(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_ADDED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
 
     def handle_Shutdown(self, event, manager):
         print AsteriskCommandHandler.SHUTDOWN_MESSAGE

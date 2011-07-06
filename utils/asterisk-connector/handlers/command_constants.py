@@ -18,6 +18,7 @@ class Asterisk:
     HEADER_CHANNEL = "Channel"
     HEADER_CHANNEL1 = "Channel1"
     HEADER_CHANNEL2 = "Channel2"
+    HEADER_LOCATION = "Location"
     
     CAUSE_NORMAL_CLEARING = "Normal Clearing"
     STATE_RINGING = "Ringing"

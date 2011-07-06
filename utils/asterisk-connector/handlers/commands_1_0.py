@@ -19,14 +19,15 @@ class AsteriskEvent(SQLObject):
 #PhoneNumber.createTable(ifNotExists=True)
 
 def send_message(stomp, message, agent):
+    print "Send!"
     print '='*80
-    print 'Agent:', agent 
-    print 'Message:', message 
+    print 'Agent:', agent
+    print 'Message:', message
     print '='*80
 
     conf = {}
     #TODO: add message expiration
-    #conf={"expires":(int(time()) + int(connect(config.get('GENERAL', 'message_ttl'))) * 1000}  
+    #conf={"expires":(int(time()) + int(connect(config.get('GENERAL', 'message_ttl'))) * 1000}
     stomp.put(message, destination="/queue/messages/"+agent, persistent=False, conf=conf)
 
 def handle_Dial(event, manager=None):
@@ -40,7 +41,7 @@ def handle_Dial(event, manager=None):
         event = event.headers
 
     print event
-    #TODO: 
+    #TODO:
     # - put into db
     # - cleanup rule
     AsteriskEvent(event=event['Event'], raw=str(event), uniqueid=event['DestUniqueID'])
@@ -75,7 +76,7 @@ def handle_Link(event, manager=None):
     message.set_id(event['Uniqueid1'])
     message.set_extension(event['CallerID1'])
     message.set_caller(event['CallerID2'])
-    
+
     send_message(manager.stomp, message.dump_data_json(), getLocalNumber(event['Channel1']))
 
 
@@ -98,6 +99,23 @@ def handle_Shutdown(event, manager):
     print "Recieved shutdown event"
     manager.close()
 
+def handle_QueueMemberAdded(event, manager):
+
+    if not isinstance(event, dict):
+        event = event.headers
+
+    location = event['Location']
+
+    if location == None:
+        return None
+
+    message = ChannelMessage()
+
+    message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_ADDED)
+
+    send_message(manager.stomp, message.dump_data_json(), getLocalNumber(location))
+
+
 def getLocalNumber(channel):
     return channel.split('-')[0]
 
@@ -111,7 +129,7 @@ def handle_newstate_ringing(event, stomp):
 
     message.set_event(ChannelMessage.EVENT_RINGING)
     message.set_id(event['Uniqueid'])
-    
+
     try:
         parent_event = AsteriskEvent.selectBy(event = 'Dial', uniqueid = event['Uniqueid'])[0]
     except Exception as e:
@@ -121,12 +139,12 @@ def handle_newstate_ringing(event, stomp):
         raw = eval(parent_event.raw)
     else:
         raw = None
-    
+
     if raw != None:
         caller = raw['CallerID']
     else:
         caller = 'unknown'
-    
+
     extension = event['CallerID']
 
     message.set_extension(extension)
@@ -136,7 +154,7 @@ def handle_newstate_ringing(event, stomp):
 
 def handle_hangup_clearing(event, stomp):
     channel = event['Channel']
-    
+
     if channel == None:
         return None
 
@@ -144,7 +162,8 @@ def handle_hangup_clearing(event, stomp):
 
     message.set_event(ChannelMessage.EVENT_HANGUP_CLEANUP)
     message.set_id(event['Uniqueid'])
-    
+
     send_message(stomp, message.dump_data_json(), getLocalNumber(channel))
+
 
 global sqlhub

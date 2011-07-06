@@ -24,10 +24,13 @@ class CommandHandler:
         pass
 
     @abc.abstractmethod
+    def handle_QueueMemberAdded(self, event, manager):
+        pass
+
+    @abc.abstractmethod
     def handle_Newstate(self, event, manager):
         pass
 
     @abc.abstractmethod
     def handle_Shutdown(self, event, manager):
         pass
-
