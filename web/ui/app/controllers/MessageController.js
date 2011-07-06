@@ -8,6 +8,7 @@
 Ext.define('uCall.controllers.MessageController', {
     requires: ['uCall.constants.MessageEvent'],
     extend: 'Ext.util.Observable',
+    singleton: true,
 
     mappedEvents: channelEventSchema,
 
@@ -58,6 +59,14 @@ Ext.define('uCall.controllers.MessageController', {
 
         }
     },
+    
+    sendMessage: function(data, reciever) {
+    	if (typeof data != 'string') {
+    		data = Ext.JSON.encode(data);
+    	}
+    	
+    	// TODO: actual sending!!! (this -> channel controller -> stomp adapter -> activemq)
+    },
 
     constructor: function(config) {
         // Merge configs
@@ -76,6 +85,5 @@ Ext.define('uCall.controllers.MessageController', {
         // Add listeners
         this.on(uCall.constants.MessageEvent.SHOW, this.onShow, this);
         this.on(uCall.constants.MessageEvent.HIDE, this.onHide, this);
-        this.on(uCall.constants.MessageEvent.STATUS_ONLINE, this.onStatusOnline, this);
     }
 });

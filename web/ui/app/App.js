@@ -13,7 +13,8 @@ Ext.define('uCall.App', {
         'uCall.controllers.GrowlController',
         'uCall.controllers.MessageController',
         'uCall.controllers.ApplicationWindowController',
-        'uCall.l10n.L10n'
+        'uCall.l10n.L10n',
+        'uCall.controllers.AgentStatusController'
     ],
     
     extend: 'Ext.container.Viewport',
@@ -59,7 +60,8 @@ Ext.define('uCall.App', {
         // Channel messages controller
         this.applicationWindowController = Ext.create('uCall.controllers.ApplicationWindowController');
         this.growlController = Ext.create('uCall.controllers.GrowlController');
-        this.messageController = Ext.create('uCall.controllers.MessageController', {
+        this.messageController = uCall.controllers.MessageController;
+        /*Ext.create('uCall.controllers.MessageController', {
             onEventLinkCallback: function(message) {
                 that.applicationWindowController.fireEvent(uCall.constants.MessageEvent.WINDOW, message);
             },
@@ -72,7 +74,7 @@ Ext.define('uCall.App', {
             onHide: function(id) {
                 that.growlController.remove(id);
             }
-        });
+        });*/
 
         // Channel status indicator
         this.channelStatusIndicator = Ext.getCmp("ChannelStatusIndicator");

@@ -6,7 +6,6 @@
  */
 
 Ext.define('uCall.controllers.AgentStatusController', {
-    extend: 'Ext.util.Observable',
     className: 'uCall.controllers.AgentStatusController',
     singleton: true,
     
@@ -16,6 +15,39 @@ Ext.define('uCall.controllers.AgentStatusController', {
     
     config: {
     	
+    },
+    
+    /**
+     * 
+     * @param {} menu
+     * @param {} item
+     * @param {} event
+     */
+    onWidgetMenuItemClick: function(menu, item, event){
+        var data = {
+            agentId: currentUser.agentId
+        };
+        switch(item.id) {
+            case 'StatusItemOffline':
+                data.statusId = 'offline';
+                //statusController.offline();
+                //Ext.getCmp('UserStatusMenuButton').setOffline();
+                break;
+
+            case 'StatusItemOnline':
+                data.statusId = 'available';
+                //statusController.available();
+                //Ext.getCmp('UserStatusMenuButton').setAvailable();
+                break;
+
+            case 'StatusItemAway':
+                data.statusId = 'away';
+                //statusController.away();
+                //Ext.getCmp('UserStatusMenuButton').setAway();
+                break;
+        }
+        // TODO: fetch reciver from config
+        uCall.controllers.MessageController.sendMessage(data, 'messages/ctrl');
     },
     
     /**
@@ -49,6 +81,16 @@ Ext.define('uCall.controllers.AgentStatusController', {
 
         // Parent
         this.callParent(arguments);
+
+        // Event Handlers
+        Ext.onReady(function() {
+            var menu = Ext.getCmp('UserStatusMenuButton');
+            menu.on(
+                "click", 
+                uCall.controllers.AgentStatusController.onWidgetMenuItemClick, 
+                menu
+            );
+        });
 
         /**
          * This appears to not be required... ivan
