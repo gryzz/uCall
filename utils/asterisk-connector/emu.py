@@ -4,11 +4,12 @@ import csv
 import sys,os
 from time import *
 from datetime import *
-from handlers import commands_1_0 as commands
 import simplejson as json
 from stompy.simple import Client
 import ConfigParser
 from sqlobject import *
+from handlers.command_handler_factory import CommandHandlerFactory
+from handlers.command_constants import Protocol
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
@@ -54,21 +55,26 @@ sqlhub.processConnection = connection
 
 timestamp_prev = None
 
-callbacks = {
-    'Dial': commands.handle_Dial,
-    'Hangup': commands.handle_Hangup,
-    'Link': commands.handle_Link,
-#    'Newcallerid':handle_Newcallerid,
-#   'Newchannel':handle_Newchannel,
-#    'Newexten':handle_Newexten,
-    'Newstate': commands.handle_Newstate,
-    'QueueMemberAdded': commands.handle_QueueMemberAdded
-#    'Unlink':handle_Unlink,
-
-}
-
 manager = FakeAmiManager()
-manager.stomp = stomp
+manager.destination = stomp
+
+asteriskProtocolVersion = None
+if manager.version == '1.0':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_0
+elif manager.version == '1.1':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_1
+else:
+    sys.exit()
+
+command_handler = CommandHandlerFactory(asteriskProtocolVersion).create_command_handler()
+
+callbacks = {
+    'Dial': command_handler.handle_Dial,
+    'Hangup': command_handler.handle_Hangup,
+    'Link': command_handler.handle_Link,
+    'Newstate': command_handler.handle_Newstate,
+    'QueueMemberAdded': command_handler.handle_QueueMemberAdded
+}
 
 for line in csv_read:
     print line

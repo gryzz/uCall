@@ -17,13 +17,12 @@ class UserInfoApi(object):
 
         try:
             crm_adapter = crm_gateway.retrieveCrmAdapter(extention)
+            user_data = crm_adapter.findUserByPhone(phone_number)
         except Exception as e:
             return {
                 "success": False,
                 "msg": e.message
             }
-
-        user_data = crm_adapter.findUserByPhone(phone_number)
 
         user = user_data['firstname'] + ' ' + user_data['lastname']
         title = user_data['title']

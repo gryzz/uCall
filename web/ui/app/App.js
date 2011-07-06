@@ -40,6 +40,7 @@ Ext.define('uCall.App', {
     
     // Constructor
     constructor: function(){
+        
         var that = this;
 
         var manualChannelReconnect = function() {
