@@ -8,6 +8,8 @@ import simplejson as json
 from stompy.simple import Client
 import ConfigParser
 from sqlobject import *
+from handlers.command_handler_factory import CommandHandlerFactory
+from handlers.command_constants import Protocol
 
 #sys.stdout = open("/var/log/requests/connector2.log","a")
 #sys.stderr = open("/var/log/requests/connector-err2.log","a")
@@ -61,21 +63,24 @@ manager = asterisk.manager.Manager()
 #try:
 manager.connect(ami_host)
 manager.login(ami_username, ami_password)
-manager.stomp = stomp
+manager.destination = stomp
 
-if manager.version == '1.1':
-    from handlers import commands_1_1 as commands
-elif manager.version == '1.0':
-    from handlers import commands_1_0 as commands
+asteriskProtocolVersion = None
+if manager.version == '1.0':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_0
+elif manager.version == '1.1':
+    asteriskProtocolVersion = Protocol.ASTERISK_1_1
 else:
     sys.exit()
 
-manager.register_event('Shutdown', commands.handle_Shutdown)
-manager.register_event('Hangup', commands.handle_Hangup)
-manager.register_event('Link', commands.handle_Link)
-manager.register_event('Bridge', commands.handle_Bridge)
-#manager.register_event('Dial', commands.handle_Dial)
-manager.register_event('Newstate', commands.handle_Newstate)
+command_handler = CommandHandlerFactory(asteriskProtocolVersion).create_command_handler()
+
+manager.register_event('Shutdown', command_handler.handle_Shutdown)
+manager.register_event('Hangup', command_handler.handle_Hangup)
+manager.register_event('Link', command_handler.handle_Link)
+manager.register_event('Bridge', command_handler.handle_Bridge)
+manager.register_event('Dial', command_handler.handle_Dial)
+manager.register_event('Newstate', command_handler.handle_Newstate)
 
 manager.message_loop()
 

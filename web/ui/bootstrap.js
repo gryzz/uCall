@@ -36,8 +36,5 @@ Ext.application({
             
             return;
         }
-        
-        // Show main viewport
-        Ext.create('uCall.App');
     }
 });
