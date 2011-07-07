@@ -8,11 +8,16 @@
 Ext.define('uCall.controllers.ChannelEventController', {
     requires: ['uCall.constants.ChannelEvent'],
     extend: 'Ext.util.Observable',
+    singleton: true,
 
     config: {
         onConnect: Ext.emptyFn,
         onMessage: Ext.emptyFn,
         onDisconnect: Ext.emptyFn
+    },
+    
+    sendMessage: function() {
+    	
     },
 
     constructor: function(config) {

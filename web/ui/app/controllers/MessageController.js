@@ -68,7 +68,7 @@ Ext.define('uCall.controllers.MessageController', {
     	if (typeof data != 'string') {
     		data = Ext.JSON.encode(data);
     	}
-
+        console.log("uCall.controllers.MessageController.sendMessage(): ", data, reciever);
     	// TODO: actual sending!!! (this -> channel controller -> stomp adapter -> activemq)
     },
 

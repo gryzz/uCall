@@ -22,7 +22,7 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
                 var messageBox = Ext.create('uCall.widgets.GrowlMessage', {
                    items: {
                        xtype: 'component',
-                       html: 'Unknown customer number: ' + message.e,
+                       html: 'Unknown customer number: ' + message.e
                    },
                    floating: true,
                    closable: true
@@ -80,7 +80,7 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
                                      var messageBox = Ext.create('uCall.widgets.GrowlMessage', {
                                         items: {
                                             xtype: 'component',
-                                            html: 'Something went wrong',
+                                            html: 'Something went wrong'
                                         },
                                         floating: true,
                                         closable: true,

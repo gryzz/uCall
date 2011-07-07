@@ -73,7 +73,7 @@ Ext.define('uCall.App', {
         this.channelStatusIndicator = Ext.getCmp("ChannelStatusIndicator");
 
         // Create channel event controller
-        this.channelEventController = Ext.create("uCall.controllers.ChannelEventController", {
+        /*this.channelEventController = Ext.create("uCall.controllers.ChannelEventController", {
             onConnect: function(){
                 that.channelStatusIndicator.fireEvent(uCall.constants.ChannelEvent.CONNECTED);
 
@@ -104,7 +104,7 @@ Ext.define('uCall.App', {
                 // Show manual reconnect message
                 uCall.widgets.ChannelStatusInactivePopup.show({onClickCallback: manualChannelReconnect});
             }
-        });
+        });*/
         
         // Stomp client adapter factory
         this.stompClientAdapterFactory = Ext.create('uCall.data.stomp.StompClientAdapterFactory', {
