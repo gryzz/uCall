@@ -26,7 +26,8 @@ Ext.define('uCall.controllers.AgentStatusController', {
     onWidgetMenuItemClick: function(menu, item, event){
 
         var data = {
-            agentId: currentUser.agentId
+            agent: currentUser.agentId,
+            type: 'agent_status'
         };
 
         switch(item.id) {
@@ -43,7 +44,7 @@ Ext.define('uCall.controllers.AgentStatusController', {
                 break;
         }
 
-        uCall.controllers.ChannelEventController.sendMessage(data, window.controlChannel.ctrl_channel);
+        uCall.controllers.ChannelEventController.sendMessage(data, controlChannel.ctrl_channel);
     },
 
     /**

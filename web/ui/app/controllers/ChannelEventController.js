@@ -102,11 +102,11 @@ Ext.define('uCall.controllers.ChannelEventController', {
             login: window.controlChannel.username,
             passcode: window.controlChannel.password,
 
-            destination: '/queue/messages/' + window.currentUser.agentId,
-            sendDestination: '/queue/control',
-            pingDestination: '/queue/ping',
+            agentChannel: controlChannel.agent_channel + '/' + window.currentUser.agentId,
+            ctrlChannel: controlChannel.ctrl_channel,
 
-            pingMessage: window.currentUser.agentId,
+            pingMessage: {'type': 'ping', 'agent': window.currentUser.agentId},
+
             debug: true,
 
             onConnectCallback: function(){

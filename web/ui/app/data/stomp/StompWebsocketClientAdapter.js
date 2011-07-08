@@ -78,7 +78,7 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
 
     performSubscribe: function() {
         var that = this;
-        this.client.subscribe(this.destination, 
+        this.client.subscribe(this.agentChannel,
             function(event){that.fireEvent(uCall.constants.StompClientEvent.DATA_RECEIVED, {data: event})}, 
             headers = {}
         );
@@ -90,6 +90,10 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
         if (!isNaN(ttl)) {
             var now = new Date().getTime();
             headers.expires = now + ttl * 1000;
+        }
+
+        if (typeof messageBody != 'string') {
+            messageBody = Ext.JSON.encode(messageBody);
         }
 
         this.client.send(destination, headers, messageBody);
@@ -109,7 +113,8 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
         }
 
         // Send ping to queue
-        this.client.send(this.pingDestination, this.pingOptions, this.pingMessage);
+        this.performDataSend(this.pingMessage, this.ctrlChannel);
+
         // Schedule next iteration
         Ext.defer(this.keepAlive, this.keepAliveInterval, this);
     }
