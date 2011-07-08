@@ -1,6 +1,4 @@
 Ext.define('uCall.controllers.MessagesDeck', {
-    requires: ['uCall.controllers.AbstractController'],
-    extend: 'uCall.controllers.AbstractController',
     id: 'ucall-controllers-messagesdeck',
     counter: 0,
 
