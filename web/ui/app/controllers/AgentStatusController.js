@@ -24,27 +24,26 @@ Ext.define('uCall.controllers.AgentStatusController', {
      * @param {} event
      */
     onWidgetMenuItemClick: function(menu, item, event){
+
         var data = {
             agentId: currentUser.agentId
         };
+
         switch(item.id) {
             case 'StatusItemOffline':
                 data.statusId = 'offline';
-                //statusController.offline();
                 break;
 
             case 'StatusItemOnline':
                 data.statusId = 'available';
-                //statusController.available();
                 break;
 
             case 'StatusItemAway':
                 data.statusId = 'away';
-                //statusController.away();
                 break;
         }
-        // TODO: fetch reciver from config
-        uCall.controllers.MessageController.sendMessage(data, 'messages/ctrl');
+
+        uCall.controllers.ChannelEventController.sendMessage(data, window.controlChannel.ctrl_channel);
     },
 
     /**
@@ -78,13 +77,13 @@ Ext.define('uCall.controllers.AgentStatusController', {
 
         // Event Handlers
         Ext.onReady(function() {
-            var menu = Ext.getCmp('UserStatusMenuButton');
-            menu.on(
-                "click",
+            Ext.getCmp('UserStatusMenuButton').menu.on(
+                'click',
                 uCall.controllers.AgentStatusController.onWidgetMenuItemClick,
-                menu
+                this
             );
 
+            // why define handlers for other controller????
             uCall.controllers.MessageController.on(
                 uCall.constants.MessageEvent.STATUS_ONLINE,
                 function() {
@@ -92,6 +91,7 @@ Ext.define('uCall.controllers.AgentStatusController', {
                 }
             );
 
+            // why define handlers for other controller????
             uCall.controllers.MessageController.on(
                 uCall.constants.MessageEvent.STATUS_OFFLINE,
                 function() {
@@ -99,6 +99,7 @@ Ext.define('uCall.controllers.AgentStatusController', {
                 }
             );
 
+            // why define handlers for other controller????
             uCall.controllers.MessageController.on(
                 uCall.constants.MessageEvent.STATUS_AWAY,
                 function() {
@@ -106,16 +107,5 @@ Ext.define('uCall.controllers.AgentStatusController', {
                 }
             );
         });
-
-
-        /**
-         * This appears to not be required... ivan
-         */
-/*        // Register events
-        this.addEvents(
-            uCall.controllers.AgentStatusController.availableEvent,
-            uCall.controllers.AgentStatusController.awayEvent,
-            uCall.controllers.AgentStatusController.offlineEvent
-        );*/
     }
 });

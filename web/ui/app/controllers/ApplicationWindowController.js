@@ -16,6 +16,9 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
     extend: 'Ext.util.Observable',
     
     onShow: function(message){
+
+        alert('!!');
+
         uCall.model.ApplicationDefinition.load(message.e, {
             scope: this,
             failure: function(record, operation) {
@@ -105,6 +108,6 @@ Ext.define('uCall.controllers.ApplicationWindowController', {
         Ext.apply(this.config, config);
         Ext.apply(this, this.config);
 
-        this.on(uCall.constants.MessageEvent.WINDOW, this.onShow, this);
+        this.on(uCall.constants.MessageEvent.INCOMING_CALL_LINK, this.onShow, this);
     }
 });

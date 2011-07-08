@@ -12,21 +12,23 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
     ],
     extend: 'Ext.Button',
     alias: 'widget.ChannelStatusIndicator',
-    
+
     activeStatusImageSrc: "/ui/resources/images/channel_status/active.png",
     inactiveStatusImageSrc: "/ui/resources/images/channel_status/inactive.png",
     channelStatusActive: false,
     
-    onChannelStatusActive: function() {
+    setActive: function() {
         // Set channel starus flag
         this.channelStatusActive = true;
+
         // Set icon
         this.setIcon(this.activeStatusImageSrc);
     },
 
-    onChannelStatusInactive: function() {
+    setInactive: function() {
         // Set channel starus flag
         this.channelStatusActive = false;
+
         // Set icon
         this.setIcon(this.inactiveStatusImageSrc);
     },
@@ -41,12 +43,8 @@ Ext.define('uCall.widgets.ChannelStatusIndicator', {
 
         // Set channel starus flag
         this.channelStatusActive = false;
+
         // Set icon
         this.setIcon(this.inactiveStatusImageSrc);
-
-        this.addEvents(uCall.constants.ChannelEvent.CONNECTED, uCall.constants.ChannelEvent.DISCONNECTED);
-
-        this.on(uCall.constants.ChannelEvent.CONNECTED, this.onChannelStatusActive, this);
-        this.on(uCall.constants.ChannelEvent.DISCONNECTED, this.onChannelStatusInactive, this);
     }
 });

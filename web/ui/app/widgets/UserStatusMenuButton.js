@@ -44,6 +44,6 @@ Ext.define('uCall.widgets.UserStatusMenuButton', {
         Ext.applyIf(this, this.config);
         this.callParent(arguments);
 
-        this.setIcon(this.iconStatusOffline);
+        this.setOffline();
     }
 });

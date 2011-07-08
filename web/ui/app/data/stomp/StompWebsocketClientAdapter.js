@@ -84,7 +84,7 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
         );
     },
 
-    performDataSend: function(messageBody, ttl) {
+    performDataSend: function(messageBody, destination, ttl) {
         var headers = {};
 
         if (!isNaN(ttl)) {
@@ -92,7 +92,7 @@ Ext.define('uCall.data.stomp.StompWebsocketClientAdapter', {
             headers.expires = now + ttl * 1000;
         }
 
-        this.client.send(this.sendDestination, headers, messageBody);
+        this.client.send(destination, headers, messageBody);
     },
 
     performDisconnect: function() {
