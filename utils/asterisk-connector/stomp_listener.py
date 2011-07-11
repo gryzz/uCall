@@ -25,13 +25,17 @@ def queue_remove(manager, agent):
 
     return manager.send_action(cdict)
 
-def queue_pause(manager, agent):
+def queue_pause(manager, agent, paused = True):
     cdict = {'Action':'QueuePause'}
     cdict['Interface'] = agent
     cdict['Queue'] = 'test'
-    cdict['Paused'] = True
+    cdict['Paused'] = paused
 
     return manager.send_action(cdict)
+
+def queue_unpause(manager, agent):
+    return queue_pause(manager, agent, False)
+
 
 config = ConfigParser.ConfigParser()
 devel_config = ConfigParser.ConfigParser()
