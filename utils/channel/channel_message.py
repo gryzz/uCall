@@ -18,6 +18,7 @@ class ChannelMessage:
 
     TYPE_AGENT_STATUS = "agent_status"
     TYPE_PING = "ping"
+    TYPE_CHECK_CURRENT_STATUS = "check_current_status"
 
     (TYPE_KEY, AGENT_KEY, STATUS_KEY, ID_KEY, CALLER_KEY, EVENT_KEY, EXTENTION_KEY) = ('type', 'agent', 'statusId', 'i', 'c', 't', 'e')
 

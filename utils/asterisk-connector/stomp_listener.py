@@ -36,6 +36,13 @@ def queue_pause(manager, agent, paused = True):
 def queue_unpause(manager, agent):
     return queue_pause(manager, agent, False)
 
+def queue_status(manager, agent):
+    cdict = {'Action':'QueueStatus'}
+    cdict['Queue'] = 'test'
+    cdict['Member'] = agent
+
+    return manager.send_action(cdict)
+
 
 config = ConfigParser.ConfigParser()
 devel_config = ConfigParser.ConfigParser()
@@ -83,5 +90,15 @@ while True:
         manager.logoff()
     elif data['type'] == channel_message.TYPE_PING:
         print "ping-pong!"
+    elif data['type'] == channel_message.TYPE_CHECK_CURRENT_STATUS:
+        manager = asterisk.manager.Manager()
+        manager.connect(ami_host)
+        manager.login(ami_username, ami_password)
+
+        response = queue_status(manager, data['agent'])
+
+        print response.headers
+
+        manager.logoff()
 
 

@@ -8,7 +8,8 @@
 Ext.define('uCall.controllers.ChannelEventController', {
     requires: [
         'uCall.constants.ChannelEvent',
-        'uCall.data.stomp.StompClientAdapterFactory'
+        'uCall.data.stomp.StompClientAdapterFactory',
+        'uCall.controllers.AgentStatusController'
     ],
 
     extend: 'Ext.util.Observable',
@@ -23,7 +24,7 @@ Ext.define('uCall.controllers.ChannelEventController', {
         onMessage: Ext.emptyFn,
         onDisconnect: Ext.emptyFn
     },
-    
+
     sendMessage: function(data, destination) {
     	if (typeof data != 'string') {
     		data = Ext.JSON.encode(data);
@@ -43,6 +44,8 @@ Ext.define('uCall.controllers.ChannelEventController', {
 
         // Hide popup
         uCall.widgets.ChannelStatusInactivePopup.hide();
+
+        uCall.controllers.AgentStatusController.checkCurrentStatus();
     },
 
     onMessage: function(eventData){
@@ -120,7 +123,7 @@ Ext.define('uCall.controllers.ChannelEventController', {
                 // Propagate channel disconnect event
                 uCall.controllers.ChannelEventController.fireEvent(uCall.constants.ChannelEvent.DISCONNECTED);
             },
-            
+
             onMessageCallback: function(data){
                 // Propagate channel message event
                 uCall.controllers.ChannelEventController.fireEvent(uCall.constants.ChannelEvent.MESSAGE, {message: data});
