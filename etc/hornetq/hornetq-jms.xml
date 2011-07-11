@@ -11,33 +11,21 @@
       </entries>
    </connection-factory>
 
-   <!--the topic used by the example-->
-   <topic name="sip1001">
-      <entry name="/topic/sip1001"/>
-   </topic>
-
-   <queue name="messages_ctrl">
-      <entry name="/queue/messages_ctrl"/>
+   <queue name="msg_ctrl">
+      <entry name="jms.queue.msg.ctrl"/>
    </queue>
 
-   <queue name="messages_sip101">
-      <entry name="/queue/messages_sip101"/>
+   <queue name="msg_SIP101">
+      <entry name="jms.queue.msg.SIP/101"/>
    </queue>
-
-   <queue name="messages_sip102">
-      <entry name="/queue/messages_sip102"/>
+   <queue name="msg_SIP102">
+      <entry name="jms.queue.msg.SIP/102"/>
    </queue>
-
-   <queue name="messages_sip103">
-      <entry name="/queue/messages_sip103"/>
+   <queue name="msg_SIP103">
+      <entry name="jms.queue.msg.SIP/103"/>
    </queue>
-
-   <queue name="messages_sip104">
-      <entry name="/queue/messages_sip104"/>
-   </queue>
-
-   <queue name="messages_sip105">
-      <entry name="/queue/messages_sip105"/>
+   <queue name="msg_SIP104">
+      <entry name="jms.queue.msg.SIP/104"/>
    </queue>
 
 </configuration>
