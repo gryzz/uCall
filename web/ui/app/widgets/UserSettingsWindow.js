@@ -83,7 +83,7 @@ Ext.define('uCall.widgets.UserSettingsWindow', {
         	handler: function() {
         	    var form = this.up('form').getForm();
                 if (form.isValid()) {
-                    that = this;
+                    var that = this;
                     form.submit({
                         waitMsg: 'Submitting your data...',
                         success: function(form, action){
