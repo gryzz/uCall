@@ -16,15 +16,18 @@ class ChannelMessage:
     EVENT_QUEUE_MEMBER_REMOVED_KEY = 'EVENT_QUEUE_MEMBER_REMOVED'
     EVENT_QUEUE_MEMBER_PAUSED_KEY = 'EVENT_QUEUE_MEMBER_PAUSED'
 
-    message = {'e': 'r', 'ex':407040, 'a':'SIP/1313', 'u':'1234'}
+    TYPE_AGENT_STATUS = "agent_status"
+    TYPE_PING = "ping"
 
-    (ID_KEY, CALLER_KEY, EVENT_KEY, EXTENTION_KEY) = ('i', 'c', 't', 'e')
+    (TYPE_KEY, AGENT_KEY, STATUS_KEY, ID_KEY, CALLER_KEY, EVENT_KEY, EXTENTION_KEY) = ('type', 'agent', 'statusId', 'i', 'c', 't', 'e')
 
+    type = None
     caller = None
     event = None
     extension = None
     agent = None
     id = None
+    status = None
 
     def dump_data_json(self):
 
@@ -37,12 +40,24 @@ class ChannelMessage:
     	    data[self.EVENT_KEY] = self.event
 
         if self.extension:
-	    data[self.EXTENTION_KEY] = self.extension
+	        data[self.EXTENTION_KEY] = self.extension
 
         if self.id:
     	    data[self.ID_KEY] = self.id
 
         return self.json_dump(data)
+
+    def load_data_json(self, json):
+        data = self.json_load(json)
+
+        self.set_type(data[self.TYPE_KEY])
+
+        if data[self.TYPE_KEY] == self.TYPE_AGENT_STATUS:
+            self.set_agent(data[self.AGENT_KEY])
+            self.set_status(data[self.STATUS_KEY])
+
+        return data
+
 
     def dump_schema_json(self):
 
@@ -57,12 +72,19 @@ class ChannelMessage:
 
         return self.json_dump(data)
 
+
     def json_dump(self, data):
         return json.dumps(data, separators=(',',':'))
+
+    def json_load(self, string):
+        return json.loads(string)
 
 
     def print_message(self):
         print json.dumps(self.message, separators=(',',':'))
+
+    def get_type(self):
+        return self.type
 
     def get_caller(self):
         return self.caller
@@ -79,6 +101,12 @@ class ChannelMessage:
     def get_id(self):
         return self.id
 
+    def get_status(self):
+        return self.status_id
+
+    def set_type(self, type):
+        self.type = type
+
     def set_caller(self, caller):
         self.caller = caller
 
@@ -93,3 +121,6 @@ class ChannelMessage:
 
     def set_id(self, id):
         self.id = id
+
+    def set_status(self, status_id):
+        self.status_id = status_id
