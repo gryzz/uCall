@@ -1,5 +1,7 @@
 import abc
 from command_handler import CommandHandler
+from command_constants import Asterisk
+from channel.channel_message import ChannelMessage
 
 from handler_utils import check_event
 from handler_utils import send_message
@@ -8,6 +10,8 @@ from handler_utils import get_local_number
 class AsteriskCommandHandler(CommandHandler):
     """Abstract asterisk command handler"""
     __metaclass__ = abc.ABCMeta
+
+    PAUSED_FLAG = 1
 
     @abc.abstractmethod
     def _handle_newstate_ringing(self, event, destination):
@@ -54,7 +58,7 @@ class AsteriskCommandHandler(CommandHandler):
 
     @check_event
     def handle_QueueMemberAdded(self, event, manager):
-        location = event[Asterisk10.HEADER_LOCATION]
+        location = event[Asterisk.HEADER_LOCATION]
 
         if location == None:
             return None
@@ -65,7 +69,7 @@ class AsteriskCommandHandler(CommandHandler):
 
     @check_event
     def handle_QueueMemberRemoved(self, event, manager):
-        location = event[Asterisk10.HEADER_LOCATION]
+        location = event[Asterisk.HEADER_LOCATION]
 
         if location == None:
             return None
@@ -76,7 +80,7 @@ class AsteriskCommandHandler(CommandHandler):
 
     @check_event
     def handle_QueueMemberPaused(self, event, manager):
-        location = event[Asterisk10.HEADER_LOCATION]
+        location = event[Asterisk.HEADER_LOCATION]
 
         if location == None:
             return None
@@ -84,3 +88,16 @@ class AsteriskCommandHandler(CommandHandler):
         message = ChannelMessage()
         message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_PAUSED)
         send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMember(self, event, manager):
+        location = event[Asterisk.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        if int(event['Paused']) == self.PAUSED_FLAG:
+            self.handle_QueueMemberPaused(event, manager)
+        else:
+            self.handle_QueueMemberAdded(event, manager)
+

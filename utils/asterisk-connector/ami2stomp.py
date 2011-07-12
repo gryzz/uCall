@@ -84,6 +84,7 @@ manager.register_event('Newstate', command_handler.handle_Newstate)
 manager.register_event('QueueMemberAdded', command_handler.handle_QueueMemberAdded)
 manager.register_event('QueueMemberRemoved', command_handler.handle_QueueMemberRemoved)
 manager.register_event('QueueMemberPaused', command_handler.handle_QueueMemberPaused)
+manager.register_event('QueueMember', command_handler.handle_QueueMember)
 
 manager.message_loop()
 
