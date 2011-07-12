@@ -1,11 +1,14 @@
 import abc
 from command_handler import CommandHandler
+
 from handler_utils import check_event
+from handler_utils import send_message
+from handler_utils import get_local_number
 
 class AsteriskCommandHandler(CommandHandler):
     """Abstract asterisk command handler"""
     __metaclass__ = abc.ABCMeta
-    
+
     @abc.abstractmethod
     def _handle_newstate_ringing(self, event, destination):
         pass
@@ -40,12 +43,44 @@ class AsteriskCommandHandler(CommandHandler):
             return self._handle_hangup_clearing(event, manager.destination)
 
         return None
-            
+
     @check_event
     def handle_Newstate(self, event, manager):
-        
+
         if self._is_newstate_ringing(event):
             return self._handle_newstate_ringing(event, manager.destination)
-            
+
         return None
 
+    @check_event
+    def handle_QueueMemberAdded(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_ADDED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberRemoved(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_REMOVED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
+
+    @check_event
+    def handle_QueueMemberPaused(self, event, manager):
+        location = event[Asterisk10.HEADER_LOCATION]
+
+        if location == None:
+            return None
+
+        message = ChannelMessage()
+        message.set_event(ChannelMessage.EVENT_QUEUE_MEMBER_PAUSED)
+        send_message(manager.destination, message.dump_data_json(), get_local_number(location))
