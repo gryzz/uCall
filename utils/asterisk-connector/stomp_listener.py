@@ -45,15 +45,13 @@ def queue_status(manager, agent):
 
 
 config = ConfigParser.ConfigParser()
-devel_config = ConfigParser.ConfigParser()
 
 config.read('/opt/ucall/etc/config.ini')
-devel_config.read('/opt/ucall/etc/devel_config.ini')
 
 stomp_host = config.get('STOMP', 'host')
 stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
-stomp_queue = "/queue/ctrl"
+stomp_queue = config.get('STOMP', 'ctrl_channel')
 
 ami_host = config.get('AMI', 'host')
 ami_username = config.get('AMI', 'username')
