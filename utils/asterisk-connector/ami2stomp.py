@@ -14,15 +14,15 @@ from handlers.command_constants import Protocol
 #sys.stdout = open("/var/log/requests/connector2.log","a")
 #sys.stderr = open("/var/log/requests/connector-err2.log","a")
 
-import fcntl                                                                                                                                                                                    
-lockfile = os.path.normpath('/var/lock/' + os.path.basename(__file__) + '.lock')                                                                                                                
-exclusive_lock = open(lockfile, 'w')                                                                                                                                                            
-try:                                                                                                                                                                                            
-    fcntl.lockf(exclusive_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)                                                                                                                                  
-except IOError:                                                                                                                                                                                 
-    print "Another instance is already running, quitting."                                                                                                                                      
-    time.sleep(1)                                                                                                                                                                               
-    sys.exit(-1)    
+import fcntl
+lockfile = os.path.normpath('/var/lock/' + os.path.basename(__file__) + '.lock')
+exclusive_lock = open(lockfile, 'w')
+try:
+    fcntl.lockf(exclusive_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except IOError:
+    print "Another instance is already running, quitting."
+    time.sleep(1)
+    sys.exit(-1)
 
 config = ConfigParser.ConfigParser()
 config.read('/opt/ucall/etc/config.ini')
@@ -32,23 +32,23 @@ stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
 
 print '='*80
-print 'Stomp host:', stomp_host 
-print 'Stomp username:', stomp_username 
-print 'Stomp password:', stomp_password 
+print 'Stomp host:', stomp_host
+print 'Stomp username:', stomp_username
+print 'Stomp password:', stomp_password
 print '='*80
 
 ami_host = config.get('AMI', 'host')
 ami_username = config.get('AMI', 'username')
 ami_password = config.get('AMI', 'password')
 
-print 'AMI host:', ami_host 
-print 'AMI username:', ami_username 
-print 'AMI password:', ami_password 
+print 'AMI host:', ami_host
+print 'AMI username:', ami_username
+print 'AMI password:', ami_password
 print '='*80
 
 sql_dsn = config.get('SQL', 'dsn')
 
-print 'SQL:', sql_dsn 
+print 'SQL:', sql_dsn
 print '='*80
 
 stomp = Client(stomp_host)
@@ -81,6 +81,9 @@ manager.register_event('Link', command_handler.handle_Link)
 manager.register_event('Bridge', command_handler.handle_Bridge)
 manager.register_event('Dial', command_handler.handle_Dial)
 manager.register_event('Newstate', command_handler.handle_Newstate)
+manager.register_event('QueueMemberAdded', command_handler.handle_QueueMemberAdded)
+manager.register_event('QueueMemberRemoved', command_handler.handle_QueueMemberRemoved)
+manager.register_event('QueueMemberPaused', command_handler.handle_QueueMemberPaused)
 
 manager.message_loop()
 
@@ -100,4 +103,3 @@ manager.logoff()
 
 #finally:
 manager.close()
-
