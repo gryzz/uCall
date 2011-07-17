@@ -27,10 +27,10 @@ print '='*80
 
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
-stomp.subscribe("/queue/control")
+stomp.subscribe("jms.queue.msg.ctrl")
 
-message = stomp.get()
-
-print message.body
+while True:
+    message = stomp.get()
+    print message.body
 
 stomp.disconnect()
