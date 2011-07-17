@@ -102,10 +102,10 @@ Ext.define('uCall.controllers.ChannelEventController', {
             login: window.controlChannel.username,
             passcode: window.controlChannel.password,
 
-            agentChannel: controlChannel.agent_channel + '/' + window.currentUser.agentId,
+            agentChannel: controlChannel.agent_channel + window.currentUser.agentId,
             ctrlChannel: controlChannel.ctrl_channel,
 
-            pingMessage: {'type': 'ping', 'agent': window.currentUser.agentId},
+            pingMessage: {'type': 'ping', 'agent': window.currentUser.agentId, 'id' : Number(new Date())},
 
             debug: true,
 
