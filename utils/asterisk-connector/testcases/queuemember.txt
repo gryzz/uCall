@@ -1,0 +1,1 @@
+4836665	2011-06-01 10:51:49.996394	QueueMember	1306915125.7017	{'Event': 'QueueMember', 'Queue': 'test', 'Location': 'SIP/103', 'Name': 'SIP/103', 'Membership': 'dynamic', 'Penalty': '0', 'CallsTaken': '0', 'LastCall': '0', 'Status': '1', 'Paused': '0'}

@@ -47,6 +47,15 @@ Ext.define('uCall.controllers.AgentStatusController', {
         uCall.controllers.ChannelEventController.sendMessage(data, controlChannel.ctrl_channel);
     },
 
+    checkCurrentStatus: function() {
+        var data = {
+            agent: currentUser.agentId,
+            type: 'check_current_status'
+        };
+
+        uCall.controllers.ChannelEventController.sendMessage(data, controlChannel.ctrl_channel);
+    },
+
     /**
      * Mark agent as available
      */

@@ -25,24 +25,33 @@ def queue_remove(manager, agent):
 
     return manager.send_action(cdict)
 
-def queue_pause(manager, agent):
+def queue_pause(manager, agent, paused = True):
     cdict = {'Action':'QueuePause'}
     cdict['Interface'] = agent
     cdict['Queue'] = 'test'
-    cdict['Paused'] = True
+    cdict['Paused'] = paused
 
     return manager.send_action(cdict)
 
+def queue_unpause(manager, agent):
+    return queue_pause(manager, agent, False)
+
+def queue_status(manager, agent):
+    cdict = {'Action':'QueueStatus'}
+    cdict['Queue'] = 'test'
+    cdict['Member'] = agent
+
+    return manager.send_action(cdict)
+
+
 config = ConfigParser.ConfigParser()
-devel_config = ConfigParser.ConfigParser()
 
 config.read('/opt/ucall/etc/config.ini')
-devel_config.read('/opt/ucall/etc/devel_config.ini')
 
 stomp_host = config.get('STOMP', 'host')
 stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
-stomp_queue = "/queue/ctrl"
+stomp_queue = config.get('STOMP', 'ctrl_channel')
 
 ami_host = config.get('AMI', 'host')
 ami_username = config.get('AMI', 'username')
@@ -79,5 +88,15 @@ while True:
         manager.logoff()
     elif data['type'] == channel_message.TYPE_PING:
         print "ping-pong!"
+    elif data['type'] == channel_message.TYPE_CHECK_CURRENT_STATUS:
+        manager = asterisk.manager.Manager()
+        manager.connect(ami_host)
+        manager.login(ami_username, ami_password)
+
+        response = queue_status(manager, data['agent'])
+
+        print response.headers
+
+        manager.logoff()
 
 
