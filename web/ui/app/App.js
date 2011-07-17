@@ -40,6 +40,7 @@ Ext.define('uCall.App', {
         this.callParent(arguments);
 
         Ext.onReady(function() {
+            Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
             /*
              * Init controllers which depends on widgets
              */
