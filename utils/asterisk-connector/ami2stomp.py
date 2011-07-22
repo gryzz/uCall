@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.INFO,
                     filemode='a+')
 
 import fcntl
-lockfile = os.path.normpath('/var/lock/' + os.path.basename(__file__) + '.lock')
+lockfile = os.path.normpath('/tmp/' + os.path.basename(__file__) + '.lock')
 exclusive_lock = open(lockfile, 'w')
 try:
     fcntl.lockf(exclusive_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
