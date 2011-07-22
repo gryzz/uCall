@@ -9,6 +9,14 @@ import ConfigParser
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from channel.channel_message import ChannelMessage
 
+import logging
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%a, %d %b %Y %H:%M:%S',
+                    filename='/tmp/ucall-pbx-listener.log',
+                    filemode='a+')
+
 def queue_add(manager, agent):
     cdict = {'Action':'QueueAdd'}
     cdict['Interface'] = agent
@@ -67,7 +75,7 @@ while True:
 
     channel_message = ChannelMessage()
 
-    print message.body
+    logging.debug(message.body)
 
     data = channel_message.load_data_json(message.body)
 

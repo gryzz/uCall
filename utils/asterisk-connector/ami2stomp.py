@@ -14,6 +14,14 @@ from handlers.command_constants import Protocol
 #sys.stdout = open("/var/log/requests/connector2.log","a")
 #sys.stderr = open("/var/log/requests/connector-err2.log","a")
 
+import logging
+
+logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%a, %d %b %Y %H:%M:%S',
+                    filename='/tmp/myapp.log',
+                    filemode='a+')
+
 import fcntl
 lockfile = os.path.normpath('/var/lock/' + os.path.basename(__file__) + '.lock')
 exclusive_lock = open(lockfile, 'w')
