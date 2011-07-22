@@ -28,7 +28,7 @@ DATABASES = {
         'NAME': 'ucall', # Or path to database file if using sqlite3.
         'USER': 'postgres', # Not used with sqlite3.
         'PASSWORD': '', # Not used with sqlite3.
-        'HOST': '192.168.122.13', # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': '127.0.0.1', # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -136,7 +136,7 @@ INSTALLED_APPS = (
     'crm',
 )
 
-INSTALLED_APPS += ("djcelery", )
+#INSTALLED_APPS += ("djcelery", )
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -163,11 +163,11 @@ LOGGING = {
 
 AUTH_PROFILE_MODULE = 'ucall.UserProfile'
 
-import djcelery
-djcelery.setup_loader()
+#import djcelery
+#djcelery.setup_loader()
 
 CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
 
-INSTALLED_APPS += ("djkombu", )
+#INSTALLED_APPS += ("djkombu", )
 
 BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
