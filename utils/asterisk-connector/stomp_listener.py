@@ -51,6 +51,15 @@ def queue_status(manager, agent):
 
     return manager.send_action(cdict)
 
+import fcntl
+lockfile = os.path.normpath('/tmp/' + os.path.basename(__file__) + '.lock')
+exclusive_lock = open(lockfile, 'w')
+try:
+    fcntl.lockf(exclusive_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+except IOError:
+    print "Another instance is already running, quitting."
+    time.sleep(1)
+    sys.exit(-1)
 
 config = ConfigParser.ConfigParser()
 
