@@ -11,7 +11,7 @@ from channel.channel_message import ChannelMessage
 
 import logging
 
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S',
                     filename='/tmp/ucall-pbx-listener.log',
@@ -70,6 +70,15 @@ stomp_username = config.get('STOMP', 'username')
 stomp_password = config.get('STOMP', 'password')
 stomp_queue = config.get('STOMP', 'ctrl_channel')
 
+
+print '='*80
+print 'Stomp host:', stomp_host
+print 'Stomp username:', stomp_username
+print 'Stomp password:', stomp_password
+print 'Stomp queue:', stomp_queue
+print '='*80
+
+
 ami_host = config.get('AMI', 'host')
 ami_username = config.get('AMI', 'username')
 ami_password = config.get('AMI', 'password')
@@ -77,7 +86,6 @@ ami_password = config.get('AMI', 'password')
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
 stomp.subscribe(stomp_queue)
-
 
 while True:
     message = stomp.get()
@@ -103,8 +111,11 @@ while True:
         print response.headers['Message']
 
         manager.logoff()
+
     elif data['type'] == channel_message.TYPE_PING:
-        print "ping-pong!"
+	#logging.info('ping at %s from %s', (data['id'], data['agent']))
+	stomp.put('{"type":"pong"}', destination="jms.queue.msg." + str(data['agent']), persistent=False, conf={})
+
     elif data['type'] == channel_message.TYPE_CHECK_CURRENT_STATUS:
         manager = asterisk.manager.Manager()
         manager.connect(ami_host)
