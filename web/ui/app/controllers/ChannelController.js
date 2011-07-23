@@ -108,7 +108,6 @@ Ext.define('uCall.controllers.ChannelController', {
             agentChannel: controlChannel.agent_channel + window.currentUser.agentId,
             ctrlChannel: controlChannel.ctrl_channel,
 
-            //pingMessage: {'type': 'ping', 'agent': window.currentUser.agentId, 'id' : Number(new Date())},
             pingMessage: {'type': 'ping', 'agent': window.currentUser.agentId},
 
             debug: true,
