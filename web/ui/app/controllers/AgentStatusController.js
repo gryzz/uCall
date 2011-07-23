@@ -44,7 +44,7 @@ Ext.define('uCall.controllers.AgentStatusController', {
                 break;
         }
 
-        uCall.controllers.ChannelEventController.sendMessage(data, controlChannel.ctrl_channel);
+        uCall.controllers.ChannelController.sendMessage(data, controlChannel.ctrl_channel);
     },
 
     checkCurrentStatus: function() {
@@ -53,7 +53,7 @@ Ext.define('uCall.controllers.AgentStatusController', {
             type: 'check_current_status'
         };
 
-        uCall.controllers.ChannelEventController.sendMessage(data, controlChannel.ctrl_channel);
+        uCall.controllers.ChannelController.sendMessage(data, controlChannel.ctrl_channel);
     },
 
     /**

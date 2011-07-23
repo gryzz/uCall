@@ -8,7 +8,7 @@
 Ext.define('uCall.App', {
     requires: [
         'uCall.widgets.MainPanel',
-        'uCall.controllers.ChannelEventController',
+        'uCall.controllers.ChannelController',
         'uCall.controllers.GrowlController',
         'uCall.controllers.MessageController',
         'uCall.controllers.ApplicationWindowController',
@@ -49,7 +49,7 @@ Ext.define('uCall.App', {
 
             /*
              */
-            uCall.controllers.ChannelEventController.stompClientAdapter.performConnect();
+            uCall.controllers.ChannelController.stompClientAdapter.performConnect();
         });
     }
 });
