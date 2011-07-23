@@ -23,7 +23,9 @@ Ext.define('uCall.data.stomp.StompClientAdapter', {
             persistent:false,
             expires:1 // Expires at 1st of Jan 1970 00:00:01
         },
-        keepAliveInterval : 15000,
+        
+        //TODO inject it 
+        keepAliveInterval : controlChannel.ping_timeout,
 
         // 3rd party adapter
         client: null,
