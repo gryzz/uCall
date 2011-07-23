@@ -62,6 +62,8 @@ print '='*80
 stomp = Client(stomp_host)
 stomp.connect(stomp_username, stomp_password)
 
+stomp.agent_channel = 'jms.queue.msg.'
+
 connection = connectionForURI(sql_dsn)
 sqlhub.processConnection = connection
 
